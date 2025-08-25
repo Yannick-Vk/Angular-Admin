@@ -1,0 +1,17 @@
+﻿form {
+  background: #3d4043;
+  /* top | right | bottom | left */
+  padding: 1rem 3rem 3rem 3rem;
+  border-radius: var(--border-radius);
+  color: #c9c9c9;
+}
+
+form input {
+  background: #c9c9c9;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+}
