@@ -1,6 +1,5 @@
-﻿import {Component, inject, signal} from '@angular/core';
+﻿import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {provideHttpClient} from '@angular/common/http';
 import {LoginService} from '../services/login-service';
 
 @Component({
