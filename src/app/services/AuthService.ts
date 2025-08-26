@@ -35,7 +35,7 @@ export class AuthService {
 
   // Check if the expiration is set in local storage and if it's still valid
   public IsLoggedIn(): boolean {
-    const expiration = localStorage.getItem(this.keys.expiry);
+    const expiration = this.GetToken();
     if (!expiration) {
       console.error('Expiration not set.');
       return false;
@@ -47,5 +47,9 @@ export class AuthService {
       console.error('Invalid Expiration was set');
     }
     return false;
+  }
+
+  public GetToken(): string | null {
+    return localStorage.getItem(this.keys.token);
   }
 }
