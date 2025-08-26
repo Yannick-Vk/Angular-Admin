@@ -4,7 +4,7 @@ import {LoginForm} from './login/LoginForm';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, LoginForm],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
