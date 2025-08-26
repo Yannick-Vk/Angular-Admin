@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
 :root {
   --font-size: 1rem;
   --primary: #e4b8f8;
