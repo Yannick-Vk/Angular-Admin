@@ -20,6 +20,7 @@ export class LoginForm {
 
   onSubmit() {
     console.log(this.loginForm.value)
-    this.client.get();
+    const form = this.loginForm.value;
+    this.client.get({username: form.username!, password: form.password!});
   }
 }

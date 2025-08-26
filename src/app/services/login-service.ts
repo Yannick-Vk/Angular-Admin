@@ -1,14 +1,22 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
+import {catchError} from 'rxjs';
+import {LoggedInUser, LoginDto} from '../models/LoginDTO';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   private client = inject(HttpClient)
+  private baseUrl = 'http://localhost:5079/api/v1/auth';
 
-  public get() {
-    this.client.get('https://jsonplaceholder.typicode.com/todos/1').subscribe(config => {
+  public get(user: LoginDto) {
+    this.client.post<LoggedInUser>(`${this.baseUrl}/login`, user)
+      .pipe(catchError((error: HttpResponse<any>) => {
+        console.error('Failed to login: ', error);
+        throw error
+      }))
+      .subscribe(config => {
       // process the configuration.
       console.log(config);
     });
