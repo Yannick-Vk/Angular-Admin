@@ -1,6 +1,6 @@
 ﻿import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {LoginService} from '../services/login-service';
+import {AuthService} from '../services/AuthService';
 
 @Component({
   selector: 'login-form',
@@ -11,7 +11,7 @@ import {LoginService} from '../services/login-service';
   styleUrl: './LoginForm.scss',
 })
 export class LoginForm {
-  private client = inject(LoginService);
+  private client = inject(AuthService);
 
   loginForm = new FormGroup({
     username: new FormControl('', Validators.required),
