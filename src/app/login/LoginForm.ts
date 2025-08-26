@@ -11,11 +11,11 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 })
 export class LoginForm {
   loginForm = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
   })
 
   onSubmit() {
-
+    console.log(this.loginForm.value);
   }
 }

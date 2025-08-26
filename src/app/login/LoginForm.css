@@ -9,10 +9,15 @@ form {
 form button {
   color: #2c2c2c;
 }
-form button:hover {
+form button:enabled:hover {
   background: #5a1275;
   color: #fff;
   border-color: #5a1275;
+}
+form button[disabled] {
+  background: #787878;
+  border-color: #787878;
+  cursor: not-allowed;
 }
 
 form input {
