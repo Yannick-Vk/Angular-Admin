@@ -6,8 +6,18 @@
   color: #c9c9c9;
 }
 
+form button {
+  color: #2c2c2c;
+  &:hover {
+    background: #5a1275;
+    color: #fff;
+    border-color: #5a1275;
+  }
+}
+
 form input {
   background: #c9c9c9;
+  color: #2c2c2c;
 }
 
 .button-group {
