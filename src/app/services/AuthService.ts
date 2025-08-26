@@ -17,8 +17,9 @@ export class AuthService {
         throw error
       }))
       .subscribe(config => {
-      // process the configuration.
-      console.log(config);
-    });
+        // process the configuration.
+        console.log(config);
+        console.log(`Username:`, config.UserName);
+      });
   }
 }

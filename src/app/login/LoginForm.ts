@@ -1,6 +1,7 @@
 ﻿import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../services/AuthService';
+import {LoginRequest} from '../models/Auth';
 
 @Component({
   selector: 'login-form',
@@ -19,8 +20,9 @@ export class LoginForm {
   })
 
   onSubmit() {
-    console.log(this.loginForm.value)
     const form = this.loginForm.value;
-    this.client.Login({username: form.username!, password: form.password!});
+    // Mark as not null since the form is validated
+    const user: LoginRequest = {UserName: form.username!, password: form.password!}
+    this.client.Login(user);
   }
 }
