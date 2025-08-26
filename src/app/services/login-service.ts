@@ -10,7 +10,7 @@ export class LoginService {
   private client = inject(HttpClient)
   private baseUrl = 'http://localhost:5079/api/v1/auth';
 
-  public get(user: LoginDto) {
+  public Login(user: LoginDto) {
     this.client.post<LoggedInUser>(`${this.baseUrl}/login`, user)
       .pipe(catchError((error: HttpResponse<any>) => {
         console.error('Failed to login: ', error);
