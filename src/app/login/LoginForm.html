@@ -1,23 +1,22 @@
 ﻿<div>
-  <form>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <h2 class="text-fuchsia-500 text-3xl">Login</h2>
     <div class="inputGroup">
       <label for="username">Username</label>
-      <input type="text" id="username" [formControl]="username">
+      <input type="text" id="username" formControlName="username">
     </div>
     <div class="inputGroup">
       <label for="password">Password</label>
-      <input type="password" id="password" [formControl]="password">
+      <input type="password" id="password" formControlName="password">
     </div>
 
     <div class="button-group">
-      <button>Login</button>
+      <button [disabled]="!loginForm.valid">Login</button>
       <button>Register</button>
     </div>
   </form>
 
   <div class="inputGroup">
-    Username: {{ username.value }}
-    Password: {{ password.value }}
+    Username: {{loginForm.value.username}}
   </div>
 </div>

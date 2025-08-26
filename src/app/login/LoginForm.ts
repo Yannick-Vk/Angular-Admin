@@ -1,5 +1,5 @@
 ﻿import {Component, signal} from '@angular/core';
-import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
 @Component({
   selector: 'login-form',
@@ -10,6 +10,12 @@ import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
   styleUrl: './LoginForm.scss',
 })
 export class LoginForm {
-  username = new FormControl('');
-  password = new FormControl('');
+  loginForm = new FormGroup({
+    username: new FormControl(''),
+    password: new FormControl(''),
+  })
+
+  onSubmit() {
+
+  }
 }
