@@ -15,7 +15,7 @@ export interface RegisterRequest extends UserWithPassword {
   email: string;
 }
 
-export interface LoggedInUser extends User {
-  Email: string;
-  Jwt: string;
+export interface Jwt {
+  Token: string;
+  ExpiresIn: number;
 }
