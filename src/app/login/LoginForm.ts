@@ -6,8 +6,8 @@ import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
   imports: [
     ReactiveFormsModule
   ],
-  templateUrl: './loginForm.html',
-  styleUrl: './Form.css'
+  templateUrl: './LoginForm.html',
+  styleUrl: './LoginForm.scss',
 })
 export class LoginForm {
   username = new FormControl('');
