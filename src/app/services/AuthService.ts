@@ -8,6 +8,7 @@ import moment from 'moment';
   providedIn: 'root',
 })
 export class AuthService {
+  private keys = {token: 'id_token', expiry: 'expires_at'}
   private client = inject(HttpClient)
   private baseUrl = 'http://localhost:5079/api/v1/auth';
 
@@ -21,9 +22,14 @@ export class AuthService {
         // process the configuration.
         console.log(authResult);
 
-        const expiresAt = moment().add(authResult.ExpiresIn,'second');
-        localStorage.setItem('id_token', authResult.Token);
-        localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
+        const expiresAt = moment().add(authResult.ExpiresIn, 'second');
+        localStorage.setItem(this.keys.token, authResult.Token);
+        localStorage.setItem(this.keys.expiry, JSON.stringify(expiresAt.valueOf()));
       });
+  }
+
+  public Logout() {
+    localStorage.removeItem(this.keys.token);
+    localStorage.removeItem(this.keys.expiry);
   }
 }
