@@ -1,6 +1,6 @@
 import {Routes} from '@angular/router';
-import {LoginForm} from './login/LoginForm';
-import {RegisterForm} from './register/register';
+import {LoginForm} from './pages/login/LoginForm';
+import {RegisterForm} from './pages/register/register';
 
 export const routes: Routes = [
   {

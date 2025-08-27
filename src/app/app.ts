@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {LoginForm} from './login/LoginForm';
+import {LoginForm} from './pages/login/LoginForm';
 import {Navbar} from './navbar/navbar';
 
 @Component({
