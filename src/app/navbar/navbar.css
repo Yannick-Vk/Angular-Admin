@@ -2,4 +2,8 @@ li {
   margin: 1rem;
 }
 
+li:hover {
+  color: var(--secondary);
+}
+
 /*# sourceMappingURL=navbar.css.map */

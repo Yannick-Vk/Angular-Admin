@@ -7,9 +7,9 @@ form {
 
 form button {
   &:enabled:hover {
-    background: #5a1275;
+    background: var(--secondary);
     color: #fff;
-    border-color: #5a1275;
+    border-color: var(--secondary);
   }
 
   &[disabled] {
@@ -27,7 +27,7 @@ form button {
 }
 
 input {
-  width: 18rem;
+  width: 100%;
 }
 
 .inputGroup {

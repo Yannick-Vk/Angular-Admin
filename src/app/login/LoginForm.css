@@ -6,9 +6,9 @@ form {
 }
 
 form button:enabled:hover {
-  background: #5a1275;
+  background: var(--secondary);
   color: #fff;
-  border-color: #5a1275;
+  border-color: var(--secondary);
 }
 form button[disabled] {
   background: #787878;
@@ -24,7 +24,7 @@ form button[disabled] {
 }
 
 input {
-  width: 18rem;
+  width: 100%;
 }
 
 .inputGroup {
