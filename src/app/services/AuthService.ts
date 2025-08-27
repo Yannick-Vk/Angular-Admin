@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
-import {catchError} from 'rxjs';
+import {BehaviorSubject, catchError, tap} from 'rxjs';
 import {Jwt, LoginRequest, RegisterRequest} from '../models/Auth';
 import {DateTime} from 'luxon';
 import {Item} from './LocalItemService';
@@ -15,25 +15,23 @@ export class AuthService {
   private baseUrl = 'https://localhost:7134/api/v1/auth';
 
   public Login(user: LoginRequest) {
-    this.client.post<Jwt>(`${this.baseUrl}/login`, user)
-      .pipe(catchError((error: HttpResponse<any>) => {
-        console.error('Failed to login: ', error);
-        throw error
-      }))
-      .subscribe(authResult => {
-        this.HandleToken(authResult);
-      });
+    return this.client.post<Jwt>(`${this.baseUrl}/login`, user)
+      .pipe(
+        tap(authResult => this.HandleToken(authResult)),
+        catchError((error: HttpResponse<any>) => {
+          console.error('Failed to login: ', error);
+          throw error
+        }));
   }
 
   Register(user: RegisterRequest) {
-    this.client.post<Jwt>(`${this.baseUrl}/register`, user)
-      .pipe(catchError((error: HttpResponse<any>) => {
-        console.error('Failed to register: ', error);
-        throw error
-      }))
-      .subscribe(authResult => {
-        this.HandleToken(authResult);
-      });
+    return this.client.post<Jwt>(`${this.baseUrl}/register`, user)
+      .pipe(
+        tap(authResult => this.HandleToken(authResult)),
+        catchError((error: HttpResponse<any>) => {
+          console.error('Failed to register: ', error);
+          throw error
+        }));
   }
 
   private HandleToken(token: Jwt) {
