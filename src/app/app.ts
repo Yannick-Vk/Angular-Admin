@@ -10,5 +10,4 @@ import {Navbar} from './navbar/navbar';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('Angular-admin');
 }

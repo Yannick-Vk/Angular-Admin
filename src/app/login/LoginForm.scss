@@ -1,13 +1,11 @@
 ﻿form {
-  background: #3d4043;
   /* top | right | bottom | left */
   padding: 1rem 3rem 3rem 3rem;
   border-radius: var(--border-radius);
-  color: #c9c9c9;
+  background-color: var(--background-color);
 }
 
 form button {
-  color: #2c2c2c;
   &:enabled:hover {
     background: #5a1275;
     color: #fff;
