@@ -16,15 +16,26 @@ form button[disabled] {
   cursor: not-allowed;
 }
 
-form input {
-  background: #c9c9c9;
-  color: #2c2c2c;
-}
-
 .button-group {
   display: flex;
   flex-direction: row;
   gap: 3rem;
+}
+
+input {
+  width: 18rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-bottom: 1rem;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
 }
 
 /*# sourceMappingURL=LoginForm.css.map */

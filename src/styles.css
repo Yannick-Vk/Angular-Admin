@@ -37,6 +37,9 @@ h1, h2, h3, h4, h5, h6 {
 input, textarea {
   padding: 0.4rem;
   border-radius: var(--border-radius);
+  border: 1px solid #5c5c5c;
+  background-color: #f6f6f6;
+  box-sizing: border-box;
 }
 
 button {
