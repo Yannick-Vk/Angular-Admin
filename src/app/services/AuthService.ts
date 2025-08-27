@@ -10,7 +10,7 @@ import moment from 'moment';
 export class AuthService {
   private keys = {token: 'id_token', expiry: 'expires_at'}
   private client = inject(HttpClient)
-  private baseUrl = 'http://localhost:5079/api/v1/auth';
+  private baseUrl = 'https://localhost:7134/api/v1/auth';
 
   public Login(user: LoginRequest) {
     this.client.post<Jwt>(`${this.baseUrl}/login`, user)
