@@ -3,12 +3,14 @@ import {HttpClient, HttpResponse} from '@angular/common/http';
 import {catchError} from 'rxjs';
 import {Jwt, LoginRequest} from '../models/Auth';
 import moment from 'moment';
+import {Item} from './LocalItemService';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private keys = {token: 'id_token', expiry: 'expires_at'}
+  private token = new Item('id_token');
+  private expiration = new Item('expires_at');
   private client = inject(HttpClient)
   private baseUrl = 'https://localhost:7134/api/v1/auth';
 
@@ -23,19 +25,19 @@ export class AuthService {
         console.log(authResult);
 
         const expiresAt = moment().add(authResult.ExpiresIn, 'second');
-        localStorage.setItem(this.keys.token, authResult.Token);
-        localStorage.setItem(this.keys.expiry, JSON.stringify(expiresAt.valueOf()));
+        this.token.set(authResult.Token);
+        this.expiration.set(JSON.stringify(expiresAt.valueOf()));
       });
   }
 
   public Logout() {
-    localStorage.removeItem(this.keys.token);
-    localStorage.removeItem(this.keys.expiry);
+    this.token.remove();
+    this.expiration.remove();
   }
 
   // Check if the expiration is set in local storage and if it's still valid
   public IsLoggedIn(): boolean {
-    const expiration = this.GetToken();
+    const expiration = this.token.get();
     if (!expiration) {
       console.error('Expiration not set.');
       return false;
@@ -47,9 +49,5 @@ export class AuthService {
       console.error('Invalid Expiration was set');
     }
     return false;
-  }
-
-  public GetToken(): string | null {
-    return localStorage.getItem(this.keys.token);
   }
 }
