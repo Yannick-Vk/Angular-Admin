@@ -2,6 +2,7 @@
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../services/AuthService';
 import {LoginRequest} from '../models/Auth';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'login-form',
@@ -13,6 +14,7 @@ import {LoginRequest} from '../models/Auth';
 })
 export class LoginForm {
   private client = inject(AuthService);
+  private router = inject(Router);
 
   loginForm = new FormGroup({
     username: new FormControl('', Validators.required),
@@ -30,6 +32,6 @@ export class LoginForm {
   }
 
   redirect() {
-    console.log('Redirecting...');
+    this.router.navigate(['/Register']).then(r => console.log('Redirecting ...', r));
   }
 }
