@@ -20,6 +20,7 @@ form button[disabled] {
   display: flex;
   flex-direction: row;
   gap: 3rem;
+  justify-content: center;
 }
 
 input {
