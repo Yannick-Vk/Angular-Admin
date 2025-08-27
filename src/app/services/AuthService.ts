@@ -35,6 +35,10 @@ export class AuthService {
     this.expiration.remove();
   }
 
+  public GetToken() {
+    return this.token.get();
+  }
+
   // Check if the expiration is set in local storage and if it's still valid
   public IsLoggedIn(): boolean {
     const expiration = this.token.get();
