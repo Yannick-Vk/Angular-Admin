@@ -23,10 +23,10 @@ export class RegisterForm {
   })
 
   onSubmit() {
-    const form = this.registerForm.value;
     if (this.registerForm.invalid) {
       return;
     }
+    const form = this.registerForm.value;
     // Mark as not null since the form is validated
     const user: RegisterRequest = {UserName: form.username!, password: form.password!, email: form.email!,};
     this.client.Register(user);
