@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {catchError} from 'rxjs';
-import {Jwt, LoginRequest} from '../models/Auth';
+import {Jwt, LoginRequest, RegisterRequest} from '../models/Auth';
 import moment from 'moment';
 import {Item} from './LocalItemService';
 
@@ -18,6 +18,23 @@ export class AuthService {
     this.client.post<Jwt>(`${this.baseUrl}/login`, user)
       .pipe(catchError((error: HttpResponse<any>) => {
         console.error('Failed to login: ', error);
+        throw error
+      }))
+      .subscribe(authResult => {
+        // process the configuration.
+        console.log(authResult);
+
+        const expiresAt = moment().add(authResult.ExpiresIn, 'second');
+        this.token.set(authResult.Token);
+        this.expiration.set(JSON.stringify(expiresAt.valueOf()));
+      });
+  }
+
+
+  Register(user: RegisterRequest) {
+    this.client.post<Jwt>(`${this.baseUrl}/register`, user)
+      .pipe(catchError((error: HttpResponse<any>) => {
+        console.error('Failed to register: ', error);
         throw error
       }))
       .subscribe(authResult => {

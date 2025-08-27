@@ -1,8 +1,9 @@
 form {
   /* top | right | bottom | left */
-  padding: 1rem 3rem 3rem 3rem;
+  padding: 1rem 5rem 3rem 5rem;
   border-radius: var(--border-radius);
   background-color: var(--background-color);
+  width: 32rem;
 }
 
 form button:enabled:hover {
