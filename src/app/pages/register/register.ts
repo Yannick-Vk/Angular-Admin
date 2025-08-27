@@ -29,7 +29,9 @@ export class RegisterForm {
     const form = this.registerForm.value;
     // Mark as not null since the form is validated
     const user: RegisterRequest = {UserName: form.username!, password: form.password!, email: form.email!,};
-    this.client.Register(user);
+    this.client.Register(user).subscribe(() => {
+      this.router.navigate(['/']).then(r => console.log('Redirecting ...', r));
+    });
   }
 
   redirect() {

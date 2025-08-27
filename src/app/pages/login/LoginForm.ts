@@ -28,7 +28,9 @@ export class LoginForm {
     const form = this.loginForm.value;
     // Mark as not null since the form is validated
     const user: LoginRequest = {UserName: form.username!, password: form.password!}
-    this.client.Login(user);
+    this.client.Login(user).subscribe(() => {
+      this.router.navigate(['/']).then(r => console.log('Redirecting ...', r));
+    });
   }
 
   redirect() {
