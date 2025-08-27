@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-import {RouterLink, RouterLinkActive} from '@angular/router';
-import {routes} from '../app.routes';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -11,6 +10,4 @@ import {routes} from '../app.routes';
   styleUrl: './navbar.scss'
 })
 export class Navbar {
-
-  protected readonly routes = routes;
 }
