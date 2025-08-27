@@ -72,7 +72,7 @@ export class AuthService {
       } else {
         console.info(diff.toFormat("'Expires in' mm 'minutes'"));
       }
-      return isExpired;
+      return !isExpired;
     } catch (e) {
       console.info(this.token.get());
       console.error('Invalid Expiration was set', e);
