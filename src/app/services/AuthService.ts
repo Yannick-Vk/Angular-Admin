@@ -21,15 +21,9 @@ export class AuthService {
         throw error
       }))
       .subscribe(authResult => {
-        // process the configuration.
-        console.log(authResult);
-
-        const expiresAt = moment().add(authResult.ExpiresIn, 'second');
-        this.token.set(authResult.Token);
-        this.expiration.set(JSON.stringify(expiresAt.valueOf()));
+        this.HandleToken(authResult);
       });
   }
-
 
   Register(user: RegisterRequest) {
     this.client.post<Jwt>(`${this.baseUrl}/register`, user)
@@ -38,13 +32,17 @@ export class AuthService {
         throw error
       }))
       .subscribe(authResult => {
-        // process the configuration.
-        console.log(authResult);
-
-        const expiresAt = moment().add(authResult.ExpiresIn, 'second');
-        this.token.set(authResult.Token);
-        this.expiration.set(JSON.stringify(expiresAt.valueOf()));
+        this.HandleToken(authResult);
       });
+  }
+
+  private HandleToken(token: Jwt) {
+    // process the configuration.
+    console.log(token);
+
+    const expiresAt = moment().add(token.ExpiresIn, 'second');
+    this.token.set(token.Token);
+    this.expiration.set(JSON.stringify(expiresAt.valueOf()));
   }
 
   public Logout() {
