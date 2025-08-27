@@ -2,12 +2,13 @@ import {Routes} from '@angular/router';
 import {LoginForm} from './pages/login/LoginForm';
 import {RegisterForm} from './pages/register/register';
 import {Users} from './pages/users/users';
+import {HomeComponent} from './pages/home/home';
 
 export const routes: Routes = [
   {
     'path': '',
     'pathMatch': 'full',
-    'component': LoginForm
+    'component': HomeComponent,
   }, {
     'path': 'Login',
     'component': LoginForm
