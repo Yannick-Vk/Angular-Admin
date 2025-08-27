@@ -1,0 +1,11 @@
+li {
+  color: #c9c9c9;
+  text-underline: #c9c9c9;
+
+  margin: 1.2rem 3rem;
+
+  &:hover {
+    text-decoration: underline;
+    color: var(--primary);
+  }
+}
