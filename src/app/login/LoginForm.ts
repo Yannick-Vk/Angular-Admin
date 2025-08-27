@@ -21,8 +21,15 @@ export class LoginForm {
 
   onSubmit() {
     const form = this.loginForm.value;
+    if (this.loginForm.invalid) {
+      return;
+    }
     // Mark as not null since the form is validated
     const user: LoginRequest = {UserName: form.username!, password: form.password!}
     this.client.Login(user);
+  }
+
+  redirect() {
+    console.log('Redirecting...');
   }
 }
