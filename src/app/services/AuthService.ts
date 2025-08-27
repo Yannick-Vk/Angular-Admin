@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {catchError} from 'rxjs';
 import {Jwt, LoginRequest, RegisterRequest} from '../models/Auth';
-import moment from 'moment';
+import {DateTime} from 'luxon';
 import {Item} from './LocalItemService';
 
 @Injectable({
@@ -38,11 +38,13 @@ export class AuthService {
 
   private HandleToken(token: Jwt) {
     // process the configuration.
-    console.log(token);
+    const expiresAt = DateTime.fromISO(String(token.Expiration));
+    console.log('Token expires at:',
+      expiresAt.toLocaleString(DateTime.DATETIME_FULL),
+      expiresAt.diff(DateTime.now()).toFormat("'in' mm 'minutes'"));
 
-    const expiresAt = moment().add(token.ExpiresIn, 'second');
     this.token.set(token.Token);
-    this.expiration.set(JSON.stringify(expiresAt.valueOf()));
+    this.expiration.set(JSON.stringify(DateTime.fromISO(String(token.Expiration))));
   }
 
   public Logout() {
@@ -56,16 +58,24 @@ export class AuthService {
 
   // Check if the expiration is set in local storage and if it's still valid
   public IsLoggedIn(): boolean {
-    const expiration = this.token.get();
+    const expiration = this.expiration.get();
     if (!expiration) {
       console.error('Expiration not set.');
       return false;
     }
     try {
-      const expiresAt = JSON.parse(expiration);
-      return moment().isBefore(expiresAt.valueOf());
+      const expiresAt = DateTime.fromISO(JSON.parse(expiration));
+      const diff = expiresAt.diff(DateTime.now());
+      const isExpired = diff.milliseconds <= 0;
+      if (isExpired) {
+        console.warn(diff.toFormat("'Token expired' HH 'hours and' mm 'minutes ago'"));
+      } else {
+        console.info(diff.toFormat("'Expires in' mm 'minutes'"));
+      }
+      return isExpired;
     } catch (e) {
-      console.error('Invalid Expiration was set');
+      console.info(this.token.get());
+      console.error('Invalid Expiration was set', e);
     }
     return false;
   }

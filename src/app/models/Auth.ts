@@ -17,5 +17,5 @@ export interface RegisterRequest extends UserWithPassword {
 
 export interface Jwt {
   Token: string;
-  ExpiresIn: number;
+  Expiration: number;
 }
