@@ -1,7 +1,6 @@
 import {Component, inject, signal, WritableSignal} from '@angular/core';
 import {UserService} from '../../services/user-service';
 import {User} from '../../models/Users';
-import {Observable} from 'rxjs';
 import {CommonModule} from "@angular/common";
 
 @Component({
