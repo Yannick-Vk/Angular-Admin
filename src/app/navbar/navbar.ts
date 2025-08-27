@@ -11,5 +11,16 @@ import {AuthService} from '../services/AuthService';
   styleUrl: './navbar.scss'
 })
 export class Navbar {
-   loggedIn = signal(inject(AuthService).IsLoggedIn());
+  private authService = inject(AuthService);
+  loggedIn = signal(this.authService.IsLoggedIn());
+
+  constructor() {
+    this.authService.isLoggedIn$.subscribe(loggedIn => {
+      this.loggedIn.set(loggedIn);
+    });
+  }
+
+  logout() {
+    this.authService.Logout();
+  }
 }
