@@ -13,6 +13,8 @@ export class AuthService {
   private expiration = new Item('expires_at');
   private client = inject(HttpClient)
   private baseUrl = 'https://localhost:7134/api/v1/auth';
+  private loggedIn = new BehaviorSubject<boolean>(this.IsLoggedIn());
+  public isLoggedIn$ = this.loggedIn.asObservable();
 
   public Login(user: LoginRequest) {
     return this.client.post<Jwt>(`${this.baseUrl}/login`, user)
@@ -43,11 +45,13 @@ export class AuthService {
 
     this.token.set(token.Token);
     this.expiration.set(JSON.stringify(DateTime.fromISO(String(token.Expiration))));
+    this.loggedIn.next(true);
   }
 
   public Logout() {
     this.token.remove();
     this.expiration.remove();
+    this.loggedIn.next(false);
   }
 
   public GetToken() {
