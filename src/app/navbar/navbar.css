@@ -1,8 +1,8 @@
-li {
+a {
   margin: 1rem;
 }
 
-li:hover {
+a:hover {
   color: var(--secondary);
 }
 

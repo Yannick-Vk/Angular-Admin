@@ -1,12 +1,16 @@
-<nav>
-  <ul class="flex flex-row bg-slate-500 text-slate-100 text-2xl py-2 pl-5">
-    <li><a routerLink="/">Home</a></li>
-    <li><a routerLink="/Users">Users</a></li>
-    @if (!loggedIn()) {
-      <li><a routerLink="/Login">Login</a></li>
-      <li><a routerLink="/Register">Register</a></li>
-    } @else {
-      <li><a (click)="logout()">Logout</a></li>
-    }
+<nav class="bg-slate-500 text-slate-100 text-2xl py-2 pl-5">
+  <ul class="flex flex-row justify-between">
+    <div class="flex flex-row">
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/Users">Users</a></li>
+    </div>
+    <div>
+      @if (!loggedIn()) {
+        <a routerLink="/Login">Login</a>
+        <a routerLink="/Register">Register</a>
+      } @else {
+        <a (click)="logout()">Logout</a>
+      }
+    </div>
   </ul>
 </nav>
