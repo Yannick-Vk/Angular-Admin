@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {RouterLink} from '@angular/router';
+import {AuthService} from '../services/AuthService';
 
 @Component({
   selector: 'app-navbar',
@@ -10,4 +11,5 @@ import {RouterLink} from '@angular/router';
   styleUrl: './navbar.scss'
 })
 export class Navbar {
+   loggedIn = signal(inject(AuthService).IsLoggedIn());
 }

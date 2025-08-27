@@ -1,7 +1,10 @@
 <nav>
   <ul class="flex flex-row bg-slate-500 text-slate-100 text-2xl py-2 pl-5">
-      <li><a routerLink="/">Home</a></li>
+    <li><a routerLink="/">Home</a></li>
+    @if (!loggedIn()) {
       <li><a routerLink="/Login">Login</a></li>
       <li><a routerLink="/Register">Register</a></li>
+    }
+    <li><a routerLink="/Users">Users</a></li>
   </ul>
 </nav>
