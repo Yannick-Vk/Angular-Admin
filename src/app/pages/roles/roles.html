@@ -1,4 +1,7 @@
-<add-role class="mb-3" (addRole)="addRole($event)" />
+<div class="flex flex-row justify-between">
+  <add-role class="mb-3" (addRole)="addRole($event)"/>
+  <app-add-role-to-user/>
+</div>
 <button class="my-5" (click)="getRoles()">Get roles</button>
 @if (roles().length > 0) {
   <app-table [headers]="['Id', 'Name', 'Delete']">

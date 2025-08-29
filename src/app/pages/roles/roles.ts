@@ -4,12 +4,14 @@ import {Router} from '@angular/router';
 import {RoleService} from '../../services/role-service';
 import {Role, RoleDto} from '../../models/Role';
 import {Table} from '../../components/table/table';
+import {AddRoleToUser} from './add-role-to-user/add-role-to-user';
 
 @Component({
   selector: 'roles',
   imports: [
     AddRole,
-    Table
+    Table,
+    AddRoleToUser
   ],
   templateUrl: './roles.html',
   styleUrl: './roles.css'
