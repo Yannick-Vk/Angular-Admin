@@ -1,15 +1,9 @@
-<div class="center-container">
-  <form [formGroup]="addRoleForm" (ngSubmit)="onSubmit()" class="">
-    <h2 class="text-fuchsia-500 text-3xl mb-3">Add role</h2>
-    <div>
-      <div class="inputGroup">
-        <label for="roleName">Name</label>
-        <input type="text" id="roleName" formControlName="roleName">
-      </div>
-    </div>
-
+<div class="">
+  <app-form title="Add role" (onValidSubmit)="onSubmit($event)" [data]='[
+    { label: "Role name", key: "RoleName", type: "text", required: true },
+  ]'>
     <div class="button-group">
-      <button [disabled]="!addRoleForm.valid" type="submit">Add role</button>
+      <button [disabled]="!isValid()" type="submit">Add role</button>
     </div>
-  </form>
+  </app-form>
 </div>

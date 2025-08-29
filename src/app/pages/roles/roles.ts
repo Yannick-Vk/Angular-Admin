@@ -19,6 +19,10 @@ export class Roles {
   router = inject(Router);
   roles: WritableSignal<Array<Role>> = signal([]);
 
+  constructor() {
+    this.getRoles();
+  }
+
   getRoles() {
     this.roleService.getRoles().subscribe({
       next: (roles) => {

@@ -1,26 +1,25 @@
-import {Component, output} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Component, output, ViewChild} from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
+import {Form} from '../../../components/forms/form/form';
 
 @Component({
   selector: 'add-role',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Form
   ],
   templateUrl: './add-role.html',
   styleUrl: './add-role.css'
 })
 export class AddRole {
-  addRoleForm = new FormGroup({
-    roleName: new FormControl('', Validators.required),
-  })
-
+  @ViewChild(Form) formComponent!: Form;
   addRole = output<string>()
 
-  onSubmit() {
-    if (this.addRoleForm.invalid) {
-      return;
-    }
-    const form = this.addRoleForm.value;
-    this.addRole.emit(form.roleName!)
+  onSubmit(form: {RoleName: string}) {
+    this.addRole.emit(form.RoleName)
+  }
+
+  isValid() {
+    return this.formComponent?.isValid();
   }
 }
