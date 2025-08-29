@@ -1,8 +1,8 @@
-import {Component, inject, signal, WritableSignal} from '@angular/core';
+import {Component, computed, inject, signal, WritableSignal} from '@angular/core';
 import {AddRole} from './add-role/add-role';
 import {Router} from '@angular/router';
 import {RoleService} from '../../services/role-service';
-import {Role, RoleDto} from '../../models/Role';
+import {Role, RoleDto, AddRoleToUserDto} from '../../models/Role';
 import {Table} from '../../components/table/table';
 import {AddRoleToUser} from './add-role-to-user/add-role-to-user';
 
@@ -20,6 +20,7 @@ export class Roles {
   roleService = inject(RoleService);
   router = inject(Router);
   roles: WritableSignal<Array<Role>> = signal([]);
+  roleNames = computed(() => this.roles().map(role => role.name));
 
   constructor() {
     this.getRoles();
@@ -56,5 +57,17 @@ export class Roles {
         console.error('Error deleting role:', err);
       }
     })
+  }
+
+  addRoleToUser(data: {RoleName: string, Username: string}) {
+    const dto = new AddRoleToUserDto(data.RoleName, data.Username);
+    this.roleService.AddRoleToUser(dto).subscribe({
+      next: () => {
+        // maybe show a success message
+      },
+      error: (err) => {
+        console.error('Error adding role to user:', err);
+      }
+    });
   }
 }

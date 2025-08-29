@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {Role, RoleDto} from '../models/Role';
+import {Role, RoleDto, AddRoleToUserDto} from '../models/Role';
 import {AuthService} from './AuthService';
 import {HttpResponse} from '@angular/common/http';
 import {catchError, of, tap} from 'rxjs';
@@ -55,6 +55,19 @@ export class RoleService extends HttpService {
         }),
         catchError((error: HttpResponse<any>) => {
           console.error(`Failed to delete Role(${role}): `, error);
+          throw error
+        }));
+  }
+
+  public AddRoleToUser(dto: AddRoleToUserDto) {
+    console.log(`Adding role ${dto.roleName} to user ${dto.username} ...`);
+    return this.client.post(`${this.baseUrl()}/add-to-user`, dto)
+      .pipe(
+        tap(() => {
+          console.log(`Role ${dto.roleName} added to user ${dto.username}`);
+        }),
+        catchError((error: HttpResponse<any>) => {
+          console.error(`Failed to add role to user: `, error);
           throw error
         }));
   }

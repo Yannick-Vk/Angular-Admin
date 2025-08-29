@@ -1,5 +1,5 @@
-import {Component, output, ViewChild} from '@angular/core';
-import {Form} from '../../../components/forms/form/form';
+import {Component, input, output, ViewChild} from '@angular/core';
+import {Form} from "../../../components/forms/form/form";
 
 @Component({
   selector: 'app-add-role-to-user',
@@ -11,10 +11,11 @@ import {Form} from '../../../components/forms/form/form';
 })
 export class AddRoleToUser {
   @ViewChild(Form) formComponent!: Form;
-  addRole = output<string>()
+  addRole = output<{RoleName: string, Username: string}>()
+  options = input<string[]>()
 
-  onSubmit(form: {RoleName: string}) {
-    this.addRole.emit(form.RoleName)
+  onSubmit(form: {RoleName: string, Username: string}) {
+    this.addRole.emit(form)
   }
 
   isValid() {
