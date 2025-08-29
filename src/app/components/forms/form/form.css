@@ -1,0 +1,26 @@
+form {
+  /* top | right | bottom | left */
+  padding: 1rem 5rem 3rem 5rem;
+  border-radius: var(--border-radius);
+  background-color: var(--background-color);
+  width: 32rem;
+}
+
+input {
+  width: 100%;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-bottom: 1rem;
+}
+
+::ng-deep .button-group {
+  display: flex;
+  gap: 1rem;
+  flex-direction: row;
+}
+
+/*# sourceMappingURL=form.css.map */
