@@ -1,7 +1,7 @@
-import {Component, inject} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Component, inject, ViewChild} from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
 import {AuthService} from '../../services/AuthService';
-import {LoginRequest, RegisterRequest} from '../../models/Auth';
+import {RegisterRequest} from '../../models/Auth';
 import {Router} from '@angular/router';
 import {Form} from '../../components/forms/form/form';
 
@@ -15,6 +15,7 @@ import {Form} from '../../components/forms/form/form';
   styleUrl: './register.scss',
 })
 export class RegisterForm {
+  @ViewChild(Form) formComponent!: Form;
   private client = inject(AuthService);
   private router = inject(Router);
 
@@ -28,5 +29,9 @@ export class RegisterForm {
 
   redirect() {
     this.router.navigate(['/Login']).then(r => console.log('Redirecting ...', r));
+  }
+
+  isValid(): boolean {
+    return this.formComponent?.isValid();
   }
 }

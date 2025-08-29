@@ -1,4 +1,4 @@
-import {Component, input, OnInit, output, signal} from '@angular/core';
+import {Component, input, OnInit, output} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 
 @Component({
@@ -23,6 +23,9 @@ export class Form implements OnInit {
     this.data()!.forEach((field: Field) => {
       const validators = field.required ? [Validators.required] : [];
       controls[field.key] = ["", validators];
+      if (field.type === "email") {
+        validators.push(Validators.email)
+      }
     });
     this.templateForm = this.formBuilder.group(controls);
   }
@@ -44,6 +47,6 @@ export interface Field {
   label: string;
   key: string;
   type: string;
-  required: boolean;
+  required?: boolean;
 }
 
