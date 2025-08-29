@@ -3,12 +3,12 @@ import {UserService} from '../../services/user-service';
 import {User} from '../../models/Users';
 import {CommonModule} from "@angular/common";
 import {Router} from '@angular/router';
+import {Table} from '../../components/table/table';
 
 @Component({
   selector: 'app-users',
-  imports: [CommonModule],
+  imports: [CommonModule, Table],
   templateUrl: './users.html',
-  styleUrl: './users.scss'
 })
 export class Users {
   userService = inject(UserService);

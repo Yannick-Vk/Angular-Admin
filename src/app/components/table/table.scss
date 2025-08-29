@@ -1,0 +1,15 @@
+::ng-deep {
+  &table {
+    width: 100%;
+  }
+
+  &thead td {
+    font-weight: bold;
+  }
+
+  &tbody tr:nth-child(even) {
+    background-color: #ececec;
+  }
+}
+
+

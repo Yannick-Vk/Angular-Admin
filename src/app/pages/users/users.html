@@ -1,24 +1,15 @@
 <button (click)="getUsers()">Get all users</button>
 
-<table class="mt-3">
-  <thead>
-  <tr class="text-left border-b-2">
-    <th>Id</th>
-    <th>Name</th>
-    <th>Email</th>
-  </tr>
-  </thead>
-  <tbody>
-    @if (users().length > 0) {
-      @for (user of users(); track user.id) {
-        <tr class="">
-          <td class="p-3">{{ user.id }}</td>
-          <td>{{ user.username }}</td>
-          <td>{{ user.email }}</td>
-        </tr>
-      }
-    } @else {
-      <p>No users...</p>
+<app-table [headers]="['Id', 'Username', 'Email']">
+  @if (users().length > 0) {
+    @for (user of users(); track user.id) {
+      <tr class="">
+        <td class="p-3">{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+      </tr>
     }
-  </tbody>
-</table>
+  } @else {
+    <p>No users...</p>
+  }
+</app-table>

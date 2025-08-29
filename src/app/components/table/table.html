@@ -1,0 +1,12 @@
+<table class="mt-3">
+  <thead>
+  <tr class="text-left border-b-2">
+    @for (item of headers(); track item) {
+      <td>{{item}}</td>
+    }
+  </tr>
+  </thead>
+  <tbody>
+    <ng-content />
+  </tbody>
+</table>

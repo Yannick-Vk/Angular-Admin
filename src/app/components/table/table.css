@@ -1,0 +1,11 @@
+::ng-deeptable {
+  width: 100%;
+}
+::ng-deepthead td {
+  font-weight: bold;
+}
+::ng-deeptbody tr:nth-child(even) {
+  background-color: #ececec;
+}
+
+/*# sourceMappingURL=table.css.map */
