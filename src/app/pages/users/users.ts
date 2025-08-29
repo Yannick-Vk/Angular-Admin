@@ -20,9 +20,6 @@ export class Users {
   }
 
   getUsers() {
-    if(!this.userService.authService.IsLoggedIn()) {
-      //this.router.navigate(['/Login']).then(r => console.log(`User was not loggedIn`));
-    }
     this.userService.getUsers().subscribe({
       next: (users) => {
         this.users.set(users);
