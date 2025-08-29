@@ -2,7 +2,7 @@
 <button (click)="getRoles()">Get roles</button>
 <add-role class="mb-3" (addRole)="addRole($event)"></add-role>
 @if (roles().length > 0) {
-  <app-table [headers]="['Id', 'Name']">
+  <app-table [headers]="['Id', 'Name', 'Delete']">
     @for (role of roles(); track role.id) {
       <tr class="">
         <td class="p-3">{{ role.id }}</td>
