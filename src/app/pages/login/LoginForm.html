@@ -4,7 +4,7 @@
     { label: "Password", key: "Password", type: "password", required: true },
   ]'>
     <div class="button-group">
-      <button [disabled]="" type="submit">Login</button>
+      <button [disabled]="!isValid()" type="submit">Login</button>
       <button (click)="redirect()">Register</button>
     </div>
   </app-form>

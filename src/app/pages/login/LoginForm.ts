@@ -29,4 +29,8 @@ export class LoginForm {
   redirect() {
     this.router.navigate(['/Register']).then(r => console.log('Redirecting ...', r));
   }
+
+  isValid() {
+
+  }
 }

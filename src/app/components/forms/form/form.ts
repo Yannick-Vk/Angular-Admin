@@ -1,4 +1,4 @@
-import {Component, input, OnInit, output} from '@angular/core';
+import {Component, input, OnInit, output, signal} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 
 @Component({
@@ -22,7 +22,7 @@ export class Form implements OnInit {
     const controls: any = {};
     this.data()!.forEach((field: Field) => {
       const validators = field.required ? [Validators.required] : [];
-      controls[field.label] = ["", validators];
+      controls[field.key] = ["", validators];
     });
     this.templateForm = this.formBuilder.group(controls);
   }
@@ -34,6 +34,10 @@ export class Form implements OnInit {
 
     this.onValidSubmit.emit(this.templateForm.value);
   }
+
+  public isValid(): boolean {
+    return this.templateForm.valid;
+  }
 }
 
 export interface Field {
@@ -42,3 +46,4 @@ export interface Field {
   type: string;
   required: boolean;
 }
+
