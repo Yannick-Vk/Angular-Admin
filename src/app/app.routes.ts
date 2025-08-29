@@ -3,6 +3,7 @@ import {LoginForm} from './pages/login/LoginForm';
 import {RegisterForm} from './pages/register/register';
 import {Users} from './pages/users/users';
 import {HomeComponent} from './pages/home/home';
+import {authGuard} from './guards/auth-guard';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,7 @@ export const routes: Routes = [
     'component': RegisterForm
   }, {
     'path': 'Users',
-    'component': Users
+    'component': Users,
+    'canActivate': [authGuard],
   },
 ];
