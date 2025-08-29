@@ -63,7 +63,7 @@ export class Roles {
     const dto = new AddRoleToUserDto(data.RoleName, data.Username);
     this.roleService.AddRoleToUser(dto).subscribe({
       next: () => {
-        // maybe show a success message
+        console.log(`Added role ${data.RoleName} to ${data.Username}`);
       },
       error: (err) => {
         console.error('Error adding role to user:', err);
