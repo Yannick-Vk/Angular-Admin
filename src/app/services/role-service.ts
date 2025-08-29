@@ -1,9 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {Role, RoleDto} from '../models/Role';
 import {AuthService} from './AuthService';
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import {HttpResponse} from '@angular/common/http';
 import {catchError, of, tap} from 'rxjs';
-import {api_base_url} from './Api';
 import {HttpService} from './http-service';
 
 @Injectable({
@@ -36,7 +35,7 @@ export class RoleService extends HttpService {
     console.log(`Adding role ${role} ...`);
     return this.client.post(`${this.baseUrl()}`, role)
       .pipe(
-        tap(result => {
+        tap(() => {
           console.log(`Role ${role.roleName} added`);
         }),
         catchError((error: HttpResponse<any>) => {
@@ -51,7 +50,7 @@ export class RoleService extends HttpService {
       body: role
     })
       .pipe(
-        tap(result => {
+        tap(() => {
           console.log(`Role ${role.roleName} was deleted`);
         }),
         catchError((error: HttpResponse<any>) => {

@@ -1,5 +1,5 @@
-import {inject, Injectable} from '@angular/core';
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpResponse} from '@angular/common/http';
 import {BehaviorSubject, catchError, tap} from 'rxjs';
 import {Jwt, LoginRequest, RegisterRequest} from '../models/Auth';
 import {DateTime} from 'luxon';

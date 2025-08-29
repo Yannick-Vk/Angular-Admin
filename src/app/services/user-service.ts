@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {AuthService} from './AuthService';
 import {User} from '../models/Users';
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import {HttpResponse} from '@angular/common/http';
 import {catchError, of, tap} from 'rxjs';
 import {HttpService} from './http-service';
 
