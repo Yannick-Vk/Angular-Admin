@@ -7,6 +7,7 @@
       <tr class="">
         <td class="p-3">{{ role.id }}</td>
         <td>{{ role.name }}</td>
+        <td><button (click)="deleteRole(role.name)"> Delete Role </button></td>
       </tr>
     }
   </app-table>

@@ -40,4 +40,15 @@ export class Roles {
       }
     });
   }
+
+  deleteRole(roleName: string) {
+    this.roleService.DeleteRole(new RoleDto(roleName)).subscribe({
+      next: () => {
+        this.getRoles();
+      },
+      error: (err) => {
+        console.error('Error deleting role:', err);
+      }
+    })
+  }
 }

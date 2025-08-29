@@ -44,4 +44,19 @@ export class RoleService extends HttpService {
           throw error
         }));
   }
+
+  public DeleteRole(role: RoleDto) {
+    console.log(`Deleting role ${role.roleName} ...`);
+    return this.client.delete(`${this.baseUrl()}`, {
+      body: role
+    })
+      .pipe(
+        tap(result => {
+          console.log(`Role ${role.roleName} was deleted`);
+        }),
+        catchError((error: HttpResponse<any>) => {
+          console.error(`Failed to delete Role(${role}): `, error);
+          throw error
+        }));
+  }
 }
