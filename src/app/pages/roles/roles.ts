@@ -3,11 +3,13 @@ import {AddRole} from './add-role/add-role';
 import {Router} from '@angular/router';
 import {RoleService} from '../../services/role-service';
 import {Role} from '../../models/Role';
+import {Table} from '../../components/table/table';
 
 @Component({
   selector: 'roles',
   imports: [
-    AddRole
+    AddRole,
+    Table
   ],
   templateUrl: './roles.html',
   styleUrl: './roles.css'

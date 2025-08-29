@@ -1,3 +1,16 @@
 <h2>Roles</h2>
 <button (click)="getRoles()">Get roles</button>
 <add-role></add-role>
+@if (roles().length > 0) {
+  <app-table [headers]="['Id', 'Name']">
+    @for (role of roles(); track role.id) {
+      <tr class="">
+        <td class="p-3">{{ role.id }}</td>
+        <td>{{ role.name }}</td>
+      </tr>
+    }
+  </app-table>
+} @else {
+  <p class="flex justify-center text-xl font-bold mt-5 text-red-800">No Roles loaded</p>
+}
+
