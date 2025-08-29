@@ -1,6 +1,6 @@
 <h2>Roles</h2>
 <button (click)="getRoles()">Get roles</button>
-<add-role></add-role>
+<add-role class="mb-3" (addRole)="addRole($event)"></add-role>
 @if (roles().length > 0) {
   <app-table [headers]="['Id', 'Name']">
     @for (role of roles(); track role.id) {

@@ -1,6 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, output} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {LoginRequest} from '../../../models/Auth';
 
 @Component({
   selector: 'add-role',
@@ -15,10 +14,13 @@ export class AddRole {
     roleName: new FormControl('', Validators.required),
   })
 
+  addRole = output<string>()
+
   onSubmit() {
     if (this.addRoleForm.invalid) {
       return;
     }
     const form = this.addRoleForm.value;
+    this.addRole.emit(form.roleName!)
   }
 }

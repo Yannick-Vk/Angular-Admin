@@ -2,7 +2,7 @@ import {Component, inject, signal, WritableSignal} from '@angular/core';
 import {AddRole} from './add-role/add-role';
 import {Router} from '@angular/router';
 import {RoleService} from '../../services/role-service';
-import {Role} from '../../models/Role';
+import {Role, RoleDto} from '../../models/Role';
 import {Table} from '../../components/table/table';
 
 @Component({
@@ -26,6 +26,17 @@ export class Roles {
       },
       error: (err) => {
         console.error('Error getting roles:', err);
+      }
+    });
+  }
+
+  addRole(roleName: string) {
+    this.roleService.AddRole(new RoleDto(roleName)).subscribe({
+      next: () => {
+        this.getRoles();
+      },
+      error: (err) => {
+        console.error('Error adding role:', err);
       }
     });
   }
