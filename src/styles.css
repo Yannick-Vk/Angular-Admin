@@ -49,3 +49,14 @@ button {
   border-radius: var(--border-radius);
   border: 3px solid var(--primary);
 }
+
+button:hover {
+  background-color: var(--secondary);
+  border-color: var(--secondary);
+}
+
+button:disabled {
+  background: #787878;
+  border-color: #787878;
+  cursor: not-allowed;
+}

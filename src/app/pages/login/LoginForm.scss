@@ -6,20 +6,6 @@ form {
   width: 32rem;
 }
 
-form button {
-  &:enabled:hover {
-    background: var(--secondary);
-    color: #fff;
-    border-color: var(--secondary);
-  }
-
-  &[disabled] {
-    background: #787878;
-    border-color: #787878;
-    cursor: not-allowed;
-  }
-}
-
 .button-group {
   display: flex;
   flex-direction: row;
