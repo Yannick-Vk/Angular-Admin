@@ -4,6 +4,7 @@ import {RegisterForm} from './pages/register/register';
 import {Users} from './pages/users/users';
 import {HomeComponent} from './pages/home/home';
 import {authGuard} from './guards/auth-guard';
+import {Roles} from './pages/roles/roles';
 
 export const routes: Routes = [
   {
@@ -12,13 +13,16 @@ export const routes: Routes = [
     'component': HomeComponent,
   }, {
     'path': 'Login',
-    'component': LoginForm
+    'component': LoginForm,
   }, {
     'path': 'Register',
-    'component': RegisterForm
+    'component': RegisterForm,
   }, {
     'path': 'Users',
     'component': Users,
     'canActivate': [authGuard],
-  },
+  }, {
+    'path': 'Roles',
+    'component': Roles,
+  }
 ];

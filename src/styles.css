@@ -60,3 +60,8 @@ button:disabled {
   border-color: #787878;
   cursor: not-allowed;
 }
+
+.center-container {
+  display: flex;
+  justify-content: center;
+}
