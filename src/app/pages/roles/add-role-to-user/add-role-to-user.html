@@ -1,6 +1,6 @@
 <div class="">
   <app-form title="Add user to role" (onValidSubmit)="onSubmit($event)" [data]='[
-    { label: "Role name", key: "RoleName", type: "text", required: true },
+    { label: "Role name", key: "RoleName", type: "select", required: true, options: options },
     { label: "Username", key: "Username", type: "text", required: true },
   ]'>
     <div class="button-group">

@@ -48,5 +48,6 @@ export interface Field {
   key: string;
   type: string;
   required?: boolean;
+  options?: string[];
 }
 

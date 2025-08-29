@@ -1,11 +1,19 @@
 <form [formGroup]="templateForm" (ngSubmit)="onSubmit()" class="">
-  <h2 class="text-fuchsia-500 text-3xl mb-3">{{title()}}</h2>
+  <h2 class="text-fuchsia-500 text-3xl mb-3">{{ title() }}</h2>
 
-  @for(field of data(); track $index) {
+  @for (field of data(); track $index) {
     <div class="my-5">
       <label>
         {{ field.label }}:
-        <input [formControlName]="field.key" [type]="field.type" />
+        @if (field.type === "select") {
+          <select>
+            @for (option of field.options; track $index) {
+              <option>{{option}}</option>
+            }
+          </select>
+        } @else {
+          <input [formControlName]="field.key" [type]="field.type"/>
+        }
       </label>
     </div>
   }
