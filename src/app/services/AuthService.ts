@@ -4,20 +4,21 @@ import {BehaviorSubject, catchError, tap} from 'rxjs';
 import {Jwt, LoginRequest, RegisterRequest} from '../models/Auth';
 import {DateTime} from 'luxon';
 import {Item} from './LocalItemService';
+import {HttpService} from './http-service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthService extends HttpService {
   private token = new Item('id_token');
   private expiration = new Item('expires_at');
-  private client = inject(HttpClient)
-  private baseUrl = 'https://localhost:7134/api/v1/auth';
   private loggedIn = new BehaviorSubject<boolean>(this.IsLoggedIn());
   public isLoggedIn$ = this.loggedIn.asObservable();
 
+  override path = 'auth'
+
   public Login(user: LoginRequest) {
-    return this.client.post<Jwt>(`${this.baseUrl}/login`, user)
+    return this.client.post<Jwt>(`${this.baseUrl()}/login`, user)
       .pipe(
         tap(authResult => this.HandleToken(authResult)),
         catchError((error: HttpResponse<any>) => {
@@ -27,7 +28,7 @@ export class AuthService {
   }
 
   Register(user: RegisterRequest) {
-    return this.client.post<Jwt>(`${this.baseUrl}/register`, user)
+    return this.client.post<Jwt>(`${this.baseUrl()}/register`, user)
       .pipe(
         tap(authResult => this.HandleToken(authResult)),
         catchError((error: HttpResponse<any>) => {

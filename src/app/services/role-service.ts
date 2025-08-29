@@ -4,21 +4,21 @@ import {AuthService} from './AuthService';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {catchError, of, tap} from 'rxjs';
 import {api_base_url} from './Api';
+import {HttpService} from './http-service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RoleService {
+export class RoleService extends HttpService {
   authService: AuthService = inject(AuthService);
-  private client = inject(HttpClient)
-  private baseUrl = `${api_base_url}/Roles`;
+  override path = 'roles'
 
   public getRoles() {
     if (!this.authService.IsLoggedIn()) {
       console.error('Users not logged in');
       return of([]);
     }
-    return this.client.get<Array<Role>>(`${this.baseUrl}`)
+    return this.client.get<Array<Role>>(`${this.baseUrl()}`)
       .pipe(
         tap(data => {
           if (data && data.length > 0) {
@@ -34,10 +34,10 @@ export class RoleService {
 
   public AddRole(role: RoleDto) {
     console.log(`Adding role ${role} ...`);
-    return this.client.post(`${this.baseUrl}`, role)
+    return this.client.post(`${this.baseUrl()}`, role)
       .pipe(
         tap(result => {
-          console.table(result);
+          console.log(`Role ${role.roleName} added`);
         }),
         catchError((error: HttpResponse<any>) => {
           console.error(`Failed to add Role(${role}): `, error);

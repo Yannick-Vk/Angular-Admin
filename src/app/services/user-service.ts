@@ -3,14 +3,14 @@ import {AuthService} from './AuthService';
 import {User} from '../models/Users';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {catchError, of, tap} from 'rxjs';
+import {HttpService} from './http-service';
 
 @Injectable({
   'providedIn': 'root'
 })
-export class UserService {
+export class UserService extends HttpService {
   authService: AuthService = inject(AuthService);
-  private client = inject(HttpClient)
-  private baseUrl = 'https://localhost:7134/api/v1/Users';
+  override path = 'users'
 
   public getUsers() {
     if (!this.authService.IsLoggedIn()) {
@@ -18,7 +18,7 @@ export class UserService {
       return of([]);
     }
 
-    return this.client.get<Array<User>>(`${this.baseUrl}`)
+    return this.client.get<Array<User>>(`${this.baseUrl()}`)
       .pipe(
         tap(authResult => {
           console.table(authResult);
