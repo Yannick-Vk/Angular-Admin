@@ -1,15 +1,17 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpResponse} from '@angular/common/http';
 import {BehaviorSubject, catchError, tap} from 'rxjs';
 import {Jwt, LoginRequest, RegisterRequest} from '../models/Auth';
 import {DateTime} from 'luxon';
 import {Item} from './LocalItemService';
 import {HttpService} from './http-service';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService extends HttpService {
+  router = inject(Router);
   private token = new Item('id_token');
   private expiration = new Item('expires_at');
   private loggedIn = new BehaviorSubject<boolean>(this.IsLoggedIn());

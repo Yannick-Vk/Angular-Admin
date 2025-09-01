@@ -6,11 +6,12 @@ import {HomeComponent} from './pages/home/home';
 import {authGuard} from './guards/auth-guard';
 import {Roles} from './pages/roles/roles';
 import {RoleHasUsers} from './pages/roles/role-has-users/role-has-users';
+import {Logout} from './pages/logout/logout';
 
 export const routes: Routes = [
   {
-    'path': '',
-    'pathMatch': 'full',
+    path: '',
+    pathMatch: 'full',
     'component': HomeComponent,
   }, {
     'path': 'Login',
@@ -18,6 +19,9 @@ export const routes: Routes = [
   }, {
     'path': 'Register',
     'component': RegisterForm,
+  },{
+    path: 'Logout',
+    component: Logout,
   }, {
     'path': 'Users',
     'component': Users,

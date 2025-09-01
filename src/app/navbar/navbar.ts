@@ -19,8 +19,4 @@ export class Navbar {
       this.loggedIn.set(loggedIn);
     });
   }
-
-  logout() {
-    this.authService.Logout();
-  }
 }
