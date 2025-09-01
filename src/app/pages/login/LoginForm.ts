@@ -3,8 +3,9 @@ import {Router} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 
 import {AuthService} from '../../services/AuthService';
-import {LoginRequest} from '../../models/Auth';
+import {LoginRequest, LoginResponse} from '../../models/Auth';
 import {Form} from '../../components/forms/form/form';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'login-form',
@@ -19,12 +20,14 @@ export class LoginForm {
   @ViewChild(Form) formComponent!: Form;
   private client = inject(AuthService);
   private router = inject(Router);
+  public errorMessage: string | undefined;
 
   onSubmit(form: { Username: string, Password: string }): void {
     const user: LoginRequest = {UserName: form.Username, password: form.Password}
 
-    this.client.Login(user).subscribe(() => {
-      this.router.navigate(['/']).then();
+    this.client.Login(user).subscribe({
+      next: () => this.router.navigate(['/']).then(),
+      error: (err: HttpErrorResponse) => this.errorMessage = err.error.Message,
     });
   }
 
