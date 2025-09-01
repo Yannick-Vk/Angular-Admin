@@ -27,7 +27,8 @@ export class UserInfo {
   user = signal<User>({email: '', id: '', username: ''});
   roles = signal<Array<string>>([])
   allRoles = signal<Array<string>>([]);
-  options = computed(() => this.allRoles().map(role => ({ value: role, label: role })));
+  remainingRoles = computed(() => this.allRoles().filter(role => !this.roles().includes(role)));
+  options = computed(() => this.remainingRoles().map(role => ({ value: role, label: role })));
   isFormValid = signal(false);
 
   constructor() {
