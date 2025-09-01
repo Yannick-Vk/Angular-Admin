@@ -35,4 +35,9 @@ input[disabled], input[readonly] {
   flex-direction: row;
 }
 
+::ng-deep .error-message {
+  color: red;
+  margin-bottom: 1rem;
+}
+
 /*# sourceMappingURL=form.css.map */

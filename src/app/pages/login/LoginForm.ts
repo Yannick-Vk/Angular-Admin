@@ -27,7 +27,7 @@ export class LoginForm {
 
     this.client.Login(user).subscribe({
       next: () => this.router.navigate(['/']).then(),
-      error: (err: HttpErrorResponse) => this.errorMessage = err.error.Message,
+      error: (err: HttpErrorResponse) => this.errorMessage = err.error.message,
     });
   }
 
