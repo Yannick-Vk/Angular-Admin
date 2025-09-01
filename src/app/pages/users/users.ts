@@ -29,4 +29,9 @@ export class Users {
       }
     });
   }
+
+  viewDetails(userName: string) {
+    this.router.navigate(['Users', userName]).then();
+  }
+
 }

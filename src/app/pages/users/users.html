@@ -1,12 +1,13 @@
 <button (click)="getUsers()">Get all users</button>
 
-<app-table [headers]="['Id', 'Username', 'Email']">
+<app-table [headers]="['Id', 'Username', 'Email', 'Details']">
   @if (users().length > 0) {
     @for (user of users(); track user.id) {
       <tr class="">
         <td class="p-3">{{ user.id }}</td>
         <td>{{ user.username }}</td>
         <td>{{ user.email }}</td>
+        <td><button (click)="viewDetails(user.username)"> View Details </button></td>
       </tr>
     }
   } @else {

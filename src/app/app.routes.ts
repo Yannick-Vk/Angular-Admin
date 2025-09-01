@@ -7,6 +7,7 @@ import {authGuard} from './guards/auth-guard';
 import {Roles} from './pages/roles/roles';
 import {RoleHasUsers} from './pages/roles/role-has-users/role-has-users';
 import {Logout} from './pages/logout/logout';
+import {UserInfo} from './pages/users/user-info/user-info';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,10 @@ export const routes: Routes = [
   }, {
     'path': 'Users',
     'component': Users,
+    'canActivate': [authGuard],
+  },{
+    'path': 'Users/:userName',
+    'component': UserInfo,
     'canActivate': [authGuard],
   }, {
     'path': 'Roles',

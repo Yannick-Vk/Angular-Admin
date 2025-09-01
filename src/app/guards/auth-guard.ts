@@ -2,7 +2,6 @@ import {CanActivateFn} from '@angular/router';
 import {AuthService} from '../services/AuthService';
 import {inject} from '@angular/core';
 import {RoleService} from '../services/role-service';
-import {UserWithRoleDto} from '../models/Role';
 
 /// Only loggedIn users can acces this page
 export const authGuard: CanActivateFn = () => {
