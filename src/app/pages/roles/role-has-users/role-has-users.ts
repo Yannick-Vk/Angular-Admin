@@ -51,4 +51,8 @@ export class RoleHasUsers {
       }
     })
   }
+
+  back() {
+    this.router.navigate(['/Roles']).then(() => {});
+  }
 }
