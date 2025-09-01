@@ -24,5 +24,6 @@ export const routes: Routes = [
   }, {
     'path': 'Roles',
     'component': Roles,
+    'canActivate': [authGuard],
   }
 ];
