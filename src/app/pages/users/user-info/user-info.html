@@ -19,7 +19,7 @@
   <app-form title="Add user to role" (onValidSubmit)="onSubmit()" (validityChange)="onFormValidityChange($event)" [data]="[
     { label: 'Role name', key: 'RoleName', type: 'select', options: options(), required: true }
   ]">
-    <div class="button-group justify-end">
+    <div class="button-group">
       <button [disabled]="!isFormValid()" type="submit">Add role</button>
     </div>
   </app-form>
