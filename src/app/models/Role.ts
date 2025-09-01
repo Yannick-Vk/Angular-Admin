@@ -11,7 +11,7 @@ export class RoleDto {
   }
 }
 
-export class AddRoleToUserDto {
+export class UserWithRoleDto {
   roleName: string;
   username: string;
 

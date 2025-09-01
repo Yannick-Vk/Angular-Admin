@@ -2,7 +2,7 @@ import {Component, computed, inject, signal, WritableSignal} from '@angular/core
 import {AddRole} from './add-role/add-role';
 import {Router} from '@angular/router';
 import {RoleService} from '../../services/role-service';
-import {Role, RoleDto, AddRoleToUserDto} from '../../models/Role';
+import {Role, RoleDto, UserWithRoleDto} from '../../models/Role';
 import {Table} from '../../components/table/table';
 import {AddRoleToUser} from './add-role-to-user/add-role-to-user';
 
@@ -60,7 +60,7 @@ export class Roles {
   }
 
   addRoleToUser(data: {RoleName: string, Username: string}) {
-    const dto = new AddRoleToUserDto(data.RoleName, data.Username);
+    const dto = new UserWithRoleDto(data.RoleName, data.Username);
     this.roleService.AddRoleToUser(dto).subscribe({
       next: () => {
         console.log(`Added role ${data.RoleName} to ${data.Username}`);

@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {Role, RoleDto, AddRoleToUserDto} from '../models/Role';
+import {Role, RoleDto, UserWithRoleDto} from '../models/Role';
 import {AuthService} from './AuthService';
 import {HttpResponse} from '@angular/common/http';
 import {catchError, of, tap} from 'rxjs';
@@ -60,7 +60,7 @@ export class RoleService extends HttpService {
         }));
   }
 
-  public AddRoleToUser(dto: AddRoleToUserDto) {
+  public AddRoleToUser(dto: UserWithRoleDto) {
     console.log(`Adding role ${dto.roleName} to user ${dto.username} ...`);
     return this.client.post(`${this.baseUrl()}/add-to-user`, dto)
       .pipe(
@@ -73,7 +73,7 @@ export class RoleService extends HttpService {
         }));
   }
 
-  public RemoveRoleFromUser(dto: AddRoleToUserDto) {
+  public RemoveRoleFromUser(dto: UserWithRoleDto) {
     console.log(`Removing role ${dto.roleName} from user ${dto.username} ...`);
     return this.client.post(`${this.baseUrl()}/remove-from-user`, dto)
       .pipe(
@@ -91,6 +91,16 @@ export class RoleService extends HttpService {
     return this.client.get<Array<User>>(`${this.baseUrl()}/${roleName}`).pipe(
       catchError((error: HttpResponse<any>) => {
         console.error('Failed to get Users: ', error);
+        throw error;
+      })
+    )
+  }
+
+  public UserHasRole(dto: UserWithRoleDto) {
+    console.log(`Checking if ${dto.username} has role ${dto.roleName}`);
+    return this.client.get<Array<User>>(`${this.baseUrl()}/${dto.roleName}/${dto.username}`).pipe(
+      catchError((error: HttpResponse<any>) => {
+        console.error('Failed to get data: ', error);
         throw error;
       })
     )

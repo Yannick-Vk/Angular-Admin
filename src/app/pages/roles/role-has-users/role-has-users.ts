@@ -3,7 +3,7 @@ import {RoleService} from '../../../services/role-service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../../models/Users';
 import {Table} from '../../../components/table/table';
-import {AddRoleToUserDto} from '../../../models/Role';
+import {UserWithRoleDto} from '../../../models/Role';
 
 @Component({
   selector: 'app-role-has-users',
@@ -42,7 +42,7 @@ export class RoleHasUsers {
   }
 
   removeRole(username: string) {
-    this.roleService.RemoveRoleFromUser(new AddRoleToUserDto(this.role, username)).subscribe({
+    this.roleService.RemoveRoleFromUser(new UserWithRoleDto(this.role, username)).subscribe({
       next: (_) => {
         this.getUsers()
       },
