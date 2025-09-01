@@ -17,13 +17,25 @@
     }
   </app-table>
 </div>
-<div class="mt-5">
-  <app-form title="Add user to role" (onValidSubmit)="onSubmit()" (validityChange)="onFormValidityChange($event)"
+<div class="mt-5 flex flex-row gap-3 flex-wrap justify-between flex-1/2">
+  <app-form title="Add user to role" (onValidSubmit)="addRole($event)" (validityChange)="onFormValidityChangeAdd($event)"
             [data]="[
-    { label: 'Role name', key: 'RoleName', type: 'select', options: options(), required: true, value: remainingRoles().length > 0 ? remainingRoles()[0] : '' }
+    { label: 'Role name', key: 'RoleName', type: 'select', options: options(), required: true,
+    value: remainingRoles().length > 0 ? remainingRoles()[0] : '' }
   ]">
     <div class="button-group">
-      <button [disabled]="!isFormValid()" type="submit">Add role</button>
+      <button [disabled]="!isFormValidAdd()" type="submit">Add role</button>
     </div>
   </app-form>
+
+  <app-form title="Create new Role" (onValidSubmit)="createNewRole($event)" (validityChange)="onFormValidityChangeCreate($event)"
+            [data]="[
+    { label: 'Role name', key: 'RoleName', type: 'text', required: true,}
+  ]">
+    <div class="button-group">
+      <button [disabled]="!isFormValidCreate()" type="submit">Add role</button>
+    </div>
+  </app-form>
+
 </div>
+

@@ -4,7 +4,7 @@ import {UserService} from '../../../services/user-service';
 import {User} from '../../../models/Users';
 import {Table} from '../../../components/table/table';
 import {RoleService} from '../../../services/role-service';
-import {UserWithRoleDto} from '../../../models/Role';
+import {RoleDto, UserWithRoleDto} from '../../../models/Role';
 import {Form} from '../../../components/forms/form/form';
 
 @Component({
@@ -17,8 +17,6 @@ import {Form} from '../../../components/forms/form/form';
   styleUrl: './user-info.css'
 })
 export class UserInfo {
-  @ViewChild(Form) formComponent!: Form;
-
   router = inject(Router)
   userService = inject(UserService);
   roleService = inject(RoleService);
@@ -35,7 +33,8 @@ export class UserInfo {
     }
     return roles.map(role => ({ value: role, label: role }));
   });
-  isFormValid = signal(false);
+  isFormValidAdd = signal(false);
+  isFormValidCreate = signal(false);
 
   constructor() {
     const userName = this.route.snapshot.paramMap.get('userName');
@@ -49,8 +48,12 @@ export class UserInfo {
     this.getAllRoles();
   }
 
-  onFormValidityChange(isValid: boolean) {
-    this.isFormValid.set(isValid);
+  onFormValidityChangeAdd(isValid: boolean) {
+    this.isFormValidAdd.set(isValid);
+  }
+
+  onFormValidityChangeCreate(isValid: boolean) {
+    this.isFormValidCreate.set(isValid);
   }
 
   private getUser(userName: string) {
@@ -92,8 +95,7 @@ export class UserInfo {
     );
   }
 
-  onSubmit() {
-    const formValue = this.formComponent.form.getRawValue();
+  addRole(formValue: { RoleName: string }) {
     const dto = { RoleName: formValue.RoleName, Username: this.user().username };
     this.roleService.AddRoleToUser(new UserWithRoleDto(dto.RoleName, dto.Username)).subscribe({
       next: () => {
@@ -115,5 +117,29 @@ export class UserInfo {
       }
     });
   }
+
+  createNewRole(formValue: { RoleName: string, Username: string }) {
+    const roleName = formValue.RoleName;
+    const username = this.user().username;
+
+    this.roleService.AddRole(new RoleDto(roleName))
+    .subscribe({
+      next: () => {
+        this.roleService.AddRoleToUser(new UserWithRoleDto(roleName, username)).subscribe({
+          next: () => {
+            // Update the values again
+            this.getRoles(this.user().username);
+          },
+          error: (err) => {
+            console.error('Error adding role to user:', err);
+          }
+        })
+      },
+      error: (err) => {
+        console.error('Error creating role:', err);
+      }
+    })
+  }
+
 }
 
