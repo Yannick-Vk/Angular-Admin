@@ -4,12 +4,14 @@ import {User} from '../models/Users';
 import {HttpResponse} from '@angular/common/http';
 import {catchError, of, tap} from 'rxjs';
 import {HttpService} from './http-service';
+import {RoleService} from './role-service';
 
 @Injectable({
   'providedIn': 'root'
 })
 export class UserService extends HttpService {
   authService: AuthService = inject(AuthService);
+  roleService: RoleService = inject(RoleService);
   override path = 'users'
 
   public getUsers() {
@@ -29,5 +31,29 @@ export class UserService extends HttpService {
           throw error;
         }));
   }
+
+  public getUser(username: string) {
+    return this.client.get<User>(`${this.baseUrl()}/${username}`)
+      .pipe(
+        tap(authResult => {
+          console.table(authResult);
+          return authResult;
+        }),
+        catchError((error: HttpResponse<any>) => {
+          console.error('Failed to get user: ', error);
+          throw error;
+        }));
+  }
+
+  public getRoles(username: string) {
+    console.log(`Getting roles for ${username}`);
+    return this.client.get<Array<string>>(`${this.baseUrl()}/${username}/Roles`).pipe(
+      catchError((error: HttpResponse<any>) => {
+        console.error('Failed to get roles: ', error);
+        throw error;
+      })
+    )
+  }
+
 }
 

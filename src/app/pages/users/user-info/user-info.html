@@ -1,1 +1,22 @@
-<p> Welcome {{userName}} </p>
+<button (click)="back()">Back to users</button>
+<div class="mt-5">
+  <p>Username: {{user()?.username}}</p>
+  <p>Email: {{user()?.email}}</p>
+  <app-table [headers]="['Roles', 'Remove']">
+    @if (roles().length > 0) {
+      @for (role of roles(); track $index) {
+        <tr class="">
+          <td class="p-3">{{ role }}</td>
+          <td><button (click)="removeRole(role, user()!.username)">Remove role</button></td>
+        </tr>
+      }
+    } @else {
+      <p>No Roles...</p>
+    }
+  </app-table>
+</div>
+<div class="mt-5">
+  <app-add-role-to-user (addRole)="addRole()" [options]="options()">
+
+  </app-add-role-to-user>
+</div>
