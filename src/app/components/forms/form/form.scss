@@ -25,6 +25,10 @@ select {
   border-radius: var(--border-radius);
 }
 
+input[disabled], input[readonly] {
+  background-color: #cccccc;
+}
+
 ::ng-deep {
   .button-group {
     display: flex;

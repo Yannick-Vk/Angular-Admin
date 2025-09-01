@@ -1,5 +1,6 @@
-import {Component, input, OnInit, output} from '@angular/core';
+import {Component, effect, input, OnDestroy, OnInit, output} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-form',
@@ -10,36 +11,61 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
   templateUrl: './form.html',
   styleUrl: './form.scss'
 })
-export class Form implements OnInit {
+export class Form implements OnInit, OnDestroy {
   private formBuilder = new FormBuilder();
-  data = input<Array<Field>>()
+  data = input<Array<Field>>([])
   title = input<string>('')
   onValidSubmit = output<any>()
+  validityChange = output<boolean>();
 
-  templateForm: FormGroup = new FormGroup({}) ;
+  form: FormGroup = new FormGroup({}) ;
+  private valueChangesSub?: Subscription;
+
+  constructor() {
+    effect(() => {
+      this.updateForm(this.data());
+    });
+  }
 
   ngOnInit() {
+    this.updateForm(this.data());
+  }
+
+  ngOnDestroy() {
+    this.valueChangesSub?.unsubscribe();
+  }
+
+  private updateForm(data: Array<Field>) {
+    this.valueChangesSub?.unsubscribe();
+
     const controls: any = {};
-    this.data()!.forEach((field: Field) => {
+    data.forEach((field: Field) => {
+      const value = { value: field.value || '', disabled: field.disabled || false };
       const validators = field.required ? [Validators.required] : [];
-      controls[field.key] = ["", validators];
+      controls[field.key] = [value, validators];
       if (field.type === "email") {
         validators.push(Validators.email)
       }
     });
-    this.templateForm = this.formBuilder.group(controls);
+    this.form = this.formBuilder.group(controls);
+
+    this.validityChange.emit(this.form.valid);
+
+    this.valueChangesSub = this.form.valueChanges.subscribe(() => {
+      this.validityChange.emit(this.form.valid);
+    });
   }
 
   onSubmit() {
-    if (this.templateForm.invalid) {
+    if (this.form.invalid) {
       return;
     }
 
-    this.onValidSubmit.emit(this.templateForm.value);
+    this.onValidSubmit.emit(this.form.value);
   }
 
   public isValid(): boolean {
-    return this.templateForm.valid;
+    return this.form.valid;
   }
 }
 
@@ -48,6 +74,8 @@ export interface Field {
   key: string;
   type: string;
   required?: boolean;
-  options?: string[];
+  options?: Array<{value: string, label: string}>;
+  disabled?: boolean;
+  value?: string;
 }
 

@@ -1,4 +1,4 @@
-<form [formGroup]="templateForm" (ngSubmit)="onSubmit()" class="">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="">
   <h2 class="text-fuchsia-500 text-3xl mb-3">{{ title() }}</h2>
 
   @for (field of data(); track $index) {
@@ -8,11 +8,11 @@
         @if (field.type === "select") {
           <select [formControlName]="field.key">
             @for (option of field.options; track $index; ) {
-              <option [value]="option">{{option}}</option>
+              <option [value]="option.value">{{ option.label }}</option>
             }
           </select>
         } @else {
-          <input [formControlName]="field.key" [type]="field.type"/>
+          <input [formControlName]="field.key" [type]="field.type" [readOnly]="field.disabled?? false"/>
         }
       </label>
     </div>
