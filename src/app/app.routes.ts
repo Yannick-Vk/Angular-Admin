@@ -5,6 +5,7 @@ import {Users} from './pages/users/users';
 import {HomeComponent} from './pages/home/home';
 import {authGuard} from './guards/auth-guard';
 import {Roles} from './pages/roles/roles';
+import {RoleHasUsers} from './pages/roles/role-has-users/role-has-users';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,10 @@ export const routes: Routes = [
   }, {
     'path': 'Roles',
     'component': Roles,
+    'canActivate': [authGuard],
+  }, {
+    'path': 'Roles/:roleName',
+    'component': RoleHasUsers,
     'canActivate': [authGuard],
   }
 ];

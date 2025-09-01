@@ -70,4 +70,15 @@ export class Roles {
       }
     });
   }
+
+  showInfo(role: Role) {
+    this.router.navigate([`/Roles/${role.name}`]).then(success => {
+      if (success) {
+        console.log('Successfully navigated');
+      } else {
+        console.log('Failed to navigate to role');
+      }
+    })
+  }
+
 }
