@@ -2,8 +2,10 @@
   <ul class="flex flex-row justify-between">
     <div class="flex flex-row">
       <li><a routerLink="/">Home</a></li>
-      <li><a routerLink="/Users">Users</a></li>
-      <li><a routerLink="/Roles">Roles</a></li>
+      @if (loggedIn()) {
+        <li><a routerLink="/Users">Users</a></li>
+        <li><a routerLink="/Roles">Roles</a></li>
+      }
     </div>
     <div>
       @if (!loggedIn()) {
