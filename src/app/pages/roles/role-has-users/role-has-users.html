@@ -1,1 +1,16 @@
-<p>role-has-users works!</p>
+
+
+@if (users().length > 0) {
+  <app-table [headers]="['Id', 'Name', 'Info', 'Delete']">
+    @for (user of users(); track user.id) {
+      <tr class="">
+        <td class="p-3">{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td><button (click)="removeRole(user.id)"> Remove Role </button></td>
+      </tr>
+    }
+  </app-table>
+} @else {
+  <p class="flex justify-center text-xl font-bold mt-5 text-red-800">No Users with role {{role}}</p>
+}

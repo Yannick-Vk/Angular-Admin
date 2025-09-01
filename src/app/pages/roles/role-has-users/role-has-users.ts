@@ -1,23 +1,31 @@
 import {Component, inject, signal, WritableSignal} from '@angular/core';
 import {RoleService} from '../../../services/role-service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../../models/Users';
-import {UserService} from '../../../services/user-service';
+import {Table} from '../../../components/table/table';
 
 @Component({
   selector: 'app-role-has-users',
-  imports: [],
+  imports: [
+    Table
+  ],
   templateUrl: './role-has-users.html',
   styleUrl: './role-has-users.css'
 })
 export class RoleHasUsers {
   roleService = inject(RoleService);
   router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   users: WritableSignal<Array<User>> = signal([]);
+  role: string | null;
 
 
   constructor() {
-    this.getUsers("Admin");
+    this.role = this.route.snapshot.paramMap.get('roleName');
+    if (!this.role) {return}
+
+    this.getUsers(this.role);
   }
 
   getUsers(roleName: string) {
@@ -30,5 +38,9 @@ export class RoleHasUsers {
         console.error('Error getting users:', err);
       }
     })
+  }
+
+  removeRole(userId: string) {
+
   }
 }
