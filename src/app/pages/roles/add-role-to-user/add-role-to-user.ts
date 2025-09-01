@@ -15,6 +15,11 @@ export class AddRoleToUser {
   options = input<string[]>()
 
   onSubmit(form: {RoleName: string, Username: string}) {
+
+    if (!form.RoleName) {
+      console.error('Please select a Role');
+      return;
+    }
     this.addRole.emit(form)
   }
 
