@@ -1,4 +1,4 @@
-import {Component, computed, inject, signal, ViewChild} from '@angular/core';
+import {Component, computed, inject, signal} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../../services/user-service';
 import {User} from '../../../models/Users';
@@ -127,7 +127,7 @@ export class UserInfo {
       next: () => {
         this.roleService.AddRoleToUser(new UserWithRoleDto(roleName, username)).subscribe({
           next: () => {
-            // Update the values again
+            this.getAllRoles();
             this.getRoles(this.user().username);
           },
           error: (err) => {
