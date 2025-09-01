@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 
 import {AuthService} from '../../services/AuthService';
-import {LoginRequest, LoginResponse} from '../../models/Auth';
+import {LoginRequest} from '../../models/Auth';
 import {Form} from '../../components/forms/form/form';
 import {HttpErrorResponse} from '@angular/common/http';
 

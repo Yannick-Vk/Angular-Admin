@@ -4,8 +4,7 @@
     { label: "Username", key: "Username", type: "text", required: true },
     { label: "Password", key: "Password", type: "password", required: true },
     { label: "Confirm Password", key: "ConfirmPassword", type: "password", required: true },
-  ]'
-            [errorMessage]="errorMessage">
+  ]' [errorMessage]="errorMessage" [formValidators]="[passwordMatchValidator]">
     <div class="button-group">
       <button [disabled]="!isValid()" type="submit">Register</button>
       <button (click)="redirect()">Login</button>

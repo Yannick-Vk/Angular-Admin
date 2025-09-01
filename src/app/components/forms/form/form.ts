@@ -1,5 +1,5 @@
 import {Component, effect, input, OnDestroy, OnInit, output} from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, ValidatorFn} from '@angular/forms';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -16,6 +16,7 @@ export class Form implements OnInit, OnDestroy {
   data = input<Array<Field>>([])
   title = input<string>('')
   errorMessage = input<string | undefined>(undefined);
+  formValidators = input<ValidatorFn[]>([]);
   onValidSubmit = output<any>()
   validityChange = output<boolean>();
 
@@ -48,7 +49,7 @@ export class Form implements OnInit, OnDestroy {
         validators.push(Validators.email)
       }
     });
-    this.form = this.formBuilder.group(controls);
+    this.form = this.formBuilder.group(controls, { validators: this.formValidators() });
 
     this.validityChange.emit(this.form.valid);
 
