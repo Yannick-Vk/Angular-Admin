@@ -12,8 +12,8 @@ import {Router} from '@angular/router';
 })
 export class AuthService extends HttpService {
   router = inject(Router);
-  private token = new Item('id_token');
-  private expiration = new Item('expires_at');
+  private token = new Item('token');
+  private expiration = new Item('expiration');
   private loggedIn = new BehaviorSubject<boolean>(this.IsLoggedIn());
   public isLoggedIn$ = this.loggedIn.asObservable();
 
@@ -41,13 +41,13 @@ export class AuthService extends HttpService {
 
   private HandleToken(token: Jwt) {
     // process the configuration.
-    const expiresAt = DateTime.fromISO(String(token.Expiration));
+    const expiresAt = DateTime.fromISO(String(token.expiration));
     console.log('Token expires at:',
       expiresAt.toLocaleString(DateTime.DATETIME_FULL),
       expiresAt.diff(DateTime.now()).toFormat("'in' mm 'minutes'"));
 
-    this.token.set(token.Token);
-    this.expiration.set(JSON.stringify(DateTime.fromISO(String(token.Expiration))));
+    this.token.set(token.token);
+    this.expiration.set(JSON.stringify(DateTime.fromISO(String(token.expiration))));
     this.loggedIn.next(true);
   }
 

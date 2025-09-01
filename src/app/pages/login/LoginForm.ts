@@ -45,6 +45,6 @@ export class LoginForm {
     return this.formComponent?.isValid();
   }
 
-  onFormErrorsChanged(errors: ValidationErrors | null) {
+  onFormErrorsChanged(_: ValidationErrors | null) {
   }
 }

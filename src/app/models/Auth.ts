@@ -16,13 +16,6 @@ export interface RegisterRequest extends UserWithPassword {
 }
 
 export interface Jwt {
-  Token: string;
-  Expiration: number;
-}
-
-export interface LoginResponse {
-  Success: boolean;
-  Token?: string;
-  Expiration?: string;
-  Message?: string;
+  token: string;
+  expiration: number;
 }
