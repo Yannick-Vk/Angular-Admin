@@ -28,7 +28,13 @@ export class UserInfo {
   roles = signal<Array<string>>([])
   allRoles = signal<Array<string>>([]);
   remainingRoles = computed(() => this.allRoles().filter(role => !this.roles().includes(role)));
-  options = computed(() => this.remainingRoles().map(role => ({ value: role, label: role })));
+  options = computed(() => {
+    const roles = this.remainingRoles();
+    if (roles.length === 0) {
+      return [{ value: '', label: 'No more roles', disabled: true }];
+    }
+    return roles.map(role => ({ value: role, label: role }));
+  });
   isFormValid = signal(false);
 
   constructor() {

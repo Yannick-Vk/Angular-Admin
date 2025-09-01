@@ -1,13 +1,15 @@
 <button (click)="back()">Back to users</button>
 <div class="mt-5">
-  <p>Username: {{user().username}}</p>
-  <p>Email: {{user().email}}</p>
+  <p>Username: {{ user().username }}</p>
+  <p>Email: {{ user().email }}</p>
   <app-table [headers]="['Roles', 'Remove']">
     @if (roles().length > 0) {
       @for (role of roles(); track $index) {
         <tr class="">
           <td class="p-3">{{ role }}</td>
-          <td><button (click)="removeRole(role, user()!.username)">Remove role</button></td>
+          <td>
+            <button (click)="removeRole(role, user()!.username)">Remove role</button>
+          </td>
         </tr>
       }
     } @else {
@@ -16,7 +18,8 @@
   </app-table>
 </div>
 <div class="mt-5">
-  <app-form title="Add user to role" (onValidSubmit)="onSubmit()" (validityChange)="onFormValidityChange($event)" [data]="[
+  <app-form title="Add user to role" (onValidSubmit)="onSubmit()" (validityChange)="onFormValidityChange($event)"
+            [data]="[
     { label: 'Role name', key: 'RoleName', type: 'select', options: options(), required: true }
   ]">
     <div class="button-group">

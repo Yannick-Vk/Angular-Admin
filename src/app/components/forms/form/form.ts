@@ -74,7 +74,7 @@ export interface Field {
   key: string;
   type: string;
   required?: boolean;
-  options?: Array<{value: string, label: string}>;
+  options?: Array<{value: string, label: string, disabled?: boolean}>;
   disabled?: boolean;
   value?: string;
 }

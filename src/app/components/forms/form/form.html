@@ -8,7 +8,7 @@
         @if (field.type === "select") {
           <select [formControlName]="field.key">
             @for (option of field.options; track $index; ) {
-              <option [value]="option.value">{{ option.label }}</option>
+              <option [value]="option.value" [disabled]="option.disabled">{{ option.label }}</option>
             }
           </select>
         } @else {
