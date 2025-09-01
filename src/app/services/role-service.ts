@@ -4,6 +4,7 @@ import {AuthService} from './AuthService';
 import {HttpResponse} from '@angular/common/http';
 import {catchError, of, tap} from 'rxjs';
 import {HttpService} from './http-service';
+import {User} from '../models/Users';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class RoleService extends HttpService {
   authService: AuthService = inject(AuthService);
   override path = 'roles'
 
-  public getRoles() {
+  public GetRoles() {
     if (!this.authService.IsLoggedIn()) {
       console.error('Users not logged in');
       return of([]);
@@ -70,5 +71,16 @@ export class RoleService extends HttpService {
           console.error(`Failed to add role to user: `, error);
           throw error
         }));
+  }
+
+
+  public GetUsersWithRole(roleName: string) {
+    console.log(`Getting users with roleName ${roleName}`);
+    return this.client.get<Array<User>>(`${this.baseUrl()}/${roleName}`).pipe(
+      catchError((error: HttpResponse<any>) => {
+        console.error('Failed to get Users: ', error);
+        throw error;
+      })
+    )
   }
 }

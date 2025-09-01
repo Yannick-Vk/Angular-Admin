@@ -27,7 +27,7 @@ export class Roles {
   }
 
   getRoles() {
-    this.roleService.getRoles().subscribe({
+    this.roleService.GetRoles().subscribe({
       next: (roles) => {
         this.roles.set(roles);
       },
