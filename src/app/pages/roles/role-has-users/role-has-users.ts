@@ -32,7 +32,6 @@ export class RoleHasUsers {
   getUsers(roleName: string = this.role) {
     this.roleService.GetUsersWithRole(roleName).subscribe({
       next: (users) => {
-        console.table(users);
         this.users.set(users);
       },
       error: (err) => {
@@ -54,5 +53,9 @@ export class RoleHasUsers {
 
   back() {
     this.router.navigate(['/Roles']).then(() => {});
+  }
+
+  details(username: string) {
+    this.router.navigate([`/Users/${username}`]).then(() => {});
   }
 }
