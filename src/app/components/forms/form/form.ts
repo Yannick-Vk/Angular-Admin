@@ -1,5 +1,5 @@
 import {Component, effect, input, OnDestroy, OnInit, output} from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, ValidatorFn} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, ValidatorFn, ValidationErrors} from '@angular/forms';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -17,8 +17,10 @@ export class Form implements OnInit, OnDestroy {
   title = input<string>('')
   errorMessage = input<string | undefined>(undefined);
   formValidators = input<ValidatorFn[]>([]);
+  showValidationErrors = input<boolean>(false);
   onValidSubmit = output<any>()
   validityChange = output<boolean>();
+  onFormErrorsChange = output<ValidationErrors | null>();
 
   form: FormGroup = new FormGroup({}) ;
   private valueChangesSub?: Subscription;
@@ -55,6 +57,10 @@ export class Form implements OnInit, OnDestroy {
 
     this.valueChangesSub = this.form.valueChanges.subscribe(() => {
       this.validityChange.emit(this.form.valid);
+    });
+
+    this.form.statusChanges.subscribe(() => {
+      this.onFormErrorsChange.emit(this.form.errors);
     });
   }
 

@@ -1,6 +1,10 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="">
   <h2 class="text-fuchsia-500 text-3xl mb-3">{{ title() }}</h2>
 
+  @if (showValidationErrors() && form.errors?.['passwordMismatch']) {
+    <div class="error-message">Passwords do not match.</div>
+  }
+
   @for (field of data(); track $index) {
     <div class="my-5">
       <label>
@@ -15,6 +19,14 @@
           <input [formControlName]="field.key" [type]="field.type" [readOnly]="field.disabled?? false"/>
         }
       </label>
+      @if (showValidationErrors() && form.get(field.key)?.invalid && (form.get(field.key)?.dirty || form.get(field.key)?.touched)) {
+        @if (form.get(field.key)?.errors?.['required']) {
+          <div class="error-message">{{ field.label }} is required.</div>
+        }
+        @if (form.get(field.key)?.errors?.['email']) {
+          <div class="error-message">Invalid email format.</div>
+        }
+      }
     </div>
   }
 

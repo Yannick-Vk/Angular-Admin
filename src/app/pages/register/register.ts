@@ -20,6 +20,7 @@ export class RegisterForm {
   private client = inject(AuthService);
   private router = inject(Router);
   public errorMessage: string | undefined;
+  public showValidationErrors: boolean = false;
 
   passwordMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const password = control.get('Password');
@@ -33,12 +34,12 @@ export class RegisterForm {
   };
 
   onSubmit(form: { Username: string, Email: string, Password: string, ConfirmPassword: string }): void {
-    const user: RegisterRequest = {UserName: form.Username, password: form.Password, email: form.Email};
-
-    if (this.formComponent.form.hasError('passwordMismatch')) {
-      this.errorMessage = 'Passwords do not match.';
+    this.showValidationErrors = true;
+    if (this.formComponent.form.invalid) {
       return;
     }
+
+    const user: RegisterRequest = {UserName: form.Username, password: form.Password, email: form.Email};
 
     this.client.Register(user).subscribe({
       next: () => this.router.navigate(['/']).then(),
@@ -52,5 +53,15 @@ export class RegisterForm {
 
   isValid(): boolean {
     return this.formComponent?.isValid();
+  }
+
+  onFormErrorsChanged(errors: ValidationErrors | null) {
+    if (errors?.['passwordMismatch']) {
+      this.errorMessage = 'Passwords do not match.';
+    } else if (this.formComponent.form.get('Email')?.errors?.['email']) {
+      this.errorMessage = 'Invalid email format.';
+    } else {
+      this.errorMessage = undefined;
+    }
   }
 }

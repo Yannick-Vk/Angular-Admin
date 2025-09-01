@@ -1,6 +1,6 @@
 ﻿import {Component, inject, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
-import {ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule, ValidationErrors} from '@angular/forms';
 
 import {AuthService} from '../../services/AuthService';
 import {LoginRequest} from '../../models/Auth';
@@ -21,8 +21,14 @@ export class LoginForm {
   private client = inject(AuthService);
   private router = inject(Router);
   public errorMessage: string | undefined;
+  public showValidationErrors: boolean = false;
 
   onSubmit(form: { Username: string, Password: string }): void {
+    this.showValidationErrors = true;
+    if (this.formComponent.form.invalid) {
+      return;
+    }
+
     const user: LoginRequest = {UserName: form.Username, password: form.Password}
 
     this.client.Login(user).subscribe({
@@ -37,5 +43,8 @@ export class LoginForm {
 
   isValid(): boolean {
     return this.formComponent?.isValid();
+  }
+
+  onFormErrorsChanged(errors: ValidationErrors | null) {
   }
 }

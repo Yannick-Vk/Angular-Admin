@@ -2,7 +2,8 @@
   <app-form title="Login" (onValidSubmit)="onSubmit($event)" [data]='[
     { label: "Username", key: "Username", type: "text", required: true },
     { label: "Password", key: "Password", type: "password", required: true },
-  ]' [errorMessage]="errorMessage">
+  ]' [errorMessage]="errorMessage" [showValidationErrors]="showValidationErrors"
+            (onFormErrorsChange)="onFormErrorsChanged($event)">
     <div class="button-group">
       <button [disabled]="!isValid()" type="submit">Login</button>
       <button (click)="redirect()">Register</button>
