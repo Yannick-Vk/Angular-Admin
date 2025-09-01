@@ -15,6 +15,7 @@ export class Form implements OnInit, OnDestroy {
   private formBuilder = new FormBuilder();
   data = input<Array<Field>>([])
   title = input<string>('')
+  errorMessage = input<string | undefined>(undefined);
   onValidSubmit = output<any>()
   validityChange = output<boolean>();
 

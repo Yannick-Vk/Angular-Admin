@@ -20,4 +20,8 @@
 
   <ng-content>
   </ng-content>
+
+  @if (errorMessage()) {
+    <div class="error-message mt-5">{{ errorMessage() }}</div>
+  }
 </form>
