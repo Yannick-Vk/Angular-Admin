@@ -82,4 +82,8 @@ export class AuthService extends HttpService {
     }
     return false;
   }
+
+  public getUserData() {
+
+  }
 }
