@@ -7,7 +7,7 @@
         <td class="p-3">{{ user.id }}</td>
         <td>{{ user.username }}</td>
         <td>{{ user.email }}</td>
-        <td><button (click)="removeRole(user.id)"> Remove Role </button></td>
+        <td><button (click)="removeRole(user.username)"> Remove Role </button></td>
       </tr>
     }
   </app-table>

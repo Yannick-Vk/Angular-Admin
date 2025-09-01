@@ -73,6 +73,18 @@ export class RoleService extends HttpService {
         }));
   }
 
+  public RemoveRoleFromUser(dto: AddRoleToUserDto) {
+    console.log(`Removing role ${dto.roleName} from user ${dto.username} ...`);
+    return this.client.post(`${this.baseUrl()}/remove-from-user`, dto)
+      .pipe(
+        tap(() => {
+          console.log(`Role ${dto.roleName} removed from user ${dto.username}`);
+        }),
+        catchError((error: HttpResponse<any>) => {
+          console.error(`Failed to remove role from user: `, error);
+          throw error
+        }));
+  }
 
   public GetUsersWithRole(roleName: string) {
     console.log(`Getting users with roleName ${roleName}`);

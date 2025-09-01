@@ -3,6 +3,7 @@ import {RoleService} from '../../../services/role-service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../../models/Users';
 import {Table} from '../../../components/table/table';
+import {AddRoleToUserDto} from '../../../models/Role';
 
 @Component({
   selector: 'app-role-has-users',
@@ -18,17 +19,17 @@ export class RoleHasUsers {
   private route = inject(ActivatedRoute);
 
   users: WritableSignal<Array<User>> = signal([]);
-  role: string | null;
+  role!: string;
 
 
   constructor() {
-    this.role = this.route.snapshot.paramMap.get('roleName');
-    if (!this.role) {return}
-
+    const roleName = this.route.snapshot.paramMap.get('roleName');
+    if (!roleName) {return}
+    this.role = roleName;
     this.getUsers(this.role);
   }
 
-  getUsers(roleName: string) {
+  getUsers(roleName: string = this.role) {
     this.roleService.GetUsersWithRole(roleName).subscribe({
       next: (users) => {
         console.table(users);
@@ -40,7 +41,14 @@ export class RoleHasUsers {
     })
   }
 
-  removeRole(userId: string) {
-
+  removeRole(username: string) {
+    this.roleService.RemoveRoleFromUser(new AddRoleToUserDto(this.role, username)).subscribe({
+      next: (_) => {
+        this.getUsers()
+      },
+      error: (err) => {
+        console.error('Error getting users:', err);
+      }
+    })
   }
 }
