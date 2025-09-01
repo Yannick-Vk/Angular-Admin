@@ -65,7 +65,7 @@ export class AuthService extends HttpService {
   public IsLoggedIn(): boolean {
     const expiration = this.expiration.get();
     if (!expiration) {
-      console.error('Expiration not set.');
+      // console.error('Expiration not set.');
       return false;
     }
     try {

@@ -62,9 +62,6 @@ export class Roles {
   addRoleToUser(data: {RoleName: string, Username: string}) {
     const dto = new UserWithRoleDto(data.RoleName, data.Username);
     this.roleService.AddRoleToUser(dto).subscribe({
-      next: () => {
-        console.log(`Added role ${data.RoleName} to ${data.Username}`);
-      },
       error: (err) => {
         console.error('Error adding role to user:', err);
       }
@@ -72,13 +69,7 @@ export class Roles {
   }
 
   showInfo(role: Role) {
-    this.router.navigate([`/Roles/${role.name}`]).then(success => {
-      if (success) {
-        console.log('Successfully navigated');
-      } else {
-        console.log('Failed to navigate to role');
-      }
-    })
+    this.router.navigate([`/Roles/${role.name}`]).then()
   }
 
 }

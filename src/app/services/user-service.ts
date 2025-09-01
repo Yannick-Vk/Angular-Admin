@@ -23,7 +23,6 @@ export class UserService extends HttpService {
     return this.client.get<Array<User>>(`${this.baseUrl()}`)
       .pipe(
         tap(authResult => {
-          console.table(authResult);
           return authResult;
         }),
         catchError((error: HttpResponse<any>) => {
@@ -36,7 +35,6 @@ export class UserService extends HttpService {
     return this.client.get<User>(`${this.baseUrl()}/${username}`)
       .pipe(
         tap(authResult => {
-          console.table(authResult);
           return authResult;
         }),
         catchError((error: HttpResponse<any>) => {
@@ -46,7 +44,7 @@ export class UserService extends HttpService {
   }
 
   public getRoles(username: string) {
-    console.log(`Getting roles for ${username}`);
+    //console.log(`Getting roles for ${username}`);
     return this.client.get<Array<string>>(`${this.baseUrl()}/${username}/Roles`).pipe(
       catchError((error: HttpResponse<any>) => {
         console.error('Failed to get roles: ', error);

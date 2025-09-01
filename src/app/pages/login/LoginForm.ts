@@ -20,16 +20,16 @@ export class LoginForm {
   private client = inject(AuthService);
   private router = inject(Router);
 
-  onSubmit(form: {Username: string, Password: string}): void {
+  onSubmit(form: { Username: string, Password: string }): void {
     const user: LoginRequest = {UserName: form.Username, password: form.Password}
 
     this.client.Login(user).subscribe(() => {
-      this.router.navigate(['/']).then(r => console.log('Redirecting ...', r));
+      this.router.navigate(['/']).then();
     });
   }
 
   redirect() {
-    this.router.navigate(['/Register']).then(r => console.log('Redirecting ...', r));
+    this.router.navigate(['/Register']).then();
   }
 
   isValid(): boolean {

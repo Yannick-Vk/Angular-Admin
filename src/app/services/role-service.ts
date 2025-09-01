@@ -10,20 +10,12 @@ import {User} from '../models/Users';
   providedIn: 'root'
 })
 export class RoleService extends HttpService {
-  authService: AuthService = inject(AuthService);
   override path = 'roles'
 
   public GetRoles() {
-    if (!this.authService.IsLoggedIn()) {
-      console.error('Users not logged in');
-      return of([]);
-    }
     return this.client.get<Array<Role>>(`${this.baseUrl()}`)
       .pipe(
         tap(data => {
-          if (data && data.length > 0) {
-            console.table(data);
-          }
           return data;
         }),
         catchError((error: HttpResponse<any>) => {
@@ -33,12 +25,9 @@ export class RoleService extends HttpService {
   }
 
   public AddRole(role: RoleDto) {
-    console.log(`Adding role ${role} ...`);
+    //console.log(`Adding role ${role} ...`);
     return this.client.post(`${this.baseUrl()}`, role)
       .pipe(
-        tap(() => {
-          console.log(`Role ${role.roleName} added`);
-        }),
         catchError((error: HttpResponse<any>) => {
           console.error(`Failed to add Role(${role}): `, error);
           throw error
@@ -46,14 +35,11 @@ export class RoleService extends HttpService {
   }
 
   public DeleteRole(role: RoleDto) {
-    console.log(`Deleting role ${role.roleName} ...`);
+    //console.log(`Deleting role ${role.roleName} ...`);
     return this.client.delete(`${this.baseUrl()}`, {
       body: role
     })
       .pipe(
-        tap(() => {
-          console.log(`Role ${role.roleName} was deleted`);
-        }),
         catchError((error: HttpResponse<any>) => {
           console.error(`Failed to delete Role(${role}): `, error);
           throw error
@@ -61,12 +47,9 @@ export class RoleService extends HttpService {
   }
 
   public AddRoleToUser(dto: UserWithRoleDto) {
-    console.log(`Adding role ${dto.roleName} to user ${dto.username} ...`);
+    //console.log(`Adding role ${dto.roleName} to user ${dto.username} ...`);
     return this.client.post(`${this.baseUrl()}/add-to-user`, dto)
       .pipe(
-        tap(() => {
-          console.log(`Role ${dto.roleName} added to user ${dto.username}`);
-        }),
         catchError((error: HttpResponse<any>) => {
           console.error(`Failed to add role to user: `, error);
           throw error
@@ -74,12 +57,9 @@ export class RoleService extends HttpService {
   }
 
   public RemoveRoleFromUser(dto: UserWithRoleDto) {
-    console.log(`Removing role ${dto.roleName} from user ${dto.username} ...`);
+    //console.log(`Removing role ${dto.roleName} from user ${dto.username} ...`);
     return this.client.post(`${this.baseUrl()}/remove-from-user`, dto)
       .pipe(
-        tap(() => {
-          console.log(`Role ${dto.roleName} removed from user ${dto.username}`);
-        }),
         catchError((error: HttpResponse<any>) => {
           console.error(`Failed to remove role from user: `, error);
           throw error
@@ -87,7 +67,7 @@ export class RoleService extends HttpService {
   }
 
   public GetUsersWithRole(roleName: string) {
-    console.log(`Getting users with roleName ${roleName}`);
+    //console.log(`Getting users with roleName ${roleName}`);
     return this.client.get<Array<User>>(`${this.baseUrl()}/${roleName}`).pipe(
       catchError((error: HttpResponse<any>) => {
         console.error('Failed to get Users: ', error);
@@ -97,7 +77,7 @@ export class RoleService extends HttpService {
   }
 
   public UserHasRole(dto: UserWithRoleDto) {
-    console.log(`Checking if ${dto.username} has role ${dto.roleName}`);
+    //console.log(`Checking if ${dto.username} has role ${dto.roleName}`);
     return this.client.get<Array<User>>(`${this.baseUrl()}/${dto.roleName}/${dto.username}`).pipe(
       catchError((error: HttpResponse<any>) => {
         console.error('Failed to get data: ', error);

@@ -10,7 +10,7 @@ export function AuthInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn):
     return next(req);
   }
 
-  console.info('Auth token provided for', req.url);
+  //console.info('Auth token provided for', req.url);
 
   const cloned = req.clone({
     headers: req.headers.set('Authorization', 'Bearer ' + token)

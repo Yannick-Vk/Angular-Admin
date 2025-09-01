@@ -23,12 +23,12 @@ export class RegisterForm {
     const user: RegisterRequest = {UserName: form.Username, password: form.Password, email: form.Email};
 
     this.client.Register(user).subscribe(() => {
-      this.router.navigate(['/']).then(r => console.log('Redirecting ...', r));
+      this.router.navigate(['/']).then();
     });
   }
 
   redirect() {
-    this.router.navigate(['/Login']).then(r => console.log('Redirecting ...', r));
+    this.router.navigate(['/Login']).then();
   }
 
   isValid(): boolean {
