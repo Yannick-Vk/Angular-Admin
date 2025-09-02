@@ -1,20 +1,29 @@
-import {Component, ChangeDetectionStrategy, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, ViewChild} from '@angular/core';
 import {Form} from '../../forms/form/form';
 import {ReactiveFormsModule, ValidationErrors} from '@angular/forms';
+import {BlogService} from "../../../services/blog.service";
+import {HttpErrorResponse} from "@angular/common/http";
+import {CommonModule} from "@angular/common";
+import {BlogUpload} from "../../../models/Blog";
 
 @Component({
   selector: 'app-upload-blog',
   templateUrl: './upload-blog.html',
   styleUrl: './upload-blog.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
   imports: [
     Form,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ]
 })
 export class UploadBlog {
   @ViewChild(Form) formComponent!: Form;
+  private blogService = inject(BlogService);
+
   errorMessage: string | undefined;
+  successMessage: string | undefined;
   showValidationErrors: boolean = false;
   selectedFile: File | null = null;
 
@@ -25,7 +34,7 @@ export class UploadBlog {
     return this.formComponent?.isValid();
   }
 
-  onSubmit($event: any): void {
+  onSubmit(formValue: { Title: string, Description: string }): void {
     this.showValidationErrors = true;
     if (!this.formComponent?.isValid()) {
       return;
@@ -45,6 +54,30 @@ export class UploadBlog {
     }
 
     this.errorMessage = undefined;
+    this.successMessage = undefined;
+
+    // Read file as raw UTF8 string
+    const reader = new FileReader();
+    reader.readAsText(this.selectedFile, 'UTF-8');
+    reader.onload = () => {
+      const rawFileContent = reader.result as string;
+      const blogUpload: BlogUpload = {
+        Title: formValue.Title,
+        Description: formValue.Description,
+        File: rawFileContent
+      };
+
+      this.blogService.uploadBlog(blogUpload).subscribe({
+        next: () => {
+          this.successMessage = 'Blog uploaded successfully!';
+          this.formComponent.form.reset();
+        },
+        error: (err: HttpErrorResponse) => this.errorMessage = err.error.message,
+      });
+    };
+    reader.onerror = (error) => {
+      this.errorMessage = 'Error reading file: ' + error;
+    };
   }
 
   clear(): void {

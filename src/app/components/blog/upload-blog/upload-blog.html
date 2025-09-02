@@ -4,6 +4,9 @@
     { label: "Description", key: "Description", type: "textarea", required: true },
     { label: "File upload", key: "Upload", type: "file", required: true },
   ]' [errorMessage]="errorMessage" [showValidationErrors]="showValidationErrors">
+    @if (successMessage) {
+      <div class="success-message mt-5">{{ successMessage }}</div>
+    }
     <div class="button-group mt-5">
       <button [disabled]="!isValid()" type="submit">Upload Blog</button>
       <button type="button" (click)="clear()">Clear</button>

@@ -1,12 +1,15 @@
 import {Component, effect, input, OnDestroy, OnInit, output} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, ValidatorFn, ValidationErrors} from '@angular/forms';
 import {Subscription} from 'rxjs';
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-form',
+  standalone: true,
   imports: [
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ],
   templateUrl: './form.html',
   styleUrl: './form.scss'
