@@ -1,10 +1,11 @@
-
-<app-form title="Upload blog" (onValidSubmit)="onSubmit($event)" [data]='[
+<div>
+  <app-form title="Upload blog" (onValidSubmit)="onSubmit($event)" [data]='[
     { label: "Blog Title", key: "Title", type: "text", required: true },
     { label: "Blog file upload", key: "Upload", type: "file", required: true },
-  ]' [errorMessage]="errorMessage" [showValidationErrors]="showValidationErrors"
-          (onFormErrorsChange)="onFormErrorsChanged($event)">
-  <div class="button-group mt-5">
-    <button [disabled]="!isValid()" type="submit">Upload Blog</button>
-  </div>
-</app-form>
+  ]' [errorMessage]="errorMessage" [showValidationErrors]="showValidationErrors">
+    <div class="button-group mt-5">
+      <button [disabled]="!isValid()" type="submit">Upload Blog</button>
+      <button type="button" (click)="clear()">Clear</button>
+    </div>
+  </app-form>
+</div>
