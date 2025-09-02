@@ -1,7 +1,8 @@
 <div>
-  <app-form title="Upload blog" (onValidSubmit)="onSubmit($event)" [data]='[
+  <app-form title="Upload blog" (onValidSubmit)="onSubmit($event)" (onFileSelected)="onFile($event)" [data]='[
     { label: "Blog Title", key: "Title", type: "text", required: true },
-    { label: "Blog file upload", key: "Upload", type: "file", required: true },
+    { label: "Description", key: "Description", type: "textarea", required: true },
+    { label: "File upload", key: "Upload", type: "file", required: true },
   ]' [errorMessage]="errorMessage" [showValidationErrors]="showValidationErrors">
     <div class="button-group mt-5">
       <button [disabled]="!isValid()" type="submit">Upload Blog</button>

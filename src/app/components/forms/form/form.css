@@ -17,7 +17,7 @@ input {
   margin-bottom: 1rem;
 }
 
-select {
+select, textarea {
   width: 100%;
   background-color: var(--background-color);
   border: 2px solid var(--border-color);

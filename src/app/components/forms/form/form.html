@@ -15,6 +15,10 @@
               <option [value]="option.value" [disabled]="option.disabled">{{ option.label }}</option>
             }
           </select>
+        } @else if (field.type === "file") {
+          <input type="file" (change)="onFileChange($event, field.key)">
+        } @else if (field.type === "textarea") {
+          <textarea [formControlName]="field.key" [readOnly]="field.disabled?? false"></textarea>
         } @else {
           <input [formControlName]="field.key" [type]="field.type" [readOnly]="field.disabled?? false"/>
         }

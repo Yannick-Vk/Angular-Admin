@@ -16,6 +16,7 @@ export class UploadBlog {
   @ViewChild(Form) formComponent!: Form;
   errorMessage: string | undefined;
   showValidationErrors: boolean = false;
+  selectedFile: File | null = null;
 
   onFormErrorsChanged(_: ValidationErrors | null): void {
   }
@@ -29,10 +30,30 @@ export class UploadBlog {
     if (!this.formComponent?.isValid()) {
       return;
     }
-    console.log($event);
+
+    if (!this.selectedFile) {
+      this.errorMessage = 'Please select a file to upload';
+      return;
+    }
+
+    const fileName = this.selectedFile.name;
+    const fileExt = fileName.split('.').pop()?.toLocaleLowerCase();
+
+    if (fileExt !== 'md') {
+      this.errorMessage = 'Invalid file type. Please upload a .md file.';
+      return;
+    }
+
+    this.errorMessage = undefined;
   }
 
   clear(): void {
     this.formComponent.form.reset();
+  }
+
+  onFile(event: {key: string, file: File}) {
+    if (event.key === 'Upload') {
+      this.selectedFile = event.file;
+    }
   }
 }

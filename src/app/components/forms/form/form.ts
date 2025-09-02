@@ -21,6 +21,7 @@ export class Form implements OnInit, OnDestroy {
   onValidSubmit = output<any>()
   validityChange = output<boolean>();
   onFormErrorsChange = output<ValidationErrors | null>();
+  onFileSelected = output<{key: string, file: File}>();
 
   form: FormGroup = new FormGroup({}) ;
   private valueChangesSub?: Subscription;
@@ -74,6 +75,15 @@ export class Form implements OnInit, OnDestroy {
 
   public isValid(): boolean {
     return this.form.valid;
+  }
+
+  onFileChange(event: Event, key: string) {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      const file = input.files[0];
+      this.onFileSelected.emit({key, file});
+      this.form.get(key)?.patchValue(file.name);
+    }
   }
 }
 
