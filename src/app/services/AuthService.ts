@@ -14,6 +14,7 @@ export class AuthService extends HttpService {
   router = inject(Router);
   private token = new Item('token');
   private expiration = new Item('expiration');
+  private user = new Item('user');
   private loggedIn = new BehaviorSubject<boolean>(this.IsLoggedIn());
   public isLoggedIn$ = this.loggedIn.asObservable();
 
@@ -48,6 +49,7 @@ export class AuthService extends HttpService {
 
     this.token.set(token.token);
     this.expiration.set(JSON.stringify(DateTime.fromISO(String(token.expiration))));
+    this.user.set(JSON.stringify({username: token.username, email: token.email}));
     this.loggedIn.next(true);
   }
 
