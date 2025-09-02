@@ -4,13 +4,13 @@
 </div>
 <button class="my-5" (click)="getRoles()">Get roles</button>
 @if (roles().length > 0) {
-  <app-table [headers]="['Id', 'Name', 'Info', 'Delete']">
+  <app-table [headers]="['Id', 'Name', 'Users', 'Delete']">
     @for (role of roles(); track role.id) {
       <tr class="">
         <td class="p-3">{{ role.id }}</td>
         <td>{{ role.name }}</td>
         <td>
-          <button (click)="showInfo(role)" >Info</button>
+          <button (click)="showInfo(role)" >See all users</button>
         </td>
         <td><button (click)="deleteRole(role.name)"> Delete Role </button></td>
       </tr>

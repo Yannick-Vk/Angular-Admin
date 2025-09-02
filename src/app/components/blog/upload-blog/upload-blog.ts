@@ -15,7 +15,6 @@ import {ReactiveFormsModule, ValidationErrors} from '@angular/forms';
 export class UploadBlog {
   errorMessage: string | undefined;
   showValidationErrors: boolean = false;
-  fileUpload: string | undefined;
 
   onFormErrorsChanged($event: ValidationErrors | null) {
 

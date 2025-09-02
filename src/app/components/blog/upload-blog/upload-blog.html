@@ -1,11 +1,10 @@
 
-<p>File upload an MD-File</p>
 <app-form title="Upload blog" (onValidSubmit)="onSubmit($event)" [data]='[
-    { label: "Title", key: "Title", type: "text", required: true },
+    { label: "Blog Title", key: "Title", type: "text", required: true },
+    { label: "Blog file upload", key: "Upload", type: "file", required: true },
   ]' [errorMessage]="errorMessage" [showValidationErrors]="showValidationErrors"
           (onFormErrorsChange)="onFormErrorsChanged($event)">
-  <input type="file" [formControlName]="fileUpload">
-  <div class="button-group">
-    <button [disabled]="!isValid()" type="submit">Login</button>
+  <div class="button-group mt-5">
+    <button [disabled]="!isValid()" type="submit">Upload Blog</button>
   </div>
 </app-form>
