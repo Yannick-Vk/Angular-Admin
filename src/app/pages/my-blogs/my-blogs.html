@@ -3,7 +3,8 @@
   <p>You haven't made a blog yet.</p>
   <button (click)="toNewBlog()" class="mt-5">Create my first blog</button>
 } @else {
-  <button (click)="toNewBlog()" class="mt-5">Create a new blog</button>
+  <button (click)="toNewBlog()" class="my-5">Create a new blog</button>
+  <hr/>
   @for (blog of blogs(); track blog.id) {
     <div class="my-5">
       <h3 class="text-xl">{{ blog.title }}</h3>
@@ -17,5 +18,8 @@
         <button (click)="edit(blog.id)">Edit</button>
       </div>
     </div>
+
+    <hr/>
+
   }
 }
