@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {Blog} from '../../models/Blog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BlogService} from '../../services/blog.service';
@@ -19,7 +19,7 @@ export class Blogs {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
-  blog!: Blog;
+  blog = signal<Blog | undefined>(undefined);
   user = this.authService.getUser();
 
   constructor() {
@@ -28,7 +28,7 @@ export class Blogs {
 
     this.blogService.getBlog(blogId).subscribe({
         next: (res) => {
-          this.blog = res;
+          this.blog.set(res);
         }
       }
     );

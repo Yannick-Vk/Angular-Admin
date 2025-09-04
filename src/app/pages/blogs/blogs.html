@@ -1,21 +1,23 @@
-<article class="my-3">
-  <div>
-    <h2 class="text-2xl">{{ blog.title }}</h2>
-    <p>Author: {{ blog.author }}</p>
-    <p>Created at: {{ blog.createdAt }}</p>
-    @if (blog.updatedAt) {
-      <p>Updated at: {{ blog.updatedAt }}</p>
-    }
-    <div class="flex flex-row gap-5 my-5">
-      <button (click)="return()">Back to blogs</button>
-      @if (user?.username === blog.author) {
-        <button (click)="edit(blog.id)">Edit blog</button>
+@if (blog(); as blog) {
+  <article class="my-3">
+    <div>
+      <h2 class="text-2xl">{{ blog.title }}</h2>
+      <p>Author: {{ blog.author }}</p>
+      <p>Created at: {{ blog.createdAt }}</p>
+      @if (blog.updatedAt) {
+        <p>Updated at: {{ blog.updatedAt }}</p>
       }
+      <div class="flex flex-row gap-5 my-5">
+        <button (click)="return()">Back to blogs</button>
+        @if (user?.username === blog.author) {
+          <button (click)="edit(blog.id)">Edit blog</button>
+        }
+      </div>
     </div>
-  </div>
 
-  <markdown [data]="blog.blogContent">
+    <markdown [data]="blog.blogContent">
 
-  </markdown>
-</article>
+    </markdown>
+  </article>
+}
 
