@@ -54,4 +54,13 @@ export class BlogService extends HttpService {
       })
     )
   }
+
+  deleteBlog(id: string) {
+    return this.client.delete(`${this.baseUrl()}/${id}`).pipe(
+      catchError((error: HttpResponse<any>) => {
+        console.error(`Failed to delete blog with id [${id}]: ${error}`);
+        throw error;
+      })
+    )
+  }
 }

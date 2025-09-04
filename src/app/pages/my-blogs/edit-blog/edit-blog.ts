@@ -1,19 +1,22 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ViewChild} from '@angular/core';
 import {BlogService} from '../../../services/blog.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Blog, BlogUpdate} from '../../../models/Blog';
 import {AuthService} from '../../../services/AuthService';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {Modal} from '../../../components/modal/modal';
 
 @Component({
   selector: 'app-edit-blog',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Modal
   ],
   templateUrl: './edit-blog.html',
   styleUrl: './edit-blog.css'
 })
 export class EditBlog {
+  @ViewChild('confirmDeleteModal') confirmDeleteModal!: Modal;
   private blogService = inject(BlogService);
   private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
@@ -96,5 +99,23 @@ export class EditBlog {
         });
       };
     }
+  }
+
+  deleteBlog() {
+    this.confirmDeleteModal.title.set('Confirm delete');
+    this.confirmDeleteModal.message.set(`Confirm delete of blog ${this.blog.title}?`);
+
+    this.confirmDeleteModal.open();
+  }
+
+  confirmDelete() {
+    this.blogService.deleteBlog(this.blog.id).subscribe(() => {
+      this.router.navigate(['Blog/Me']).then();
+    });
+    this.confirmDeleteModal.close();
+  }
+
+  cancelDelete() {
+    this.confirmDeleteModal.close();
   }
 }
