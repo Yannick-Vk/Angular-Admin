@@ -1,4 +1,4 @@
-import {Component, computed, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, signal, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../../services/user-service';
 import {User} from '../../../models/Users';
@@ -6,15 +6,19 @@ import {Table} from '../../../components/table/table';
 import {RoleService} from '../../../services/role-service';
 import {RoleDto, UserWithRoleDto} from '../../../models/Role';
 import {Form} from '../../../components/forms/form/form';
+import {Modal} from "../../../components/modal/modal";
 
 @Component({
   selector: 'app-user-info',
+  standalone: true,
   imports: [
     Table,
-    Form
+    Form,
+    Modal
   ],
   templateUrl: './user-info.html',
-  styleUrl: './user-info.css'
+  styleUrl: './user-info.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserInfo {
   router = inject(Router)
@@ -35,6 +39,9 @@ export class UserInfo {
   });
   isFormValidAdd = signal(false);
   isFormValidCreate = signal(false);
+  roleToRemove = signal<{roleName: string, username: string} | null>(null);
+
+  @ViewChild('confirmRemoveRoleModal') confirmRemoveRoleModal!: Modal;
 
   constructor() {
     const userName = this.route.snapshot.paramMap.get('userName');
@@ -83,16 +90,10 @@ export class UserInfo {
   }
 
   removeRole(roleName: string, username: string) {
-    this.roleService.RemoveRoleFromUser(new UserWithRoleDto(roleName, username)).subscribe(
-      {
-        next: (_) => {
-          this.getRoles(username);
-        },
-        error: (err) => {
-          console.error('Error getting users:', err);
-        }
-      }
-    );
+    this.roleToRemove.set({roleName, username});
+    this.confirmRemoveRoleModal.title.set('Remove Role');
+    this.confirmRemoveRoleModal.message.set(`Are you sure you want to remove role ${roleName} from ${username}?`);
+    this.confirmRemoveRoleModal.open();
   }
 
   addRole(formValue: { RoleName: string }) {
@@ -141,5 +142,29 @@ export class UserInfo {
     })
   }
 
+  confirmRemoveRole() {
+    const toRemove = this.roleToRemove();
+    if (toRemove) {
+      this.roleService.RemoveRoleFromUser(new UserWithRoleDto(toRemove.roleName, toRemove.username)).subscribe(
+        {
+          next: (_) => {
+            this.getRoles(toRemove.username);
+            this.confirmRemoveRoleModal.close();
+            this.roleToRemove.set(null);
+          },
+          error: (err) => {
+            console.error('Error getting users:', err);
+            this.confirmRemoveRoleModal.close();
+            this.roleToRemove.set(null);
+          }
+        }
+      );
+    }
+  }
+
+  cancelRemoveRole() {
+    this.confirmRemoveRoleModal.close();
+    this.roleToRemove.set(null);
+  }
 }
 
