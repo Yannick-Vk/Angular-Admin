@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpService} from './http-service';
 import {catchError, Observable} from 'rxjs';
 import {HttpResponse} from '@angular/common/http';
-import {Blog, BlogUpload} from '../models/Blog';
+import {Blog, BlogUpdate, BlogUpload} from '../models/Blog';
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +41,15 @@ export class BlogService extends HttpService {
     return this.client.get<Array<Blog>>(`${this.baseUrl()}/author/${authorName}`).pipe(
       catchError((error: HttpResponse<any>) => {
         console.error(`Failed to get blog's for [${authorName}]: ${error}`);
+        throw error;
+      })
+    )
+  }
+
+  updateBlog(blog: BlogUpdate) {
+    return this.client.patch(`${this.baseUrl()}`, blog).pipe(
+      catchError((error: HttpResponse<any>) => {
+        console.error(`Failed to update [${blog.title}]: ${error}`);
         throw error;
       })
     )

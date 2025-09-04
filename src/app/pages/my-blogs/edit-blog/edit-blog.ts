@@ -73,8 +73,13 @@ export class EditBlog {
       }
     }
 
-    console.table(update);
-    // this.blogService.updateBlog(update).subscribe(...);
+    if (Object.keys(update).length <= 1) {
+      console.log('No values were changed');
+      return;
+    }
+    console.log('Some values have been changed', update);
+
+    this.blogService.updateBlog(update).subscribe();
   }
 
   // Read the incoming file as a raw UTF8-string
