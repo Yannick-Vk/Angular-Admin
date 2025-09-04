@@ -33,7 +33,13 @@ export class LoginForm {
 
     this.client.Login(user).subscribe({
       next: () => this.router.navigate(['/']).then(),
-      error: (err: HttpErrorResponse) => this.errorMessage = err.error.message,
+      error: (err: HttpErrorResponse) => {
+        if (err.status === 0) {
+          this.errorMessage = 'Could not connect to the server. Please try again later.';
+        } else {
+          this.errorMessage = err.error.message;
+        }
+      },
     });
   }
 
