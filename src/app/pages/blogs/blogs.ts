@@ -3,7 +3,6 @@ import {Blog} from '../../models/Blog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BlogService} from '../../services/blog.service';
 import {MarkdownComponent} from 'ngx-markdown';
-import {AuthService} from '../../services/AuthService';
 
 @Component({
   selector: 'app-blogs',
@@ -41,6 +40,7 @@ export class Blogs {
   }
 
   return() {
-    this.router.navigate(['Blogs']).then(() => {});
+    this.router.navigate(['Blogs']).then(() => {
+    });
   }
 }

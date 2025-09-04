@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {BlogService} from '../../../services/blog.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Blog, BlogUpdate} from '../../../models/Blog';
