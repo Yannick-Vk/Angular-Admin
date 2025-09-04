@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {BlogService} from '../../services/blog.service';
 import {MarkdownComponent} from 'ngx-markdown';
 import {AuthService} from '../../services/AuthService';
+import {formatDate} from '../../services/DateTimeHelper';
 
 @Component({
   selector: 'app-blogs',
@@ -41,4 +42,6 @@ export class Blogs {
   edit(id: string) {
     this.router.navigate(['Blog/Me/Edit', id]).then(() => {});
   }
+
+  protected readonly formatDate = formatDate;
 }

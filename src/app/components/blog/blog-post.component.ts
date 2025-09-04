@@ -1,7 +1,7 @@
 import {Component, inject, input} from '@angular/core';
 import {Blog} from '../../models/Blog';
 import {Router} from '@angular/router';
-import {DateTime} from 'luxon';
+import {formatDate} from '../../services/DateTimeHelper';
 
 @Component({
   selector: 'app-blog',
@@ -17,7 +17,5 @@ export class BlogPost {
     this.router.navigate([`Blogs/${id}`]).then()
   }
 
-  formatDate(date: string) {
-    return DateTime.fromISO(date).toLocaleString(DateTime.DATETIME_MED);
-  }
+  protected readonly formatDate = formatDate;
 }
