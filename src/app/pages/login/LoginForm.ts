@@ -1,5 +1,5 @@
 ﻿import {Component, inject, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {ReactiveFormsModule, ValidationErrors} from '@angular/forms';
 
 import {AuthService} from '../../services/AuthService';
@@ -11,7 +11,8 @@ import {HttpErrorResponse} from '@angular/common/http';
   selector: 'login-form',
   imports: [
     ReactiveFormsModule,
-    Form
+    Form,
+    RouterLink
   ],
   templateUrl: './LoginForm.html',
   styleUrl: './LoginForm.scss',
@@ -43,9 +44,7 @@ export class LoginForm {
     });
   }
 
-  redirect() {
-    this.router.navigate(['/Register']).then();
-  }
+  
 
   isValid(): boolean {
     return this.formComponent?.isValid();

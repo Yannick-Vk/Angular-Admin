@@ -2,7 +2,7 @@ import {Component, inject, ViewChild} from '@angular/core';
 import {AbstractControl, ReactiveFormsModule, ValidationErrors, ValidatorFn} from '@angular/forms';
 import {AuthService} from '../../services/AuthService';
 import {RegisterRequest} from '../../models/Auth';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {Form} from '../../components/forms/form/form';
 import {HttpErrorResponse} from '@angular/common/http';
 
@@ -10,7 +10,8 @@ import {HttpErrorResponse} from '@angular/common/http';
   selector: 'register-form',
   imports: [
     ReactiveFormsModule,
-    Form
+    Form,
+    RouterLink
   ],
   templateUrl: './register.html',
   styleUrl: './register.scss',
@@ -53,9 +54,7 @@ export class RegisterForm {
     });
   }
 
-  redirect() {
-    this.router.navigate(['/Login']).then();
-  }
+
 
   isValid(): boolean {
     return this.formComponent?.isValid();

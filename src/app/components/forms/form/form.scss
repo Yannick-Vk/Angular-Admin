@@ -28,15 +28,25 @@ input[disabled], input[readonly] {
   background-color: #cccccc;
 }
 
-::ng-deep {
-  .button-group {
-    display: flex;
-    gap: 1rem;
-    flex-direction: row;
-  }
-}
+:host {
+  --link-color: #007bff;
 
-::ng-deep .error-message {
-  color: red;
-  margin-bottom: 1rem;
+  ::ng-deep {
+    a {
+      text-decoration: underline;
+      color: var(--link-color);
+      cursor: pointer;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      flex-direction: row;
+    }
+
+    .error-message {
+      color: red;
+      margin-bottom: 1rem;
+    }
+  }
 }

@@ -4,9 +4,10 @@
     { label: "Password", key: "Password", type: "password", required: true },
   ]' [errorMessage]="errorMessage" [showValidationErrors]="showValidationErrors"
             (onFormErrorsChange)="onFormErrorsChanged($event)" class="w-xl">
-    <div class="button-group">
-      <button [disabled]="!isValid()" type="submit">Login</button>
-      <button (click)="redirect()">Register</button>
-    </div>
+
+    <p class="my-3">
+      Don't have a login? <a routerLink="/Register">Register</a>
+    </p>
+    <button [disabled]="!isValid()" type="submit">Login</button>
   </app-form>
 </div>

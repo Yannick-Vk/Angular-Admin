@@ -28,13 +28,20 @@ input[disabled], input[readonly] {
   background-color: #cccccc;
 }
 
-::ng-deep .button-group {
+:host {
+  --link-color: #007bff;
+}
+:host ::ng-deep a {
+  text-decoration: underline;
+  color: var(--link-color);
+  cursor: pointer;
+}
+:host ::ng-deep .button-group {
   display: flex;
   gap: 1rem;
   flex-direction: row;
 }
-
-::ng-deep .error-message {
+:host ::ng-deep .error-message {
   color: red;
   margin-bottom: 1rem;
 }

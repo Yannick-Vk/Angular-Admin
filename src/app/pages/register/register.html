@@ -4,12 +4,14 @@
     { label: "Username", key: "Username", type: "text", required: true },
     { label: "Password", key: "Password", type: "password", required: true },
     { label: "Confirm Password", key: "ConfirmPassword", type: "password", required: true },
-  ]' [errorMessage]="errorMessage" [formValidators]="[passwordMatchValidator]" [showValidationErrors]="showValidationErrors"
+  ]' [errorMessage]="errorMessage" [formValidators]="[passwordMatchValidator]"
+            [showValidationErrors]="showValidationErrors"
             (onFormErrorsChange)="onFormErrorsChanged($event)" class="w-xl">
-    <div class="button-group">
-      <button [disabled]="!isValid()" type="submit">Register</button>
-      <button (click)="redirect()">Login</button>
-    </div>
+
+    <p class="my-3">
+      Already have a login? <a routerLink="/Login">Login</a>
+    </p>
+    <button [disabled]="!isValid()" type="submit">Register</button>
   </app-form>
 </div>
 
