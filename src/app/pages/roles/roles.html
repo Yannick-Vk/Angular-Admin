@@ -10,15 +10,19 @@
         <td class="p-3"><span class="block max-w-[100px] md:max-w-none truncate">{{ role.id }}</span></td>
         <td>{{ role.name }}</td>
         <td>
-          <button (click)="showInfo(role)" >See all users</button>
+          <button (click)="showInfo(role)">See all users</button>
         </td>
-        <td><button (click)="deleteRole(role.name)"> Delete Role </button></td>
+        <td>
+          <button (click)="deleteRole(role.name)"> Delete Role</button>
+        </td>
       </tr>
     }
   </app-table>
   <app-modal #confirmDelete>
-    <button class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" (click)="confirmRoleDelete()">Confirm</button>
-    <button class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400" (click)="cancelRoleDelete()">Cancel</button>
+    <div class="flex flex-row gap-5 modal-actions">
+      <button id="confirm" (click)="confirmRoleDelete()">Confirm</button>
+      <button id="cancel" (click)="cancelRoleDelete()">Cancel</button>
+    </div>
   </app-modal>
 } @else {
   <p class="flex justify-center text-xl font-bold mt-5 text-red-800">No Roles loaded</p>

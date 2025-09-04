@@ -16,7 +16,7 @@ import {Modal} from '../../components/modal/modal';
     Modal
   ],
   templateUrl: './roles.html',
-  styleUrl: './roles.css'
+  styleUrl: './roles.scss'
 })
 export class Roles {
   roleService = inject(RoleService);
