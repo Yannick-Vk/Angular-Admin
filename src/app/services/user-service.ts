@@ -11,7 +11,6 @@ import {RoleService} from './role-service';
 })
 export class UserService extends HttpService {
   authService: AuthService = inject(AuthService);
-  roleService: RoleService = inject(RoleService);
   override path = 'users'
 
   public getUsers() {

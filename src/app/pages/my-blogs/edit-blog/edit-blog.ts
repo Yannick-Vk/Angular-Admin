@@ -86,7 +86,7 @@ export class EditBlog {
       return;
     }
 
-    this.blogService.updateBlog(update).subscribe(value => {
+    this.blogService.updateBlog(update).subscribe(() => {
       this.router.navigate(['Blogs', this.blog.id]).then(() => {})
     });
   }

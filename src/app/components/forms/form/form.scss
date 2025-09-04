@@ -9,13 +9,6 @@ input {
   width: 100%;
 }
 
-.inputGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  margin-bottom: 1rem;
-}
-
 select, textarea {
   width: 100%;
   background-color: var(--background-color);

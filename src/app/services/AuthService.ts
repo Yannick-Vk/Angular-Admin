@@ -92,7 +92,6 @@ export class AuthService extends HttpService {
     const userString = this.user.get();
     if (!userString) return null;
 
-    const userData: User = JSON.parse(userString);
-    return userData;
+    return JSON.parse(userString);
   }
 }

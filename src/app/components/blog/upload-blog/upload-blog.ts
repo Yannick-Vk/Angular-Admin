@@ -33,10 +33,6 @@ export class UploadBlog {
   selectedFile: File | null = null;
 
   markdownRenderContent = signal<string | null>(null);
-
-  onFormErrorsChanged(_: ValidationErrors | null): void {
-  }
-
   isValid(): boolean {
     return this.formComponent?.isValid();
   }
