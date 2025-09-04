@@ -11,7 +11,7 @@ export class BlogService extends HttpService {
   override path = 'blogs';
 
   uploadBlog(blog: BlogUpload) {
-    return this.client.post(`${this.baseUrl()}`, blog).pipe(
+    return this.client.post<string>(`${this.baseUrl()}`, blog).pipe(
       catchError((error: HttpResponse<any>) => {
         console.error('Failed to upload blog: ', error);
         throw error;

@@ -4,9 +4,10 @@ import {ReactiveFormsModule, ValidationErrors} from '@angular/forms';
 import {BlogService} from "../../../services/blog.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
-import {BlogUpload} from "../../../models/Blog";
+import {Blog, BlogUpload} from "../../../models/Blog";
 import {AuthService} from '../../../services/AuthService';
 import {MarkdownComponent} from 'ngx-markdown';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-upload-blog',
@@ -25,9 +26,9 @@ export class UploadBlog {
   @ViewChild(Form) formComponent!: Form;
   private blogService = inject(BlogService);
   private authService = inject(AuthService);
+  private router = inject(Router)
 
   errorMessage: string | undefined;
-  successMessage: string | undefined;
   showValidationErrors: boolean = false;
   selectedFile: File | null = null;
 
@@ -60,7 +61,6 @@ export class UploadBlog {
     }
 
     this.errorMessage = undefined;
-    this.successMessage = undefined;
 
     const userData: string | undefined = this.authService.getUser()?.username;
     if (!userData) return;
@@ -78,9 +78,8 @@ export class UploadBlog {
       };
 
       this.blogService.uploadBlog(blogUpload).subscribe({
-        next: () => {
-          this.successMessage = 'Blog uploaded successfully!';
-          this.formComponent.form.reset();
+        next: (value) => {
+          this.router.navigate(['Blogs/', value]).then()
         },
         error: (err: HttpErrorResponse) => this.errorMessage = err.error.message,
       });
@@ -97,7 +96,7 @@ export class UploadBlog {
     this.markdownRenderContent.set('');
   }
 
-  onFile(event: {key: string, file: File}) {
+  onFile(event: { key: string, file: File }) {
     if (event.key === 'Upload') {
       this.selectedFile = event.file;
     }
