@@ -36,4 +36,13 @@ export class BlogService extends HttpService {
       })
     )
   }
+
+  getBlogsWithAuthor(authorName: string) {
+    return this.client.get<Array<Blog>>(`${this.baseUrl()}/author/${authorName}`).pipe(
+      catchError((error: HttpResponse<any>) => {
+        console.error(`Failed to get blog's for [${authorName}]: ${error}`);
+        throw error;
+      })
+    )
+  }
 }

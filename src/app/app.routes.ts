@@ -10,6 +10,7 @@ import {Logout} from './pages/logout/logout';
 import {UserInfo} from './pages/users/user-info/user-info';
 import {UploadBlog} from "./components/blog/upload-blog/upload-blog";
 import {Blogs} from './pages/blogs/blogs';
+import {MyBlogs} from './pages/my-blogs/my-blogs';
 
 export const routes: Routes = [
   {
@@ -54,5 +55,9 @@ export const routes: Routes = [
   }, {
     path: 'Home',
     redirectTo: '',
-  }
+  }, {
+    path: 'MyBlogs',
+    component: MyBlogs,
+    canActivate: [authGuard],
+  },
 ];
