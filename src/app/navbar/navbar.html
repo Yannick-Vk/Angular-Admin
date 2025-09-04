@@ -1,15 +1,24 @@
 <nav class="bg-slate-500 text-slate-100 text-2xl py-2 pl-5">
-  <ul class="flex flex-row justify-between">
-    <div class="flex flex-row">
-      <li><a routerLink="/">Home</a></li>
-      @if (loggedIn()) {
-        <li><a routerLink="/Users">Users</a></li>
-        <li><a routerLink="/Roles">Roles</a></li>
-        <li><a routerLink="/Blog/Upload">Upload Blog</a></li>
-        <li><a routerLink="/Blog/Me">My Blogs</a></li>
-      }
+  <div class="flex items-center justify-between">
+    <a routerLink="/">Home</a>
+
+    <!-- Hamburger Button -->
+    <div class="md:hidden">
+      <button (click)="toggleHamburgerMenu()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
     </div>
-    <div>
+
+    <div class="hidden md:flex md:flex-row md:items-center space-x-4">
+      @if (loggedIn()) {
+        <a routerLink="/Users">Users</a>
+        <a routerLink="/Roles">Roles</a>
+        <a routerLink="/Blog/Upload">Upload Blog</a>
+        <a routerLink="/Blog/Me">My Blogs</a>
+      }
+
       @if (!loggedIn()) {
         <a routerLink="/Login">Login</a>
         <a routerLink="/Register">Register</a>
@@ -17,5 +26,27 @@
         <a routerLink="/Logout">Logout</a>
       }
     </div>
-  </ul>
+  </div>
+
+    <!-- Mobile Menu -->
+    @if (isHamburgerMenuOpen()) {
+
+      <div class="md:hidden mt-4">
+        <div class="flex flex-col items-start space-y-2">
+          @if (loggedIn()) {
+            <a routerLink="/Users">Users</a>
+            <a routerLink="/Roles">Roles</a>
+            <a routerLink="/Blog/Upload">Upload Blog</a>
+            <a routerLink="/Blog/Me">My Blogs</a>
+          }
+          @if (!loggedIn()) {
+            <a routerLink="/Login">Login</a>
+            <a routerLink="/Register">Register</a>
+          } @else {
+            <a routerLink="/Logout">Logout</a>
+          }
+
+        </div>
+      </div>
+    }
 </nav>

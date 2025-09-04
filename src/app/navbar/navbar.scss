@@ -1,7 +1,26 @@
 a {
+  padding: 0.5rem;
+  display: block;
+  width: 100%;
   margin: 1rem;
+
+
+  border-radius: var(--border-radius);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #c3d9fb;
+  }
+
+  &.router-link-active{
+    text-decoration: underline;
+  }
 }
 
-a:hover {
-  color: var(--secondary);
+@media (min-width: 768px) {
+  a {
+    display: inline-block;
+    width: auto;
+
+  }
 }

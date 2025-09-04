@@ -16,10 +16,15 @@ import {CommonModule} from "@angular/common";
 export class Navbar {
   private authService = inject(AuthService);
   loggedIn = signal(this.authService.IsLoggedIn());
+  isHamburgerMenuOpen = signal(false)
 
   constructor() {
     this.authService.isLoggedIn$.subscribe(loggedIn => {
       this.loggedIn.set(loggedIn);
     });
+  }
+
+  toggleHamburgerMenu() {
+    this.isHamburgerMenuOpen.set(!this.isHamburgerMenuOpen());
   }
 }
