@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { Logout } from './logout';
+import {Logout} from './logout';
 
 describe('Logout', () => {
   let component: Logout;

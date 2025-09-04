@@ -2,11 +2,7 @@ import {ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChange
 import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
-import {
-  provideHttpClient,
-  withFetch, withInterceptors,
-  withJsonpSupport
-} from '@angular/common/http';
+import {provideHttpClient, withFetch, withInterceptors, withJsonpSupport} from '@angular/common/http';
 import {AuthInterceptor} from './services/auth-interceptor';
 import {provideMarkdown} from 'ngx-markdown';
 

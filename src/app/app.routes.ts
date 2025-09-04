@@ -9,7 +9,6 @@ import {RoleHasUsers} from './pages/roles/role-has-users/role-has-users';
 import {Logout} from './pages/logout/logout';
 import {UserInfo} from './pages/users/user-info/user-info';
 import {UploadBlog} from "./components/blog/upload-blog/upload-blog";
-import {BlogPost} from './components/blog/blog-post.component';
 import {Blogs} from './pages/blogs/blogs';
 
 export const routes: Routes = [

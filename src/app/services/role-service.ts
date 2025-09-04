@@ -1,8 +1,7 @@
-import {inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Role, RoleDto, UserWithRoleDto} from '../models/Role';
-import {AuthService} from './AuthService';
 import {HttpResponse} from '@angular/common/http';
-import {catchError, Observable, of, tap} from 'rxjs';
+import {catchError, Observable, tap} from 'rxjs';
 import {HttpService} from './http-service';
 import {User} from '../models/Users';
 

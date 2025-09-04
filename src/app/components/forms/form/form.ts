@@ -1,5 +1,13 @@
 import {Component, effect, input, OnDestroy, OnInit, output} from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, ValidatorFn, ValidationErrors} from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {CommonModule} from "@angular/common";
 

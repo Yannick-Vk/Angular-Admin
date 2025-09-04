@@ -1,10 +1,10 @@
-::ng-deeptable {
+::ng-deep table {
   width: 100%;
 }
-::ng-deepthead td {
+::ng-deep thead td {
   font-weight: bold;
 }
-::ng-deeptbody tr:nth-child(even) {
+::ng-deep tbody tr:nth-child(even) {
   background-color: #ececec;
 }
 

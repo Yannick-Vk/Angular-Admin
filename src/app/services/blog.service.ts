@@ -3,7 +3,6 @@ import {HttpService} from './http-service';
 import {catchError, Observable} from 'rxjs';
 import {HttpResponse} from '@angular/common/http';
 import {Blog, BlogUpload} from '../models/Blog';
-import {BlogPost} from '../components/blog/blog-post.component';
 
 @Injectable({
   providedIn: 'root',

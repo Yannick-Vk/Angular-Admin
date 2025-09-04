@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AddRole } from './add-role';
+import {AddRole} from './add-role';
 
 describe('AddRole', () => {
   let component: AddRole;

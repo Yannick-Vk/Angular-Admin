@@ -6,7 +6,6 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import {BlogUpload} from "../../../models/Blog";
 import {AuthService} from '../../../services/AuthService';
-import {User} from '../../../models/Users';
 
 @Component({
   selector: 'app-upload-blog',
