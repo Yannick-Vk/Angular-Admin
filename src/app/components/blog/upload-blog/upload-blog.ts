@@ -5,6 +5,8 @@ import {BlogService} from "../../../services/blog.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import {BlogUpload} from "../../../models/Blog";
+import {AuthService} from '../../../services/AuthService';
+import {User} from '../../../models/Users';
 
 @Component({
   selector: 'app-upload-blog',
@@ -21,6 +23,7 @@ import {BlogUpload} from "../../../models/Blog";
 export class UploadBlog {
   @ViewChild(Form) formComponent!: Form;
   private blogService = inject(BlogService);
+  private authService = inject(AuthService);
 
   errorMessage: string | undefined;
   successMessage: string | undefined;
@@ -56,6 +59,9 @@ export class UploadBlog {
     this.errorMessage = undefined;
     this.successMessage = undefined;
 
+    const userData: string | undefined = this.authService.getUser()?.username;
+    if (!userData) return;
+
     // Read file as raw UTF8 string
     const reader = new FileReader();
     reader.readAsText(this.selectedFile, 'UTF-8');
@@ -64,7 +70,8 @@ export class UploadBlog {
       const blogUpload: BlogUpload = {
         Title: formValue.Title,
         Description: formValue.Description,
-        File: rawFileContent
+        File: rawFileContent,
+        Author: userData,
       };
 
       this.blogService.uploadBlog(blogUpload).subscribe({

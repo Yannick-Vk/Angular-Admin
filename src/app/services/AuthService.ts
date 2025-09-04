@@ -6,6 +6,7 @@ import {DateTime} from 'luxon';
 import {Item} from './LocalItemService';
 import {HttpService} from './http-service';
 import {Router} from '@angular/router';
+import {User} from '../models/Users';
 
 @Injectable({
   providedIn: 'root',
@@ -87,7 +88,11 @@ export class AuthService extends HttpService {
     return false;
   }
 
-  public getUserData() {
+  public getUser(): User | null {
+    const userString = this.user.get();
+    if (!userString) return null;
 
+    const userData: User = JSON.parse(userString);
+    return userData;
   }
 }

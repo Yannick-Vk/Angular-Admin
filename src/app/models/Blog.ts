@@ -2,6 +2,7 @@
   Title: string;
   Description: string;
   File: string;
+  Author: string;
 }
 
 export interface Blog {
