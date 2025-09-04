@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {Role, RoleDto, UserWithRoleDto} from '../models/Role';
 import {AuthService} from './AuthService';
 import {HttpResponse} from '@angular/common/http';
-import {catchError, of, tap} from 'rxjs';
+import {catchError, Observable, of, tap} from 'rxjs';
 import {HttpService} from './http-service';
 import {User} from '../models/Users';
 
@@ -66,7 +66,7 @@ export class RoleService extends HttpService {
         }));
   }
 
-  public GetUsersWithRole(roleName: string) {
+  public GetUsersWithRole(roleName: string): Observable<Array<User>> {
     //console.log(`Getting users with roleName ${roleName}`);
     return this.client.get<Array<User>>(`${this.baseUrl()}/${roleName}`).pipe(
       catchError((error: HttpResponse<any>) => {

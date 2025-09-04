@@ -3,3 +3,12 @@
   Description: string;
   File: string;
 }
+
+export interface Blog {
+  title: string;
+  description: string;
+  blogContent: string;
+  author: string;
+  createdAt: string;
+  updatedAt: string;
+}

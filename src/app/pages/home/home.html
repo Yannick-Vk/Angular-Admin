@@ -1,12 +1,6 @@
 ﻿<div>
   <h2 class="text-3xl">Home</h2>
-  <app-blog title="Blogpost 1">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium alias asperiores consequatur consequuntur
-      distinctio dolorum est excepturi facere, id illum ipsam libero, odio rerum suscipit vero, voluptas voluptates.
-      Pariatur, rem.</p>
-  </app-blog>
-
-  <app-upload-blog>
-
-  </app-upload-blog>
+  @for (blog of blogs(); track $index;) {
+    <app-blog [blog]="blog"></app-blog>
+  }
 </div>
