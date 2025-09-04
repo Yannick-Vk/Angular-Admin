@@ -1,12 +1,12 @@
 
 <button (click)="back()"> Back to Roles </button>
 @if (users().length > 0) {
-  <app-table [headers]="['Id', 'Name', 'Info', 'Delete']">
+  <app-table [headers]="['Id', 'Name', 'Info', 'Delete']" class="table-auto">
     @for (user of users(); track user.id) {
       <tr class="">
-        <td class="p-3 block max-w-[100px] md:max-w-none truncate">{{ user.id }}</td>
+        <td class="p-3 block">{{ user.id }}</td>
         <td>{{ user.username }}</td>
-        <td>{{ user.email }}</td>
+        <td class="">{{ user.email }}</td>
         <td><button (click)="details(user.username)">Details</button></td>
         <td><button (click)="removeRole(user.username)"> Remove Role </button></td>
       </tr>
