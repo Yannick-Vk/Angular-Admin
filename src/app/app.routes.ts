@@ -11,6 +11,7 @@ import {UserInfo} from './pages/users/user-info/user-info';
 import {UploadBlog} from "./components/blog/upload-blog/upload-blog";
 import {Blogs} from './pages/blogs/blogs';
 import {MyBlogs} from './pages/my-blogs/my-blogs';
+import {EditBlog} from './pages/my-blogs/edit-blog/edit-blog';
 
 export const routes: Routes = [
   {
@@ -61,7 +62,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
   }, {
     path: 'Blog/Me/Edit/:blogId',
-    component: MyBlogs,
+    component: EditBlog,
     canActivate: [authGuard],
   },
 ];
