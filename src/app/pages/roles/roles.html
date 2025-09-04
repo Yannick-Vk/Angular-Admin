@@ -7,7 +7,7 @@
   <app-table [headers]="['Id', 'Name', 'Users', 'Delete']">
     @for (role of roles(); track role.id) {
       <tr class="">
-        <td class="p-3">{{ role.id }}</td>
+        <td class="p-3"><span class="block max-w-[100px] md:max-w-none truncate">{{ role.id }}</span></td>
         <td>{{ role.name }}</td>
         <td>
           <button (click)="showInfo(role)" >See all users</button>

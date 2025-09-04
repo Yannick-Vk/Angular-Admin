@@ -4,7 +4,7 @@
   @if (users().length > 0) {
     @for (user of users(); track user.id) {
       <tr class="">
-        <td class="p-3">{{ user.id }}</td>
+        <td class="p-3"><span class="block max-w-[100px] md:max-w-none truncate">{{ user.id }}</span></td>
         <td>{{ user.username }}</td>
         <td>{{ user.email }}</td>
         <td><button (click)="viewDetails(user.username)"> View Details </button></td>
