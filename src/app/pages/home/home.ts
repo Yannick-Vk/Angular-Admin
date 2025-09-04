@@ -22,7 +22,7 @@ export class HomeComponent {
 
   getBlogPosts(): void {
     this.blogService.getBlogPosts().subscribe((blogPosts) => {
-      console.table(blogPosts);
+      // console.table(blogPosts);
       this.blogs.set(blogPosts);
     })
   }
