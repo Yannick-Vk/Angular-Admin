@@ -8,6 +8,7 @@ import {
   withJsonpSupport
 } from '@angular/common/http';
 import {AuthInterceptor} from './services/auth-interceptor';
+import {provideMarkdown} from 'ngx-markdown';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,5 +16,6 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes),
     provideHttpClient(withFetch(), withJsonpSupport(), withInterceptors([AuthInterceptor])),
+    provideMarkdown(),
   ],
 };

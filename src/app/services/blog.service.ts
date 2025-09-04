@@ -28,4 +28,13 @@ export class BlogService extends HttpService {
       })
     );
   }
+
+  getBlog(id: string) {
+    return this.client.get<Blog>(`${this.baseUrl()}/${id}`).pipe(
+      catchError((error: HttpResponse<any>) => {
+        console.error(`Failed to get blog with id [${id}]: ${error}`);
+        throw error;
+      })
+    )
+  }
 }
