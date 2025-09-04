@@ -18,7 +18,8 @@
   </app-table>
 </div>
 <div class="mt-5 flex flex-row gap-3 flex-wrap justify-between flex-1/2">
-  <app-form title="Add user to role" (onValidSubmit)="addRole($event)" (validityChange)="onFormValidityChangeAdd($event)"
+  <app-form title="Add user to role" (onValidSubmit)="addRole($event)"
+            (validityChange)="onFormValidityChangeAdd($event)"
             [data]="[
     { label: 'Role name', key: 'RoleName', type: 'select', options: options(), required: true,
     value: remainingRoles().length > 0 ? remainingRoles()[0] : '' }
@@ -28,7 +29,8 @@
     </div>
   </app-form>
 
-  <app-form title="Create new Role" (onValidSubmit)="createNewRole($event)" (validityChange)="onFormValidityChangeCreate($event)"
+  <app-form title="Create new Role" (onValidSubmit)="createNewRole($event)"
+            (validityChange)="onFormValidityChangeCreate($event)"
             [data]="[
     { label: 'Role name', key: 'RoleName', type: 'text', required: true,}
   ]">
@@ -39,7 +41,9 @@
 
 </div>
 <app-modal #confirmRemoveRoleModal>
-  <button class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" (click)="confirmRemoveRole()">Confirm</button>
-  <button class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400" (click)="cancelRemoveRole()">Cancel</button>
+  <div class="flex flex-row gap-5 modal-actions">
+    <button id="confirm" (click)="confirmRemoveRole()">Confirm</button>
+    <button id="cancel" (click)="cancelRemoveRole()">Cancel</button>
+  </div>
 </app-modal>
 

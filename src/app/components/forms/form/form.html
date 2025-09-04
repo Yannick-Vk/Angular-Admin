@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="">
-  <h2 class="text-fuchsia-500 text-3xl mb-3">{{ title() }}</h2>
+  <h2 class="text-fuchsia-500 text-4xl mb-3">{{ title() }}</h2>
 
   @if (showValidationErrors() && form.errors?.['passwordMismatch']) {
     <div class="error-message">Passwords do not match.</div>

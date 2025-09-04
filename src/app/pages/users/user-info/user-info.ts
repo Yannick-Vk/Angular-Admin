@@ -17,7 +17,7 @@ import {Modal} from "../../../components/modal/modal";
     Modal
   ],
   templateUrl: './user-info.html',
-  styleUrl: './user-info.css',
+  styleUrl: './user-info.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserInfo {
