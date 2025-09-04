@@ -2,6 +2,7 @@ import {Component, inject, signal} from '@angular/core';
 import {Blog} from '../../models/Blog';
 import {BlogService} from '../../services/blog.service';
 import {Router} from '@angular/router';
+import {AuthService} from '../../services/AuthService';
 
 @Component({
   selector: 'app-my-blogs',
@@ -11,11 +12,18 @@ import {Router} from '@angular/router';
 })
 export class MyBlogs {
   blogs = signal<Array<Blog>>([])
-  private blogService: BlogService = inject(BlogService);
+  private blogService = inject(BlogService);
+  private authService = inject(AuthService);
   private router = inject(Router);
 
   constructor() {
-    this.blogService.getBlogsWithAuthor('Yannick').subscribe((blogs: Blog[]) => {
+    const user = this.authService.getUser();
+    if (!user) {
+      console.error('User was not loggedIn');
+      return;
+    }
+
+    this.blogService.getBlogsWithAuthor(user.username).subscribe((blogs: Blog[]) => {
       this.blogs.set(blogs);
     })
   }

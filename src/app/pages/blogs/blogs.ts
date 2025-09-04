@@ -3,6 +3,7 @@ import {Blog} from '../../models/Blog';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BlogService} from '../../services/blog.service';
 import {MarkdownComponent} from 'ngx-markdown';
+import {AuthService} from '../../services/AuthService';
 
 @Component({
   selector: 'app-blogs',
@@ -13,7 +14,7 @@ import {MarkdownComponent} from 'ngx-markdown';
   styleUrl: './blogs.css'
 })
 export class Blogs {
-  blogService = inject(BlogService);
+  private blogService = inject(BlogService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 

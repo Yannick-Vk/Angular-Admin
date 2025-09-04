@@ -14,3 +14,10 @@ export interface Blog {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface BlogUpdate {
+  id: string;
+  title?: string;
+  description?: string;
+  blogContent?: string;
+}
