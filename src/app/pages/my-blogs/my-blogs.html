@@ -7,6 +7,9 @@
       <p>Updated at: {{ blog.updatedAt }}</p>
     }
     <p>{{ blog.description }}</p>
-    <button class="my-5" (click)="showDetails(blog.id)"> Show details</button>
+    <div class="flex flex-row gap-5 mt-3 mb-8">
+      <button (click)="showDetails(blog.id)"> Show details</button>
+      <button (click)="edit(blog.id)">Edit</button>
+    </div>
   </div>
 }

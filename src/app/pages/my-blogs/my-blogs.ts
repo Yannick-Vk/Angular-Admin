@@ -23,4 +23,8 @@ export class MyBlogs {
   showDetails(id: string) {
     this.router.navigate([`Blogs`, id]).then(() => {});
   }
+
+  edit(id: string) {
+    this.router.navigate([`Blog/Me/Edit`, id]).then(() => {});
+  }
 }

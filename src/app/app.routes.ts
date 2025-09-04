@@ -56,7 +56,11 @@ export const routes: Routes = [
     path: 'Home',
     redirectTo: '',
   }, {
-    path: 'MyBlogs',
+    path: 'Blog/Me',
+    component: MyBlogs,
+    canActivate: [authGuard],
+  }, {
+    path: 'Blog/Me/Edit/:blogId',
     component: MyBlogs,
     canActivate: [authGuard],
   },
