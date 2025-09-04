@@ -9,8 +9,8 @@ import {ChangeDetectionStrategy, Component, input, signal} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Modal {
-  title = input<string>('');
-  message = input<string>('');
+  title = signal<string>('');
+  message = signal<string>('');
 
   isOpen = signal(false);
 

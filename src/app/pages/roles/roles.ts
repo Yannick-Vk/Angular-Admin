@@ -1,17 +1,19 @@
-import {Component, computed, inject, signal, WritableSignal} from '@angular/core';
+import {Component, computed, inject, signal, ViewChild, WritableSignal} from '@angular/core';
 import {AddRole} from './add-role/add-role';
 import {Router} from '@angular/router';
 import {RoleService} from '../../services/role-service';
 import {Role, RoleDto, UserWithRoleDto} from '../../models/Role';
 import {Table} from '../../components/table/table';
 import {AddRoleToUser} from './add-role-to-user/add-role-to-user';
+import {Modal} from '../../components/modal/modal';
 
 @Component({
   selector: 'roles',
   imports: [
     AddRole,
     Table,
-    AddRoleToUser
+    AddRoleToUser,
+    Modal
   ],
   templateUrl: './roles.html',
   styleUrl: './roles.css'
@@ -21,6 +23,9 @@ export class Roles {
   router = inject(Router);
   roles: WritableSignal<Array<Role>> = signal([]);
   roleNames = computed(() => this.roles().map(role => role.name));
+  roleToDelete: WritableSignal<string | null> = signal(null);
+
+  @ViewChild('confirmDelete') confirmDeleteModal!: Modal;
 
   constructor() {
     this.getRoles();
@@ -49,14 +54,8 @@ export class Roles {
   }
 
   deleteRole(roleName: string) {
-    this.roleService.DeleteRole(new RoleDto(roleName)).subscribe({
-      next: () => {
-        this.getRoles();
-      },
-      error: (err) => {
-        console.error('Error deleting role:', err);
-      }
-    })
+    this.roleToDelete.set(roleName);
+    this.openConfirmModal(`Deleting role ${roleName}`, `Are you sure you want to delete role ${roleName}?`);
   }
 
   addRoleToUser(data: {RoleName: string, Username: string}) {
@@ -70,6 +69,35 @@ export class Roles {
 
   showInfo(role: Role) {
     this.router.navigate([`/Roles/${role.name}`]).then()
+  }
+
+  openConfirmModal(title: string, message: string) {
+    this.confirmDeleteModal.title.set(title);
+    this.confirmDeleteModal.message.set(message);
+    this.confirmDeleteModal.open();
+  }
+
+  confirmRoleDelete() {
+    const roleName = this.roleToDelete();
+    if (roleName) {
+      this.roleService.DeleteRole(new RoleDto(roleName)).subscribe({
+        next: () => {
+          this.getRoles();
+          this.confirmDeleteModal.close();
+          this.roleToDelete.set(null);
+        },
+        error: (err) => {
+          console.error('Error deleting role:', err);
+          this.confirmDeleteModal.close();
+          this.roleToDelete.set(null);
+        }
+      });
+    }
+  }
+
+  cancelRoleDelete() {
+    this.confirmDeleteModal.close();
+    this.roleToDelete.set(null);
   }
 
 }
