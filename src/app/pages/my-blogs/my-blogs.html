@@ -11,7 +11,7 @@
       @if (blog.updatedAt) {
         <p>Updated on: {{ formatDate(blog.updatedAt) }}</p>
       }
-      <p>{{ blog.description }}</p>
+      <p class="my-3">{{ blog.description }}</p>
       <div class="flex flex-row gap-5 mt-3 mb-8">
         <button (click)="showDetails(blog.id)"> Show details</button>
         <button (click)="edit(blog.id)">Edit</button>

@@ -5,7 +5,7 @@
   @if (blog().updatedAt) {
     <p>Updated at: {{formatDate(blog().updatedAt)}}</p>
   }
-  <div class="container">
+  <div class="my-3">
     {{blog().description}}
   </div>
   <button (click)="readMore(blog().id)" class="mb-3">Read more</button>
