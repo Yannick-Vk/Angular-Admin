@@ -1,15 +1,21 @@
 <h2 class="text-3xl">My blogs</h2>
-@for (blog of blogs(); track blog.id) {
-  <div class="my-5">
-    <h3 class="text-xl">{{ blog.title }}</h3>
-    <p>Created on: {{ formatDate(blog.createdAt) }}</p>
-    @if (blog.updatedAt) {
-      <p>Updated on: {{ formatDate(blog.updatedAt) }}</p>
-    }
-    <p>{{ blog.description }}</p>
-    <div class="flex flex-row gap-5 mt-3 mb-8">
-      <button (click)="showDetails(blog.id)"> Show details</button>
-      <button (click)="edit(blog.id)">Edit</button>
+@if (blogs().length === 0) {
+  <p>You haven't made a blog yet.</p>
+  <button (click)="toNewBlog()" class="mt-5">Create my first blog</button>
+} @else {
+  <button (click)="toNewBlog()" class="mt-5">Create a new blog</button>
+  @for (blog of blogs(); track blog.id) {
+    <div class="my-5">
+      <h3 class="text-xl">{{ blog.title }}</h3>
+      <p>Created on: {{ formatDate(blog.createdAt) }}</p>
+      @if (blog.updatedAt) {
+        <p>Updated on: {{ formatDate(blog.updatedAt) }}</p>
+      }
+      <p>{{ blog.description }}</p>
+      <div class="flex flex-row gap-5 mt-3 mb-8">
+        <button (click)="showDetails(blog.id)"> Show details</button>
+        <button (click)="edit(blog.id)">Edit</button>
+      </div>
     </div>
-  </div>
+  }
 }

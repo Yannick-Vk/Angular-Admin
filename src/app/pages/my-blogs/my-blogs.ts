@@ -40,4 +40,9 @@ export class MyBlogs {
   formatDate(date: string) {
     return DateTime.fromISO(date).toLocaleString(DateTime.DATETIME_MED);
   }
+
+  toNewBlog(): void {
+    this.router.navigate([`Blog/Upload`]).then(() => {});
+    return;
+  }
 }

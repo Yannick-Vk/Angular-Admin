@@ -44,7 +44,7 @@ export const routes: Routes = [
     'component': RoleHasUsers,
     'canActivate': [authGuard],
   }, {
-    path: 'Blogs/Upload',
+    path: 'Blog/Upload',
     component: UploadBlog,
     canActivate: [authGuard],
   }, {
