@@ -1,1 +1,12 @@
-<p>my-blogs works!</p>
+<h2 class="text-3xl">My blogs</h2>
+@for (blog of blogs(); track blog.id) {
+  <div class="my-5">
+    <h3 class="text-xl">{{ blog.title }}</h3>
+    <p>Created at: {{ blog.createdAt }}</p>
+    @if (blog.updatedAt) {
+      <p>Updated at: {{ blog.updatedAt }}</p>
+    }
+    <p>{{ blog.description }}</p>
+    <button class="my-5" (click)="showDetails(blog.id)"> Show details</button>
+  </div>
+}
