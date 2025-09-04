@@ -36,12 +36,14 @@ export class EditBlog {
     const id = this.route.snapshot.params['blogId'];
     if (!id) {
       console.error('No parameter [blogId] was supplied');
+      this.router.navigate(['/Login']).then(() => {});
       return;
     }
 
     const user = this.authService.getUser();
     if (!user) {
       console.error('User is not loggedIn');
+      this.router.navigate(['/Login']).then(() => {});
       return;
     }
 

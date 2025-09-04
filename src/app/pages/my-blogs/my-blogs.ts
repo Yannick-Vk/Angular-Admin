@@ -21,6 +21,7 @@ export class MyBlogs {
     const user = this.authService.getUser();
     if (!user) {
       console.error('User was not loggedIn');
+      this.router.navigate(['/Login']).then(() => {});
       return;
     }
 
