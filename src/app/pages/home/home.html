@@ -1,6 +1,8 @@
 ﻿<div>
   <h2 class="text-3xl">Home</h2>
+  <button class="my-5" (click)="openModal()">Open modal</button>
   @for (blog of blogs(); track $index;) {
     <app-blog [blog]="blog"></app-blog>
   }
 </div>
+<app-modal #yesNoModal title="My Modal" message="This is a modal."></app-modal>
