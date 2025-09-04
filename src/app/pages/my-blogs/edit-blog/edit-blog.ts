@@ -124,4 +124,9 @@ export class EditBlog {
   cancelDelete() {
     this.confirmDeleteModal.close();
   }
+
+  back() {
+    this.router.navigate(['Blogs', this.blog.id]).then(() => {});
+    return;
+  }
 }
