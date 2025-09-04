@@ -12,8 +12,9 @@ import {Modal} from '../../../components/modal/modal';
     ReactiveFormsModule,
     Modal
   ],
+  styleUrl: './edit-blog.scss',
   templateUrl: './edit-blog.html',
-  styleUrl: './edit-blog.css'
+
 })
 export class EditBlog {
   @ViewChild('confirmDeleteModal') confirmDeleteModal!: Modal;
