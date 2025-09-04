@@ -4,7 +4,7 @@ import {ReactiveFormsModule, ValidationErrors} from '@angular/forms';
 import {BlogService} from "../../../services/blog.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
-import {Blog, BlogUpload} from "../../../models/Blog";
+import {BlogUpload} from "../../../models/Blog";
 import {AuthService} from '../../../services/AuthService';
 import {MarkdownComponent} from 'ngx-markdown';
 import {Router} from '@angular/router';
