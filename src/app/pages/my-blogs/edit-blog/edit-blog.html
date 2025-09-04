@@ -20,6 +20,10 @@
     <button type="submit">Submit changes</button>
     <button type="button" (click)="deleteBlog()">Delete Blog</button>
   </div>
+
+  @if (errorMessage().length > 0) {
+    <p class="text-red-500 pt-5">{{errorMessage()}}</p>
+  }
 </form>
 
 <app-modal #confirmDeleteModal>

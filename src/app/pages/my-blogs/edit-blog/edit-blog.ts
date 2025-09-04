@@ -1,4 +1,4 @@
-import {Component, inject, ViewChild} from '@angular/core';
+import {Component, inject, signal, ViewChild} from '@angular/core';
 import {BlogService} from '../../../services/blog.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Blog, BlogUpdate} from '../../../models/Blog';
@@ -30,6 +30,7 @@ export class EditBlog {
   })
 
   blog!: Blog;
+  errorMessage = signal<string>('');
 
   constructor() {
     const id = this.route.snapshot.params['blogId'];
@@ -59,6 +60,7 @@ export class EditBlog {
 
   // Only send the data if it's not updated
   onSubmit() {
+    this.errorMessage.set('')
     const {title, description, file} = this.formEdit.value;
 
     const update: BlogUpdate = {id: this.blog.id};
@@ -78,12 +80,13 @@ export class EditBlog {
     }
 
     if (Object.keys(update).length <= 1) {
-      console.log('No values were changed');
+      this.errorMessage.set("No changes were made")
       return;
     }
-    console.log('Some values have been changed', update);
 
-    this.blogService.updateBlog(update).subscribe();
+    this.blogService.updateBlog(update).subscribe(value => {
+      this.router.navigate(['Blogs', this.blog.id]).then(() => {})
+    });
   }
 
   // Read the incoming file as a raw UTF8-string
