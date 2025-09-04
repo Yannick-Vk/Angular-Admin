@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal, ViewChild} from '@angular/core';
 import {Form} from '../../forms/form/form';
 import {ReactiveFormsModule, ValidationErrors} from '@angular/forms';
 import {BlogService} from "../../../services/blog.service";
@@ -6,6 +6,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import {BlogUpload} from "../../../models/Blog";
 import {AuthService} from '../../../services/AuthService';
+import {MarkdownComponent} from 'ngx-markdown';
 
 @Component({
   selector: 'app-upload-blog',
@@ -16,7 +17,8 @@ import {AuthService} from '../../../services/AuthService';
   imports: [
     Form,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    MarkdownComponent
   ]
 })
 export class UploadBlog {
@@ -28,6 +30,8 @@ export class UploadBlog {
   successMessage: string | undefined;
   showValidationErrors: boolean = false;
   selectedFile: File | null = null;
+
+  markdownRenderContent = signal<string | null>(null);
 
   onFormErrorsChanged(_: ValidationErrors | null): void {
   }
@@ -87,12 +91,33 @@ export class UploadBlog {
   }
 
   clear(): void {
-    this.formComponent.form.reset();
+    this.formComponent.resetForm();
+    this.errorMessage = undefined;
+    this.selectedFile = null;
+    this.markdownRenderContent.set('');
   }
 
   onFile(event: {key: string, file: File}) {
     if (event.key === 'Upload') {
       this.selectedFile = event.file;
     }
+  }
+
+  preview() {
+    if (!this.selectedFile) {
+      this.errorMessage = 'Please select a file to preview.';
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsText(this.selectedFile, 'UTF-8');
+    reader.onload = () => {
+      this.markdownRenderContent.set(reader.result as string);
+      this.errorMessage = undefined;
+    };
+    reader.onerror = (error) => {
+      this.errorMessage = 'Error reading file: ' + error;
+      this.markdownRenderContent.set('');
+    };
   }
 }

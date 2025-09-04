@@ -16,7 +16,7 @@
             }
           </select>
         } @else if (field.type === "file") {
-          <input type="file" (change)="onFileChange($event, field.key)">
+          <input #fileInput type="file" (change)="onFileChange($event, field.key)">
         } @else if (field.type === "textarea") {
           <textarea [formControlName]="field.key" [readOnly]="field.disabled?? false"></textarea>
         } @else {

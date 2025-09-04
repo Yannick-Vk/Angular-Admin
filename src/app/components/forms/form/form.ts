@@ -1,4 +1,4 @@
-import {Component, effect, input, OnDestroy, OnInit, output} from '@angular/core';
+import {Component, effect, input, OnDestroy, OnInit, output, QueryList, ViewChildren} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {CommonModule} from "@angular/common";
+import {ElementRef} from "@angular/core";
 
 @Component({
   selector: 'app-form',
@@ -36,6 +37,8 @@ export class Form implements OnInit, OnDestroy {
 
   form: FormGroup = new FormGroup({}) ;
   private valueChangesSub?: Subscription;
+
+  @ViewChildren('fileInput') fileInputs!: QueryList<ElementRef>;
 
   constructor() {
     effect(() => {
@@ -95,6 +98,11 @@ export class Form implements OnInit, OnDestroy {
       this.onFileSelected.emit({key, file});
       this.form.get(key)?.patchValue(file.name);
     }
+  }
+
+  public resetForm() {
+    this.form.reset();
+    this.fileInputs.forEach(input => input.nativeElement.value = '');
   }
 }
 
