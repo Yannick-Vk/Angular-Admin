@@ -1,6 +1,7 @@
 import {Component, inject, input} from '@angular/core';
 import {Blog} from '../../models/Blog';
 import {Router} from '@angular/router';
+import {DateTime} from 'luxon';
 
 @Component({
   selector: 'app-blog',
@@ -14,5 +15,9 @@ export class BlogPost {
 
   readMore(id: string) {
     this.router.navigate([`Blogs/${id}`]).then()
+  }
+
+  formatDate(date: string) {
+    return DateTime.fromISO(date).toLocaleString(DateTime.DATETIME_MED);
   }
 }

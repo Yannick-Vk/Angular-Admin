@@ -1,9 +1,9 @@
 <article class="my-3">
   <h2 class="text-2xl">{{blog().title}}</h2>
   <p>Author: {{blog().author}}</p>
-  <p>Created at: {{blog().createdAt}}</p>
+  <p>Created at: {{formatDate(blog().createdAt)}}</p>
   @if (blog().updatedAt) {
-    <p>Updated at: {{blog().updatedAt}}</p>
+    <p>Updated at: {{formatDate(blog().updatedAt)}}</p>
   }
   <div class="container">
     {{blog().description}}

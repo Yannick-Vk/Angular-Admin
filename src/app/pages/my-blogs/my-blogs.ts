@@ -3,6 +3,7 @@ import {Blog} from '../../models/Blog';
 import {BlogService} from '../../services/blog.service';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/AuthService';
+import {DateTime} from 'luxon';
 
 @Component({
   selector: 'app-my-blogs',
@@ -34,5 +35,9 @@ export class MyBlogs {
 
   edit(id: string) {
     this.router.navigate([`Blog/Me/Edit`, id]).then(() => {});
+  }
+
+  formatDate(date: string) {
+    return DateTime.fromISO(date).toLocaleString(DateTime.DATETIME_MED);
   }
 }
