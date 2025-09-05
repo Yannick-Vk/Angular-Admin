@@ -2,7 +2,7 @@ import {Component, inject, input} from '@angular/core';
 import {Blog} from '../../models/Blog';
 import {Router} from '@angular/router';
 import {formatDate} from '../../services/DateTimeHelper';
-import {CopyBlogToClipboard, CopyToClipboard} from '../../services/LinkService';
+import {CopyBlogToClipboard} from '../../services/LinkService';
 
 @Component({
   selector: 'app-blog',
