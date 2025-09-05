@@ -3,11 +3,13 @@ import {Blog} from '../../models/Blog';
 import {BlogService} from '../../services/blog.service';
 import {Router} from '@angular/router';
 import {AuthService} from '../../services/AuthService';
-import {formatDate} from '../../services/DateTimeHelper';
+import {BlogPost} from '../../components/blog/blog-post.component';
 
 @Component({
   selector: 'app-my-blogs',
-  imports: [],
+  imports: [
+    BlogPost
+  ],
   templateUrl: './my-blogs.html',
   styleUrl: './my-blogs.css'
 })
@@ -26,22 +28,13 @@ export class MyBlogs {
     }
 
     this.blogService.getBlogsWithAuthor(user.username).subscribe((blogs: Blog[]) => {
+      console.table(blogs);
       this.blogs.set(blogs);
     })
-  }
-
-  showDetails(id: string) {
-    this.router.navigate([`Blogs`, id]).then(() => {});
-  }
-
-  edit(id: string) {
-    this.router.navigate([`Blog/Me/Edit`, id]).then(() => {});
   }
 
   toNewBlog(): void {
     this.router.navigate([`Blog/Upload`]).then(() => {});
     return;
   }
-
-  protected readonly formatDate = formatDate;
 }

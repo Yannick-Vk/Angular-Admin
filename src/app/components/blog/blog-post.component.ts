@@ -13,9 +13,10 @@ import {CopyToClipboard} from '../../services/LinkService';
 export class BlogPost {
   router = inject(Router)
   blog = input<Blog>({author: '', blogContent: '', createdAt: '', description: '', id: '', title: '', updatedAt: ''});
+  enableEdit = input<boolean>(false);
 
-  readMore(id: string) {
-    this.router.navigate([`Blogs/${id}`]).then()
+  async readMore(id: string) {
+    await this.router.navigate([`Blogs/${id}`])
   }
 
   protected readonly formatDate = formatDate;
@@ -24,4 +25,8 @@ export class BlogPost {
   async copy(blogId: string) {
     await CopyToClipboard(`http://localhost:4200/Blogs/${blogId}`);
   };
+
+  async edit(id: string) {
+    await this.router.navigate([`Blog/Me/Edit`, id]);
+  }
 }

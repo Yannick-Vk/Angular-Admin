@@ -6,20 +6,8 @@
   <button (click)="toNewBlog()" class="my-5">Create a new blog</button>
   <hr/>
   @for (blog of blogs(); track blog.id) {
-    <div class="my-5">
-      <h3 class="text-xl">{{ blog.title }}</h3>
-      <p>Created on: {{ formatDate(blog.createdAt) }}</p>
-      @if (blog.updatedAt) {
-        <p>Updated on: {{ formatDate(blog.updatedAt) }}</p>
-      }
-      <p class="my-3">{{ blog.description }}</p>
-      <div class="flex flex-row gap-5 mt-3 mb-8">
-        <button (click)="showDetails(blog.id)"> Show details</button>
-        <button (click)="edit(blog.id)">Edit</button>
-      </div>
-    </div>
+    <app-blog [blog]="blog" [enableEdit]="true">
 
-    <hr/>
-
+    </app-blog>
   }
 }

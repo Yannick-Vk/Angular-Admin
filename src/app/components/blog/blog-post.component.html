@@ -10,6 +10,9 @@
   </div>
   <div class="flex flex-row gap-5">
     <button (click)="readMore(blog().id)" class="mb-3">Read more</button>
+    @if (enableEdit()) {
+      <button class="mb-3" (click)="edit(blog().id)">Edit</button>
+    }
     <button (click)="copy(blog().id)" class="mb-3">Copy link</button>
   </div>
   <hr/>
