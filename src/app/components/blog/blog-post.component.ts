@@ -2,7 +2,6 @@ import {Component, inject, input} from '@angular/core';
 import {Blog} from '../../models/Blog';
 import {Router} from '@angular/router';
 import {formatDate} from '../../services/DateTimeHelper';
-import {copy} from 'clipboard';
 import {CopyToClipboard} from '../../services/LinkService';
 
 @Component({

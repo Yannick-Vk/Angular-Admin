@@ -1,4 +1,4 @@
-﻿import {ChangeDetectionStrategy, Component, inject, signal, ViewChild} from '@angular/core';
+﻿import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {BlogPost} from '../../components/blog/blog-post.component';
 import {BlogService} from '../../services/blog.service';
 import {Blog} from '../../models/Blog';
