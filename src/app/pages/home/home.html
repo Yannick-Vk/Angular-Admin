@@ -1,6 +1,13 @@
 ﻿<div>
   <h2 class="text-5xl">Home</h2>
-
+  <div class="my-5">
+    <form class="flex flex-row justify-between gap-5 mb-5" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+      <label class="hidden">Search</label>
+      <input type="search" class="w-full" placeholder="Search ..." formControlName="searchText">
+      <button type="submit" class="w-40">Search</button>
+    </form>
+    <hr/>
+  </div>
   @for (blog of blogs(); track $index;) {
     <app-blog [blog]="blog"></app-blog>
   }

@@ -63,4 +63,13 @@ export class BlogService extends HttpService {
       })
     )
   }
+
+  searchBlog(searchText: string) {
+    return this.client.get<Array<Blog>>(`${this.baseUrl()}/search/${searchText}`).pipe(
+      catchError((error: HttpResponse<any>) => {
+        console.error(`Failed to find blogs with '${searchText}': ${error}`)
+        throw error;
+      })
+    )
+  }
 }
