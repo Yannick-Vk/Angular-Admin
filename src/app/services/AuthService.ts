@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpResponse} from '@angular/common/http';
 import {BehaviorSubject, catchError, tap} from 'rxjs';
-import {Jwt, LoginRequest, RegisterRequest} from '../models/Auth';
+import {Jwt, LoginRequest, RegisterRequest, TokenClaims} from '../models/Auth';
 import {DateTime} from 'luxon';
 import {Item} from './LocalItemService';
 import {HttpService} from './http-service';
@@ -41,11 +41,6 @@ export class AuthService extends HttpService {
 
   private HandleToken(token: Jwt) {
     // process the configuration.
-    const expiresAt = DateTime.fromISO(String(token.expiration));
-    console.log('Token expires at:',
-      expiresAt.toLocaleString(DateTime.DATETIME_FULL),
-      expiresAt.diff(DateTime.now()).toFormat("'in' mm 'minutes'"));
-
     this.token.set(token.token);
     this.loggedIn.next(true);
   }
@@ -61,7 +56,7 @@ export class AuthService extends HttpService {
 
   // Check if the expiration is set in local storage and if it's still valid
   public IsLoggedIn(): boolean {
-    const isExpired = this.IsTokenExpired(this.GetTokenClaims()["exp"])
+    const isExpired = this.IsTokenExpired(this.GetTokenClaims()?.exp)
     if (isExpired) {
       console.error('Invalid Expiration was set');
       return false;
@@ -69,16 +64,24 @@ export class AuthService extends HttpService {
     return true;
   }
 
-  private IsTokenExpired(expiry: number) {
+  private IsTokenExpired(expiry: number | null | undefined): boolean {
+    if (!expiry) return true;
+
     return DateTime.fromSeconds(expiry) < DateTime.now();
   }
 
-  private GetTokenClaims(): any | null {
+  private GetTokenClaims(): TokenClaims | null {
     const token = this.token.get();
     if (!token) return null;
 
     const arrayToken = token.split('.');
-    return JSON.parse(atob(arrayToken[1]));
+    const claims = JSON.parse(atob(arrayToken[1]));
+    return {
+      exp: claims.exp,
+      Id: claims.Id,
+      Username: claims.Username,
+      Email: claims.Email,
+    };
   }
 
   // Get User claims from token
@@ -94,9 +97,9 @@ export class AuthService extends HttpService {
     console.info(`${diff.toFormat("'Token expires in' mm 'minutes'")}`);
 
     return {
-      id: token["Id"],
-      email: token["Email"],
-      username: token["Username"],
+      id: token.Id,
+      email: token.Email,
+      username: token.Username,
     };
   }
 }
