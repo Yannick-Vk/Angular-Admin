@@ -13,8 +13,10 @@
 
     <div class="hidden md:flex md:flex-row md:items-center space-x-4">
       @if (loggedIn()) {
-        <a routerLink="/Users">Users</a>
-        <a routerLink="/Roles">Roles</a>
+        @if (isAdmin()) {
+          <a routerLink="/Users">Users</a>
+          <a routerLink="/Roles">Roles</a>
+        }
         <a routerLink="/Blog/Upload">Upload Blog</a>
         <a routerLink="/Blog/Me">My Blogs</a>
       }
@@ -28,23 +30,25 @@
     </div>
   </div>
 
-    <!-- Mobile Menu -->
-    @if (isHamburgerMenuOpen()) {
-      <div class="md:hidden mt-4">
-        <div class="flex flex-col items-start space-y-2">
-          @if (loggedIn()) {
+  <!-- Mobile Menu -->
+  @if (isHamburgerMenuOpen()) {
+    <div class="md:hidden mt-4">
+      <div class="flex flex-col items-start space-y-2">
+        @if (loggedIn()) {
+          @if (isAdmin()) {
             <a routerLink="/Users">Users</a>
             <a routerLink="/Roles">Roles</a>
-            <a routerLink="/Blog/Upload">Upload Blog</a>
-            <a routerLink="/Blog/Me">My Blogs</a>
           }
-          @if (!loggedIn()) {
-            <a routerLink="/Login">Login</a>
-            <a routerLink="/Register">Register</a>
-          } @else {
-            <a routerLink="/Logout">Logout</a>
-          }
-        </div>
+          <a routerLink="/Blog/Upload">Upload Blog</a>
+          <a routerLink="/Blog/Me">My Blogs</a>
+        }
+        @if (!loggedIn()) {
+          <a routerLink="/Login">Login</a>
+          <a routerLink="/Register">Register</a>
+        } @else {
+          <a routerLink="/Logout">Logout</a>
+        }
       </div>
-    }
+    </div>
+  }
 </nav>
