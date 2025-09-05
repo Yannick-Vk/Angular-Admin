@@ -77,7 +77,7 @@ export class RoleService extends HttpService {
 
   public UserHasRole(dto: UserWithRoleDto) {
     //console.log(`Checking if ${dto.username} has role ${dto.roleName}`);
-    return this.client.get<Array<User>>(`${this.baseUrl()}/${dto.roleName}/${dto.username}`).pipe(
+    return this.client.get<boolean>(`${this.baseUrl()}/${dto.roleName}/${dto.username}`).pipe(
       catchError((error: HttpResponse<any>) => {
         console.error('Failed to get data: ', error);
         throw error;

@@ -11,8 +11,9 @@ export const authGuard: CanActivateFn = () => {
 
 export const adminGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
-  if (!authService.IsLoggedIn()) return false;
+  const user = authService.getUser()
+  if (!user) return false;
 
   const roleService = inject(RoleService);
-  return true;
+  return roleService.UserHasRole({roleName: 'Admin', username: user.username});
 };

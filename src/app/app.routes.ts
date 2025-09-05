@@ -3,7 +3,7 @@ import {LoginForm} from './pages/login/LoginForm';
 import {RegisterForm} from './pages/register/register';
 import {Users} from './pages/users/users';
 import {HomeComponent} from './pages/home/home';
-import {authGuard} from './guards/auth-guard';
+import {adminGuard, authGuard} from './guards/auth-guard';
 import {Roles} from './pages/roles/roles';
 import {RoleHasUsers} from './pages/roles/role-has-users/role-has-users';
 import {Logout} from './pages/logout/logout';
@@ -38,7 +38,7 @@ export const routes: Routes = [
   }, {
     'path': 'Roles',
     'component': Roles,
-    'canActivate': [authGuard],
+    'canActivate': [authGuard, adminGuard],
   }, {
     'path': 'Roles/:roleName',
     'component': RoleHasUsers,
