@@ -52,7 +52,7 @@ button:hover {
 
 button:disabled {
   background: #636363;
-  border-color: #404040;
+  border-color: #5a5a5a;
   cursor: not-allowed;
 }
 
