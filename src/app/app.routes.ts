@@ -30,11 +30,11 @@ export const routes: Routes = [
   }, {
     'path': 'Users',
     'component': Users,
-    'canActivate': [authGuard],
+    'canActivate': [authGuard, adminGuard],
   },{
     'path': 'Users/:userName',
     'component': UserInfo,
-    'canActivate': [authGuard],
+    'canActivate': [authGuard, adminGuard],
   }, {
     'path': 'Roles',
     'component': Roles,
@@ -42,7 +42,7 @@ export const routes: Routes = [
   }, {
     'path': 'Roles/:roleName',
     'component': RoleHasUsers,
-    'canActivate': [authGuard],
+    'canActivate': [authGuard, adminGuard],
   }, {
     path: 'Blog/Upload',
     component: UploadBlog,
