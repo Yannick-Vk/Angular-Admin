@@ -15,5 +15,5 @@ export const adminGuard: CanActivateFn = () => {
   if (!user) return false;
 
   const roleService = inject(RoleService);
-  return roleService.UserHasRole({roleName: 'Admin', username: user.username});
+  return roleService.UserIsAdmin(user.username);
 };

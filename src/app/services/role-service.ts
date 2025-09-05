@@ -84,4 +84,8 @@ export class RoleService extends HttpService {
       })
     )
   }
+
+  public UserIsAdmin(username: string) {
+    return this.UserHasRole({roleName: 'Admin', username: username})
+  }
 }
