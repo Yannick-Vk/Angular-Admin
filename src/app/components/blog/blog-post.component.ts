@@ -2,7 +2,7 @@ import {Component, inject, input} from '@angular/core';
 import {Blog} from '../../models/Blog';
 import {Router} from '@angular/router';
 import {formatDate} from '../../services/DateTimeHelper';
-import {CopyToClipboard} from '../../services/LinkService';
+import {CopyBlogToClipboard, CopyToClipboard} from '../../services/LinkService';
 
 @Component({
   selector: 'app-blog',
@@ -23,7 +23,7 @@ export class BlogPost {
 
   //* Copy the link to the clipboard
   async copy(blogId: string) {
-    await CopyToClipboard(`http://localhost:4200/Blogs/${blogId}`);
+    await CopyBlogToClipboard(blogId);
   };
 
   async edit(id: string) {
