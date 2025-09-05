@@ -36,7 +36,6 @@ input[disabled], input[readonly] {
 }
 :host ::ng-deep .error-message {
   color: red;
-  margin-bottom: 1rem;
 }
 
 /*# sourceMappingURL=form.css.map */

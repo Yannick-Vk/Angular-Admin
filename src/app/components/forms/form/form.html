@@ -1,43 +1,35 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="">
-  <h2 class="text-fuchsia-500 text-4xl mb-3">{{ title() }}</h2>
-
-  @if (showValidationErrors() && form.errors?.['passwordMismatch']) {
-    <div class="error-message">Passwords do not match.</div>
-  }
-
-  @for (field of data(); track $index) {
-    <div class="my-5">
-      <label>
-        {{ field.label }}:
-        @if (field.type === "select") {
-          <select [formControlName]="field.key">
-            @for (option of field.options; track $index; ) {
-              <option [value]="option.value" [disabled]="option.disabled">{{ option.label }}</option>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="p-4 border rounded-md shadow-md h-full flex flex-col justify-between">
+  <div>
+    <h2 class="text-xl font-bold mb-4">{{ title() }}</h2>
+    <div class="flex flex-col space-y-4">
+      @for (input of data(); track input.key) {
+        <div class="flex flex-col">
+          <label [for]="input.key" class="mb-1 font-medium">{{ input.label }}</label>
+          @switch (input.type) {
+            @case ('select') {
+              <select [id]="input.key" [formControlName]="input.key" class="p-2 border rounded-md">
+                @for (option of input.options; track option.value) {
+                  <option [value]="option.value" [disabled]="option.disabled">{{ option.label }}</option>
+                }
+              </select>
             }
-          </select>
-        } @else if (field.type === "file") {
-          <input #fileInput type="file" (change)="onFileChange($event, field.key)">
-        } @else if (field.type === "textarea") {
-          <textarea [formControlName]="field.key" [readOnly]="field.disabled?? false"></textarea>
-        } @else {
-          <input [formControlName]="field.key" [type]="field.type" [readOnly]="field.disabled?? false"/>
-        }
-      </label>
-      @if (showValidationErrors() && form.get(field.key)?.invalid && (form.get(field.key)?.dirty || form.get(field.key)?.touched)) {
-        @if (form.get(field.key)?.errors?.['required']) {
-          <div class="error-message">{{ field.label }} is required.</div>
-        }
-        @if (form.get(field.key)?.errors?.['email']) {
-          <div class="error-message">Invalid email format.</div>
-        }
+            @case ('file') {
+              <input #fileInput type="file" (change)="onFileChange($event, input.key)">
+            }
+            @default {
+              <input [type]="input.type" [id]="input.key" [formControlName]="input.key" class="p-2 border rounded-md">
+            }
+          }
+        </div>
       }
     </div>
-  }
-
-  <ng-content>
-  </ng-content>
-
-  @if (errorMessage()) {
-    <div class="error-message mt-5">{{ errorMessage() }}</div>
-  }
+    <div>
+      @if (errorMessage()) {
+        <p class="error-message">{{errorMessage()}}</p>
+      }
+    </div>
+  </div>
+  <div class="mt-2">
+    <ng-content></ng-content>
+  </div>
 </form>
