@@ -28,7 +28,6 @@ export class MyBlogs {
     }
 
     this.blogService.getBlogsWithAuthor(user.username).subscribe((blogs: Blog[]) => {
-      console.table(blogs);
       this.blogs.set(blogs);
     })
   }
