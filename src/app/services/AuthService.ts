@@ -14,8 +14,6 @@ import {User} from '../models/Users';
 export class AuthService extends HttpService {
   router = inject(Router);
   private token = new Item('token');
-  private expiration = new Item('expiration');
-  private user = new Item('user');
   private loggedIn = new BehaviorSubject<boolean>(this.IsLoggedIn());
   public isLoggedIn$ = this.loggedIn.asObservable();
 
@@ -49,14 +47,11 @@ export class AuthService extends HttpService {
       expiresAt.diff(DateTime.now()).toFormat("'in' mm 'minutes'"));
 
     this.token.set(token.token);
-    this.expiration.set(JSON.stringify(DateTime.fromISO(String(token.expiration))));
-    this.user.set(JSON.stringify({username: token.username, email: token.email}));
     this.loggedIn.next(true);
   }
 
   public Logout() {
     this.token.remove();
-    this.expiration.remove();
     this.loggedIn.next(false);
   }
 
@@ -66,32 +61,42 @@ export class AuthService extends HttpService {
 
   // Check if the expiration is set in local storage and if it's still valid
   public IsLoggedIn(): boolean {
-    const expiration = this.expiration.get();
-    if (!expiration) {
-      // console.error('Expiration not set.');
+    const isExpired = this.IsTokenExpired(this.GetTokenClaims()["exp"])
+    if (isExpired) {
+      console.error('Invalid Expiration was set');
       return false;
     }
-    try {
-      const expiresAt = DateTime.fromISO(JSON.parse(expiration));
-      const diff = expiresAt.diff(DateTime.now());
-      const isExpired = diff.milliseconds <= 0;
-      if (isExpired) {
-        console.warn(diff.toFormat("'Token expired' HH 'hours and' mm 'minutes ago'"));
-      } else {
-        console.info(diff.toFormat("'Expires in' mm 'minutes'"));
-      }
-      return !isExpired;
-    } catch (e) {
-      console.info(this.token.get());
-      console.error('Invalid Expiration was set', e);
-    }
-    return false;
+    return true;
   }
 
-  public getUser(): User | null {
-    const userString = this.user.get();
-    if (!userString) return null;
+  private IsTokenExpired(expiry: number) {
+    return DateTime.fromSeconds(expiry) < DateTime.now();
+  }
 
-    return JSON.parse(userString);
+  private GetTokenClaims(): any | null {
+    const token = this.token.get();
+    if (!token) return null;
+
+    const arrayToken = token.split('.');
+    return JSON.parse(atob(arrayToken[1]));
+  }
+
+  // Get User claims from token
+  public getUser(): User | null {
+    const token = this.GetTokenClaims()
+    if (!token) return null;
+
+    const diff = DateTime.fromSeconds(token["exp"]).diffNow();
+    if (this.IsTokenExpired(token["exp"])) {
+      console.error(diff.toFormat("'Token expired' HH 'hours and' mm 'minutes ago'"));
+      return null;
+    }
+    console.info(`${diff.toFormat("'Token expires in' mm 'minutes'")}`);
+
+    return {
+      id: token["Id"],
+      email: token["Email"],
+      username: token["Username"],
+    };
   }
 }
