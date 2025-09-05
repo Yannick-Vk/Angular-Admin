@@ -35,13 +35,18 @@ export class Blogs {
     );
   }
 
-  return() {
-    this.router.navigate(['Blogs']).then(() => {});
+  async return() {
+    await this.router.navigate(['Blogs']);
   }
 
-  edit(id: string) {
-    this.router.navigate(['Blog/Me/Edit', id]).then(() => {});
+  async edit(id: string) {
+    await this.router.navigate(['Blog/Me/Edit', id]);
   }
 
   protected readonly formatDate = formatDate;
+
+  //* Copy the link to the clipboard
+  async copy() {
+    await navigator.clipboard.writeText(`http://localhost:4200/Blogs/${this.blog()?.id}`);
+  }
 }

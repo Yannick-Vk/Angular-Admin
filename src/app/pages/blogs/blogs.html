@@ -9,6 +9,7 @@
       }
       <div class="flex flex-row gap-5 my-5">
         <button (click)="return()">Back to blogs</button>
+        <button (click)="copy()">Copy link</button>
         @if (user?.username === blog.author) {
           <button (click)="edit(blog.id)">Edit blog</button>
         }
