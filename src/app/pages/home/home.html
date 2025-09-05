@@ -5,7 +5,11 @@
       <label class="hidden">Search</label>
       <input type="search" class="w-full" placeholder="Search ..." formControlName="searchText">
       <button type="submit" class="w-40">Search</button>
+      <button class="w-20" (click)="clearSearch()">Clear</button>
     </form>
+    @if (errorMessage()) {
+      <p class="text-red-500">{{errorMessage()}}</p>
+    }
     <hr/>
   </div>
   @for (blog of blogs(); track $index;) {
