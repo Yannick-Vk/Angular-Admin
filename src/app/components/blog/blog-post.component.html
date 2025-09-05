@@ -1,13 +1,16 @@
 <article class="my-3">
-  <h2 class="text-2xl">{{blog().title}}</h2>
-  <p>Author: {{blog().author}}</p>
-  <p>Created at: {{formatDate(blog().createdAt)}}</p>
+  <h2 class="text-2xl">{{ blog().title }}</h2>
+  <p>Author: {{ blog().author }}</p>
+  <p>Created at: {{ formatDate(blog().createdAt) }}</p>
   @if (blog().updatedAt) {
-    <p>Updated at: {{formatDate(blog().updatedAt)}}</p>
+    <p>Updated at: {{ formatDate(blog().updatedAt) }}</p>
   }
   <div class="my-3">
-    {{blog().description}}
+    {{ blog().description }}
   </div>
-  <button (click)="readMore(blog().id)" class="mb-3">Read more</button>
+  <div class="flex flex-row gap-5">
+    <button (click)="readMore(blog().id)" class="mb-3">Read more</button>
+    <button (click)="copy(blog().id)" class="mb-3">Copy link</button>
+  </div>
   <hr/>
 </article>

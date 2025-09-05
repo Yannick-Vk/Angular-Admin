@@ -2,6 +2,8 @@ import {Component, inject, input} from '@angular/core';
 import {Blog} from '../../models/Blog';
 import {Router} from '@angular/router';
 import {formatDate} from '../../services/DateTimeHelper';
+import {copy} from 'clipboard';
+import {CopyToClipboard} from '../../services/LinkService';
 
 @Component({
   selector: 'app-blog',
@@ -18,4 +20,9 @@ export class BlogPost {
   }
 
   protected readonly formatDate = formatDate;
+
+  //* Copy the link to the clipboard
+  async copy(blogId: string) {
+    await CopyToClipboard(`http://localhost:4200/Blogs/${blogId}`);
+  };
 }

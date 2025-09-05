@@ -2,6 +2,7 @@
 import {BlogPost} from '../../components/blog/blog-post.component';
 import {BlogService} from '../../services/blog.service';
 import {Blog} from '../../models/Blog';
+import {CopyToClipboard} from '../../services/LinkService';
 
 @Component({
   selector: 'home',

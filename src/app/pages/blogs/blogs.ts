@@ -5,6 +5,7 @@ import {BlogService} from '../../services/blog.service';
 import {MarkdownComponent} from 'ngx-markdown';
 import {AuthService} from '../../services/AuthService';
 import {formatDate} from '../../services/DateTimeHelper';
+import {CopyBlogToClipboard} from '../../services/LinkService';
 
 @Component({
   selector: 'app-blogs',
@@ -47,6 +48,9 @@ export class Blogs {
 
   //* Copy the link to the clipboard
   async copy() {
-    await navigator.clipboard.writeText(`http://localhost:4200/Blogs/${this.blog()?.id}`);
+    const id =this.blog()?.id;
+    if (!id) return;
+
+    await CopyBlogToClipboard(id);
   }
 }
