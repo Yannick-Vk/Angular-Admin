@@ -16,8 +16,35 @@ export class AuthService extends HttpService {
   private token = new Item('token');
   private loggedIn = new BehaviorSubject<boolean>(this.IsLoggedIn());
   public isLoggedIn$ = this.loggedIn.asObservable();
+  private logoutTimer: any;
 
-  override path = 'auth'
+  override path = 'auth';
+
+  constructor() {
+    super();
+    this.initiateAutomaticLogout().then()
+  }
+
+  private async logoutAndRedirect() {
+    console.log('Token expired, logging out and redirecting.');
+    this.Logout();
+    await this.router.navigate(['/Login']);
+  }
+
+  public async initiateAutomaticLogout(): Promise<void> {
+    clearTimeout(this.logoutTimer);
+    const claims = this.GetTokenClaims();
+    if (claims && claims.exp) {
+      const expiresIn = DateTime.fromSeconds(claims.exp).diff(DateTime.now()).as('milliseconds');
+      if (expiresIn <= 0) {
+        await this.logoutAndRedirect()
+      } else {
+        this.logoutTimer = setTimeout(async () => {
+          await this.logoutAndRedirect();
+        }, expiresIn);
+      }
+    }
+  }
 
   public Login(user: LoginRequest) {
     return this.client.post<Jwt>(`${this.baseUrl()}/login`, user)
@@ -25,7 +52,7 @@ export class AuthService extends HttpService {
         tap(authResult => this.HandleToken(authResult)),
         catchError((error: HttpResponse<any>) => {
           console.error('Failed to login: ', error);
-          throw error
+          throw error;
         }));
   }
 
@@ -35,19 +62,21 @@ export class AuthService extends HttpService {
         tap(authResult => this.HandleToken(authResult)),
         catchError((error: HttpResponse<any>) => {
           console.error('Failed to register: ', error);
-          throw error
+          throw error;
         }));
   }
 
-  private HandleToken(token: Jwt) {
+  private async HandleToken(token: Jwt) {
     // process the configuration.
     this.token.set(token.token);
     this.loggedIn.next(true);
+    await this.initiateAutomaticLogout();
   }
 
   public Logout() {
     this.token.remove();
     this.loggedIn.next(false);
+    clearTimeout(this.logoutTimer);
   }
 
   public GetToken() {
@@ -56,9 +85,14 @@ export class AuthService extends HttpService {
 
   // Check if the expiration is set in local storage and if it's still valid
   public IsLoggedIn(): boolean {
-    const isExpired = this.IsTokenExpired(this.GetTokenClaims()?.exp)
+    const token = this.GetToken();
+    if (!token) {
+      return false;
+    }
+    const isExpired = this.IsTokenExpired(this.GetTokenClaims()?.exp);
     if (isExpired) {
-      console.error('Invalid Expiration was set');
+      console.error('Token is expired.');
+      this.Logout();
       return false;
     }
     return true;
@@ -86,12 +120,13 @@ export class AuthService extends HttpService {
 
   // Get User claims from token
   public getUser(): User | null {
-    const token = this.GetTokenClaims()
+    const token = this.GetTokenClaims();
     if (!token) return null;
 
-    const diff = DateTime.fromSeconds(token["exp"]).diffNow();
-    if (this.IsTokenExpired(token["exp"])) {
+    const diff = DateTime.fromSeconds(token['exp']).diffNow();
+    if (this.IsTokenExpired(token['exp'])) {
       console.error(diff.toFormat("'Token expired' HH 'hours and' mm 'minutes ago'"));
+      this.logoutAndRedirect().then();
       return null;
     }
     console.info(`${diff.toFormat("'Token expires in' mm 'minutes'")}`);
