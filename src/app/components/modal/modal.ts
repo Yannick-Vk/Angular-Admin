@@ -1,23 +1,23 @@
 import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
 
 @Component({
-  selector: 'app-modal',
-  standalone: true,
-  imports: [],
-  templateUrl: './modal.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-modal',
+    standalone: true,
+    imports: [],
+    templateUrl: './modal.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Modal {
-  title = signal<string>('');
-  message = signal<string>('');
+    title = signal<string>('');
+    message = signal<string>('');
 
-  isOpen = signal(false);
+    isOpen = signal(false);
 
-  open() {
-    this.isOpen.set(true);
-  }
+    open() {
+        this.isOpen.set(true);
+    }
 
-  close() {
-    this.isOpen.set(false);
-  }
+    close() {
+        this.isOpen.set(false);
+    }
 }
