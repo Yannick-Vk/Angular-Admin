@@ -29,11 +29,18 @@ export class Blogs {
         if (!blogId) return;
 
         this.blogService.getBlog(blogId).subscribe({
-                next: (res) => {
-                    this.blog.set(res);
+            next: (res) => {
+                if (!res) {
+                    this.router.navigate(['/Blogs']).then();
+                    return;
                 }
+                this.blog.set(res);
+            },
+            error: (err) => {
+                console.error(`Error getting blog ${blogId}:`, err);
+                this.router.navigate(['/Blogs']).then();
             }
-        );
+        });
     }
 
     async return() {
