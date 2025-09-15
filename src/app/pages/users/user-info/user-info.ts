@@ -48,9 +48,7 @@ export class UserInfo {
             return;
         }
 
-        this.getUser(userName)
-        this.getRoles(userName);
-        this.getAllRoles();
+        this.getUser(userName);
     }
 
     onFormValidityChangeAdd(isValid: boolean) {
@@ -146,10 +144,17 @@ export class UserInfo {
     private getUser(userName: string) {
         this.userService.getUser(userName).subscribe({
             next: (user) => {
+                if (!user || !user.username) {
+                    this.router.navigate(['/Users']).then();
+                    return;
+                }
                 this.user.set(user);
+                this.getRoles(userName);
+                this.getAllRoles();
             },
             error: (err) => {
-                console.error('Error getting users:', err);
+                console.error('Error getting user:', err);
+                this.router.navigate(['/Users']).then();
             }
         });
     }
