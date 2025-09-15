@@ -23,8 +23,7 @@ export class MyBlogs {
         const user = this.authService.getUser();
         if (!user) {
             console.error('User was not loggedIn');
-            this.router.navigate(['/Login']).then(() => {
-            });
+            this.router.navigate(['/Login']).then();
             return;
         }
 
@@ -34,8 +33,7 @@ export class MyBlogs {
     }
 
     toNewBlog(): void {
-        this.router.navigate([`Blog/Upload`]).then(() => {
-        });
+        this.router.navigate([`Blog/Upload`]).then();
         return;
     }
 }
