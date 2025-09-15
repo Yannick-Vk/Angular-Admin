@@ -123,14 +123,12 @@ export class AuthService extends HttpService {
     const token = this.GetTokenClaims();
     if (!token || !token.exp) return null;
 
-    const expiryDate = DateTime.fromSeconds(token.exp);
-
     if (this.IsTokenExpired(token.exp)) {
-      console.error(`Token expired ${expiryDate.toRelative()}`);
       this.logoutAndRedirect().then();
       return null;
     }
 
+    const expiryDate = DateTime.fromSeconds(token.exp);
     console.info(`Token expires ${expiryDate.toRelative()}`);
 
     return {
