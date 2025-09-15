@@ -5,7 +5,6 @@ import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './modal.html',
-  styleUrl: './modal.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Modal {
