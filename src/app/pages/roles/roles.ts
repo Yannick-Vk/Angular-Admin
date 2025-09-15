@@ -25,6 +25,8 @@ export class Roles {
   roleNames = computed(() => this.roles().map(role => role.name));
   roleToDelete: WritableSignal<string | null> = signal(null);
 
+  errorMessage = signal<string | undefined>(undefined);
+
   @ViewChild('confirmDelete') confirmDeleteModal!: Modal;
 
   constructor() {
@@ -42,8 +44,8 @@ export class Roles {
     });
   }
 
-  addRole(roleName: string) {
-    this.roleService.AddRole(new RoleDto(roleName)).subscribe({
+  CreateNewRole(roleName: string) {
+    this.roleService.CreateNewRole(new RoleDto(roleName)).subscribe({
       next: () => {
         this.getRoles();
       },
@@ -63,6 +65,7 @@ export class Roles {
     this.roleService.AddRoleToUser(dto).subscribe({
       error: (err) => {
         console.error('Error adding role to user:', err);
+        this.errorMessage.set(err.error)
       }
     });
   }

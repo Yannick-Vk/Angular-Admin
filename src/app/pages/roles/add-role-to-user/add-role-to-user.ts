@@ -13,6 +13,7 @@ export class AddRoleToUser {
   @ViewChild(Form) formComponent!: Form;
   addRole = output<{RoleName: string, Username: string}>()
   options = input<string[]>()
+  errorMessage = input<string | undefined>(undefined);
 
   formOptions = computed(() => {
     const opts = this.options();

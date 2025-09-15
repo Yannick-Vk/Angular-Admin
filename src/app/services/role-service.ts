@@ -23,7 +23,7 @@ export class RoleService extends HttpService {
         }));
   }
 
-  public AddRole(role: RoleDto) {
+  public CreateNewRole(role: RoleDto) {
     //console.log(`Adding role ${role} ...`);
     return this.client.post(`${this.baseUrl()}`, role)
       .pipe(

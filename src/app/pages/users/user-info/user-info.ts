@@ -123,7 +123,7 @@ export class UserInfo {
     const roleName = formValue.RoleName;
     const username = this.user().username;
 
-    this.roleService.AddRole(new RoleDto(roleName))
+    this.roleService.CreateNewRole(new RoleDto(roleName))
     .subscribe({
       next: () => {
         this.roleService.AddRoleToUser(new UserWithRoleDto(roleName, username)).subscribe({
