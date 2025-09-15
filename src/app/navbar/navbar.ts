@@ -1,8 +1,9 @@
 import {Component, inject, signal} from '@angular/core';
-import {RouterLink} from '@angular/router';
+import {NavigationEnd, Router, RouterLink} from '@angular/router';
 import {AuthService} from '../services/AuthService';
 import {CommonModule} from "@angular/common";
 import {RoleService} from '../services/role-service';
+import {filter} from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -17,6 +18,7 @@ import {RoleService} from '../services/role-service';
 export class Navbar {
   private authService = inject(AuthService);
   private roleService = inject(RoleService);
+  private router = inject(Router);
   loggedIn = signal(this.authService.IsLoggedIn());
   isAdmin = signal<boolean>(false);
   isHamburgerMenuOpen = signal(false)
@@ -29,6 +31,12 @@ export class Navbar {
       } else {
         this.isAdmin.set(false);
       }
+    });
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.isHamburgerMenuOpen.set(false);
     });
   }
 
