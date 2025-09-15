@@ -1,17 +1,26 @@
 
+
 <button (click)="back()"> Back to Roles </button>
 @if (users().length > 0) {
   <app-table [headers]="['Id', 'Name', 'Info', 'Delete']" class="table-auto">
     @for (user of users(); track user.id) {
       <tr class="">
-        <td class="block max-w-[100px] md:max-w-none truncate ">{{ user.id }}</td>
+        <td class="p-3 block">{{ user.id }}</td>
         <td>{{ user.username }}</td>
         <td class="">{{ user.email }}</td>
         <td><button (click)="details(user.username)">Details</button></td>
-        <td><button (click)="removeRole(user.username)"> Remove Role </button></td>
+        <td><button (click)="openConfirmationModal(user.username)"> Remove Role </button></td>
       </tr>
     }
   </app-table>
+
+  <app-modal #confirmDelete>
+    <div class="flex flex-row gap-5 modal-actions">
+      <button id="confirm" (click)="confirmRemove()">Confirm</button>
+      <button id="cancel" (click)="cancelRemove()">Cancel</button>
+    </div>
+  </app-modal>
+
 } @else {
   <p class="flex justify-center text-xl font-bold mt-5 text-red-800">No Users with role {{role}}</p>
 }
