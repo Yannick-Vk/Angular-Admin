@@ -18,19 +18,17 @@ import {Modal} from '../../../components/modal/modal';
 })
 export class EditBlog {
     @ViewChild('confirmDeleteModal') confirmDeleteModal!: Modal;
-    private blogService = inject(BlogService);
-    private authService = inject(AuthService);
-    private route = inject(ActivatedRoute);
-    private router = inject(Router);
-
     formEdit = new FormGroup({
         title: new FormControl(''),
         description: new FormControl(''),
         file: new FormControl(),
     })
-
     blog: Blog | undefined;
     errorMessage = signal<string>('');
+    private blogService = inject(BlogService);
+    private authService = inject(AuthService);
+    private route = inject(ActivatedRoute);
+    private router = inject(Router);
 
     constructor() {
         const id = this.route.snapshot.params['blogId'];

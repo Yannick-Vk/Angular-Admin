@@ -1,27 +1,27 @@
 ﻿interface User {
-  UserName: string;
+    UserName: string;
 }
 
 interface UserWithPassword extends User {
-  password: string;
+    password: string;
 }
 
 export interface LoginRequest extends UserWithPassword {
-  password: string;
+    password: string;
 }
 
 export interface RegisterRequest extends UserWithPassword {
-  password: string;
-  email: string;
+    password: string;
+    email: string;
 }
 
 export interface Jwt {
-  token: string;
+    token: string;
 }
 
 export interface TokenClaims {
-  exp: number;
-  Id: string;
-  Username: string;
-  Email: string;
+    exp: number;
+    Id: string;
+    Username: string;
+    Email: string;
 }

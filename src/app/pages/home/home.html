@@ -1,18 +1,18 @@
 ﻿<div>
   <h2 class="text-5xl">Home</h2>
   <div class="my-5">
-    <form class="flex flex-row justify-between gap-5 mb-5" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()" [formGroup]="searchForm" class="flex flex-row justify-between gap-5 mb-5">
       <label class="hidden">Search</label>
-      <input type="search" class="w-full" placeholder="Search ..." formControlName="searchText">
-      <button type="submit" class="w-40">Search</button>
-      <button class="w-20" (click)="clearSearch()">Clear</button>
+      <input class="w-full" formControlName="searchText" placeholder="Search ..." type="search">
+      <button class="w-40" type="submit">Search</button>
+      <button (click)="clearSearch()" class="w-20">Clear</button>
     </form>
     @if (errorMessage()) {
-      <p class="error-message">{{errorMessage()}}</p>
+      <p class="error-message">{{ errorMessage() }}</p>
     }
     <hr/>
   </div>
-  @for (blog of blogs(); track blog.id;) {
+  @for (blog of blogs(); track blog.id; ) {
     <app-blog [blog]="blog"></app-blog>
   }
 </div>

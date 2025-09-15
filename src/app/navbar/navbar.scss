@@ -1,22 +1,22 @@
 a {
-  padding: 0.5rem;
-  display: block;
-  width: 100%;
-  margin: 1rem;
+    padding: 0.5rem;
+    display: block;
+    width: 100%;
+    margin: 1rem;
 
 
-  border-radius: var(--border-radius);
+    border-radius: var(--border-radius);
 
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #c3d9fb;
-  }
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #c3d9fb;
+    }
 }
 
 @media (min-width: 768px) {
-  a {
-    display: inline-block;
-    width: auto;
+    a {
+        display: inline-block;
+        width: auto;
 
-  }
+    }
 }

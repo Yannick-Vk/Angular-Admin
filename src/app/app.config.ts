@@ -7,11 +7,11 @@ import {AuthInterceptor} from './services/auth-interceptor';
 import {provideMarkdown} from 'ngx-markdown';
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideZoneChangeDetection({eventCoalescing: true}),
-    provideRouter(routes),
-    provideHttpClient(withFetch(), withJsonpSupport(), withInterceptors([AuthInterceptor])),
-    provideMarkdown(),
-  ],
+    providers: [
+        provideBrowserGlobalErrorListeners(),
+        provideZoneChangeDetection({eventCoalescing: true}),
+        provideRouter(routes),
+        provideHttpClient(withFetch(), withJsonpSupport(), withInterceptors([AuthInterceptor])),
+        provideMarkdown(),
+    ],
 };

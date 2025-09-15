@@ -13,22 +13,15 @@ import {User} from '../models/Users';
 })
 export class AuthService extends HttpService {
     router = inject(Router);
+    override path = 'auth';
     private token = new Item('token');
     private loggedIn = new BehaviorSubject<boolean>(this.IsLoggedIn());
     public isLoggedIn$ = this.loggedIn.asObservable();
     private logoutTimer: any;
 
-    override path = 'auth';
-
     constructor() {
         super();
         this.initiateAutomaticLogout().then()
-    }
-
-    private async logoutAndRedirect() {
-        console.log('Token expired, logging out and redirecting.');
-        this.Logout();
-        await this.router.navigate(['/Login']);
     }
 
     public async initiateAutomaticLogout(): Promise<void> {
@@ -66,13 +59,6 @@ export class AuthService extends HttpService {
                 }));
     }
 
-    private async HandleToken(token: Jwt) {
-        // process the configuration.
-        this.token.set(token.token);
-        this.loggedIn.next(true);
-        await this.initiateAutomaticLogout();
-    }
-
     public Logout() {
         this.token.remove();
         this.loggedIn.next(false);
@@ -98,26 +84,6 @@ export class AuthService extends HttpService {
         return true;
     }
 
-    private IsTokenExpired(expiry: number | null | undefined): boolean {
-        if (!expiry) return true;
-
-        return DateTime.fromSeconds(expiry) < DateTime.now();
-    }
-
-    private GetTokenClaims(): TokenClaims | null {
-        const token = this.token.get();
-        if (!token) return null;
-
-        const arrayToken = token.split('.');
-        const claims = JSON.parse(atob(arrayToken[1]));
-        return {
-            exp: claims.exp,
-            Id: claims.Id,
-            Username: claims.Username,
-            Email: claims.Email,
-        };
-    }
-
     // Get User claims from token
     public getUser(): User | null {
         const token = this.GetTokenClaims();
@@ -135,6 +101,39 @@ export class AuthService extends HttpService {
             id: token.Id,
             email: token.Email,
             username: token.Username,
+        };
+    }
+
+    private async logoutAndRedirect() {
+        console.log('Token expired, logging out and redirecting.');
+        this.Logout();
+        await this.router.navigate(['/Login']);
+    }
+
+    private async HandleToken(token: Jwt) {
+        // process the configuration.
+        this.token.set(token.token);
+        this.loggedIn.next(true);
+        await this.initiateAutomaticLogout();
+    }
+
+    private IsTokenExpired(expiry: number | null | undefined): boolean {
+        if (!expiry) return true;
+
+        return DateTime.fromSeconds(expiry) < DateTime.now();
+    }
+
+    private GetTokenClaims(): TokenClaims | null {
+        const token = this.token.get();
+        if (!token) return null;
+
+        const arrayToken = token.split('.');
+        const claims = JSON.parse(atob(arrayToken[1]));
+        return {
+            exp: claims.exp,
+            Id: claims.Id,
+            Username: claims.Username,
+            Email: claims.Email,
         };
     }
 }

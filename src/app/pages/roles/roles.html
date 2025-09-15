@@ -1,9 +1,9 @@
 <div class="flex flex-row justify-between flex-wrap gap-3">
-  <add-role class="mb-3 w-full md:w-[49%]" (addRole)="CreateNewRole($event)"/>
-  <app-add-role-to-user class="w-full md:w-[49%]" [options]="roleNames()" (addRole)="addRoleToUser($event)"
-                        [errorMessage]="errorMessage()" [confirmMessage]="successMessage()"/>
+  <add-role (addRole)="CreateNewRole($event)" class="mb-3 w-full md:w-[49%]"/>
+  <app-add-role-to-user (addRole)="addRoleToUser($event)" [confirmMessage]="successMessage()" [errorMessage]="errorMessage()"
+                        [options]="roleNames()" class="w-full md:w-[49%]"/>
 </div>
-<button class="my-5" (click)="getRoles()">Get roles</button>
+<button (click)="getRoles()" class="my-5">Get roles</button>
 @if (roles().length > 0) {
   <app-table [headers]="['Id', 'Name', 'Users', 'Delete']">
     @for (role of roles(); track role.id) {

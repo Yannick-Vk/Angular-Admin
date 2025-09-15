@@ -5,15 +5,15 @@ import {RoleService} from '../services/role-service';
 
 /// Only loggedIn users can acces this page
 export const authGuard: CanActivateFn = () => {
-  const authService = inject(AuthService);
-  return authService.IsLoggedIn();
+    const authService = inject(AuthService);
+    return authService.IsLoggedIn();
 };
 
 export const adminGuard: CanActivateFn = () => {
-  const authService = inject(AuthService);
-  const user = authService.getUser()
-  if (!user) return false;
+    const authService = inject(AuthService);
+    const user = authService.getUser()
+    if (!user) return false;
 
-  const roleService = inject(RoleService);
-  return roleService.UserIsAdmin(user.username);
+    const roleService = inject(RoleService);
+    return roleService.UserIsAdmin(user.username);
 };

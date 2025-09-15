@@ -1,19 +1,19 @@
 ﻿export class Item {
-  key: string;
+    key: string;
 
-  constructor(key: string) {
-    this.key = key;
-  }
+    constructor(key: string) {
+        this.key = key;
+    }
 
-   public get() {
-    return localStorage.getItem(this.key);
-  }
+    public get() {
+        return localStorage.getItem(this.key);
+    }
 
-  public remove() {
-    localStorage.removeItem(this.key);
-  }
+    public remove() {
+        localStorage.removeItem(this.key);
+    }
 
-  public set(value: string) {
-    localStorage.setItem(this.key, value);
-  }
+    public set(value: string) {
+        localStorage.setItem(this.key, value);
+    }
 }

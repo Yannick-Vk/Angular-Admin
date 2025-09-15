@@ -6,32 +6,32 @@ import {Router} from '@angular/router';
 import {Table} from '../../components/table/table';
 
 @Component({
-  selector: 'app-users',
-  imports: [CommonModule, Table],
-  templateUrl: './users.html',
+    selector: 'app-users',
+    imports: [CommonModule, Table],
+    templateUrl: './users.html',
 })
 export class Users {
-  userService = inject(UserService);
-  router = inject(Router);
-  users: WritableSignal<Array<User>> = signal([]);
+    userService = inject(UserService);
+    router = inject(Router);
+    users: WritableSignal<Array<User>> = signal([]);
 
-  constructor() {
-    this.getUsers();
-  }
+    constructor() {
+        this.getUsers();
+    }
 
-  getUsers() {
-    this.userService.getUsers().subscribe({
-      next: (users) => {
-        this.users.set(users);
-      },
-      error: (err) => {
-        console.error('Error getting users:', err);
-      }
-    });
-  }
+    getUsers() {
+        this.userService.getUsers().subscribe({
+            next: (users) => {
+                this.users.set(users);
+            },
+            error: (err) => {
+                console.error('Error getting users:', err);
+            }
+        });
+    }
 
-  viewDetails(userName: string) {
-    this.router.navigate(['Users', userName]).then();
-  }
+    viewDetails(userName: string) {
+        this.router.navigate(['Users', userName]).then();
+    }
 
 }

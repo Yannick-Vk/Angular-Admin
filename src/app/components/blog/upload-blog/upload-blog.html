@@ -1,17 +1,17 @@
 <div>
-  <app-form title="Upload blog" (onValidSubmit)="onSubmit($event)" (onFileSelected)="onFile($event)" [data]='[
+  <app-form (onFileSelected)="onFile($event)" (onValidSubmit)="onSubmit($event)" [data]='[
     { label: "Blog Title", key: "Title", type: "text", required: true },
     { label: "Description", key: "Description", type: "textarea", required: true },
     { label: "File upload", key: "Upload", type: "file", required: true },
-  ]' [errorMessage]="errorMessage" [showValidationErrors]="showValidationErrors">
+  ]' [errorMessage]="errorMessage" [showValidationErrors]="showValidationErrors" title="Upload blog">
 
     <div class="button-group mt-5">
       <button [disabled]="!isValid()" type="submit">Upload Blog</button>
-      <button type="button" (click)="clear()">Clear</button>
-      <button type="button" (click)="preview()"> Preview Document</button>
+      <button (click)="clear()" type="button">Clear</button>
+      <button (click)="preview()" type="button"> Preview Document</button>
     </div>
   </app-form>
 
   <markdown [data]="markdownRenderContent()"
-    lineNumbers />
+            lineNumbers/>
 </div>

@@ -1,12 +1,12 @@
 <div class="center-container">
-  <app-form title="Register" (onValidSubmit)="onSubmit($event)" [data]='[
+  <app-form (onFormErrorsChange)="onFormErrorsChanged($event)" (onValidSubmit)="onSubmit($event)" [data]='[
     { label: "Email", key: "Email", type: "email", required: true },
     { label: "Username", key: "Username", type: "text", required: true },
     { label: "Password", key: "Password", type: "password", required: true },
     { label: "Confirm Password", key: "ConfirmPassword", type: "password", required: true },
   ]' [errorMessage]="errorMessage" [formValidators]="[passwordMatchValidator]"
             [showValidationErrors]="showValidationErrors"
-            (onFormErrorsChange)="onFormErrorsChanged($event)" class="w-xl">
+            class="w-xl" title="Register">
 
     <p class="my-3">
       Already have a login? <a routerLink="/Login">Login</a>

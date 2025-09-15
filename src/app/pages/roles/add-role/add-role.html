@@ -1,7 +1,7 @@
 <div class="">
-  <app-form title="Add role" (onValidSubmit)="onSubmit($event)" [data]='[
+  <app-form (onValidSubmit)="onSubmit($event)" [data]='[
     { label: "Role name", key: "RoleName", type: "text", required: true },
-  ]'>
+  ]' title="Add role">
     <div class="button-group">
       <button [disabled]="!isValid()" type="submit">Add role</button>
     </div>

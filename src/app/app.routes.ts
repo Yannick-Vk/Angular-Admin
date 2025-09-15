@@ -14,55 +14,55 @@ import {MyBlogs} from './pages/my-blogs/my-blogs';
 import {EditBlog} from './pages/my-blogs/edit-blog/edit-blog';
 
 export const routes: Routes = [
-  {
-    path: '',
-    pathMatch: 'full',
-    'component': HomeComponent,
-  }, {
-    'path': 'Login',
-    'component': LoginForm,
-  }, {
-    'path': 'Register',
-    'component': RegisterForm,
-  },{
-    path: 'Logout',
-    component: Logout,
-  }, {
-    'path': 'Users',
-    'component': Users,
-    'canActivate': [authGuard, adminGuard],
-  },{
-    'path': 'Users/:userName',
-    'component': UserInfo,
-    'canActivate': [authGuard, adminGuard],
-  }, {
-    'path': 'Roles',
-    'component': Roles,
-    'canActivate': [authGuard, adminGuard],
-  }, {
-    'path': 'Roles/:roleName',
-    'component': RoleHasUsers,
-    'canActivate': [authGuard, adminGuard],
-  }, {
-    path: 'Blog/Upload',
-    component: UploadBlog,
-    canActivate: [authGuard],
-  }, {
-    path: 'Blogs/:blogId',
-    component: Blogs,
-  }, {
-    path: 'Blogs',
-    redirectTo: '/Home',
-  }, {
-    path: 'Home',
-    redirectTo: '',
-  }, {
-    path: 'Blog/Me',
-    component: MyBlogs,
-    canActivate: [authGuard],
-  }, {
-    path: 'Blog/Me/Edit/:blogId',
-    component: EditBlog,
-    canActivate: [authGuard],
-  },
+    {
+        path: '',
+        pathMatch: 'full',
+        'component': HomeComponent,
+    }, {
+        'path': 'Login',
+        'component': LoginForm,
+    }, {
+        'path': 'Register',
+        'component': RegisterForm,
+    }, {
+        path: 'Logout',
+        component: Logout,
+    }, {
+        'path': 'Users',
+        'component': Users,
+        'canActivate': [authGuard, adminGuard],
+    }, {
+        'path': 'Users/:userName',
+        'component': UserInfo,
+        'canActivate': [authGuard, adminGuard],
+    }, {
+        'path': 'Roles',
+        'component': Roles,
+        'canActivate': [authGuard, adminGuard],
+    }, {
+        'path': 'Roles/:roleName',
+        'component': RoleHasUsers,
+        'canActivate': [authGuard, adminGuard],
+    }, {
+        path: 'Blog/Upload',
+        component: UploadBlog,
+        canActivate: [authGuard],
+    }, {
+        path: 'Blogs/:blogId',
+        component: Blogs,
+    }, {
+        path: 'Blogs',
+        redirectTo: '/Home',
+    }, {
+        path: 'Home',
+        redirectTo: '',
+    }, {
+        path: 'Blog/Me',
+        component: MyBlogs,
+        canActivate: [authGuard],
+    }, {
+        path: 'Blog/Me/Edit/:blogId',
+        component: EditBlog,
+        canActivate: [authGuard],
+    },
 ];

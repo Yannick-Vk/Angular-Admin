@@ -6,51 +6,51 @@ import {RoleService} from '../services/role-service';
 import {filter} from 'rxjs';
 
 @Component({
-  selector: 'app-navbar',
-  standalone: true,
-  imports: [
-    RouterLink,
-    CommonModule
-  ],
-  templateUrl: './navbar.html',
-  styleUrl: './navbar.scss'
+    selector: 'app-navbar',
+    standalone: true,
+    imports: [
+        RouterLink,
+        CommonModule
+    ],
+    templateUrl: './navbar.html',
+    styleUrl: './navbar.scss'
 })
 export class Navbar {
-  private authService = inject(AuthService);
-  private roleService = inject(RoleService);
-  private router = inject(Router);
-  loggedIn = signal(this.authService.IsLoggedIn());
-  isAdmin = signal<boolean>(false);
-  isHamburgerMenuOpen = signal(false)
+    isAdmin = signal<boolean>(false);
+    isHamburgerMenuOpen = signal(false)
+    private authService = inject(AuthService);
+    loggedIn = signal(this.authService.IsLoggedIn());
+    private roleService = inject(RoleService);
+    private router = inject(Router);
 
-  constructor() {
-    this.authService.isLoggedIn$.subscribe(loggedIn => {
-      this.loggedIn.set(loggedIn);
-      if (loggedIn) {
-        this.isAdminRole();
-      } else {
-        this.isAdmin.set(false);
-      }
-    });
+    constructor() {
+        this.authService.isLoggedIn$.subscribe(loggedIn => {
+            this.loggedIn.set(loggedIn);
+            if (loggedIn) {
+                this.isAdminRole();
+            } else {
+                this.isAdmin.set(false);
+            }
+        });
 
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      this.isHamburgerMenuOpen.set(false);
-    });
-  }
+        this.router.events.pipe(
+            filter(event => event instanceof NavigationEnd)
+        ).subscribe(() => {
+            this.isHamburgerMenuOpen.set(false);
+        });
+    }
 
-  toggleHamburgerMenu() {
-    this.isHamburgerMenuOpen.set(!this.isHamburgerMenuOpen());
-  }
+    toggleHamburgerMenu() {
+        this.isHamburgerMenuOpen.set(!this.isHamburgerMenuOpen());
+    }
 
-  private isAdminRole() {
-    const user = this.authService.getUser();
-    if (!user) return;
+    private isAdminRole() {
+        const user = this.authService.getUser();
+        if (!user) return;
 
-    this.roleService.UserIsAdmin(user.username).subscribe(value => {
-        this.isAdmin.set(value);
-      }
-    );
-  }
+        this.roleService.UserIsAdmin(user.username).subscribe(value => {
+                this.isAdmin.set(value);
+            }
+        );
+    }
 }

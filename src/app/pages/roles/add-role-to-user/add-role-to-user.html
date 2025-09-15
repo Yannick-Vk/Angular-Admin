@@ -1,12 +1,12 @@
 <div class="">
-  <app-form title="Add user to role" (onValidSubmit)="onSubmit($event)" [data]="formData()"
-            [errorMessage]="errorMessage()">
+  <app-form (onValidSubmit)="onSubmit($event)" [data]="formData()" [errorMessage]="errorMessage()"
+            title="Add user to role">
     <div class="button-group">
       <button [disabled]="!isValid()" type="submit">Add role to user</button>
     </div>
     @if (confirmMessage()) {
       <div class="mt-5 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-        <p>{{confirmMessage()}}</p>
+        <p>{{ confirmMessage() }}</p>
       </div>
     }
   </app-form>
