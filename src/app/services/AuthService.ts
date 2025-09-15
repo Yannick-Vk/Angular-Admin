@@ -121,15 +121,17 @@ export class AuthService extends HttpService {
   // Get User claims from token
   public getUser(): User | null {
     const token = this.GetTokenClaims();
-    if (!token) return null;
+    if (!token || !token.exp) return null;
 
-    const diff = DateTime.fromSeconds(token['exp']).diffNow();
-    if (this.IsTokenExpired(token['exp'])) {
-      console.error(diff.toFormat("'Token expired' HH 'hours and' mm 'minutes ago'"));
+    const expiryDate = DateTime.fromSeconds(token.exp);
+
+    if (this.IsTokenExpired(token.exp)) {
+      console.error(`Token expired ${expiryDate.toRelative()}`);
       this.logoutAndRedirect().then();
       return null;
     }
-    console.info(`${diff.toFormat("'Token expires in' mm 'minutes'")}`);
+
+    console.info(`Token expires ${expiryDate.toRelative()}`);
 
     return {
       id: token.Id,
