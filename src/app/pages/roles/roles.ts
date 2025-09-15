@@ -26,6 +26,7 @@ export class Roles {
   roleToDelete: WritableSignal<string | null> = signal(null);
 
   errorMessage = signal<string | undefined>(undefined);
+  successMessage = signal<string | undefined>(undefined);
 
   @ViewChild('confirmDelete') confirmDeleteModal!: Modal;
 
@@ -61,8 +62,13 @@ export class Roles {
   }
 
   addRoleToUser(data: {RoleName: string, Username: string}) {
+    this.successMessage.set(undefined);
+
     const dto = new UserWithRoleDto(data.RoleName, data.Username);
     this.roleService.AddRoleToUser(dto).subscribe({
+      next: () => {
+        this.successMessage.set("Added role")
+      },
       error: (err) => {
         console.error('Error adding role to user:', err);
         this.errorMessage.set(err.error)

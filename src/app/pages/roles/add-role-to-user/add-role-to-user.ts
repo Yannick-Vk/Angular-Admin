@@ -14,6 +14,7 @@ export class AddRoleToUser {
   addRole = output<{RoleName: string, Username: string}>()
   options = input<string[]>()
   errorMessage = input<string | undefined>(undefined);
+  confirmMessage = input<string | undefined>(undefined);
 
   formOptions = computed(() => {
     const opts = this.options();

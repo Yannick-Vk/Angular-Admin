@@ -1,7 +1,7 @@
 <div class="flex flex-row justify-between flex-wrap gap-3">
   <add-role class="mb-3 w-full md:w-[49%]" (addRole)="CreateNewRole($event)"/>
   <app-add-role-to-user class="w-full md:w-[49%]" [options]="roleNames()" (addRole)="addRoleToUser($event)"
-                        [errorMessage]="errorMessage()"/>
+                        [errorMessage]="errorMessage()" [confirmMessage]="successMessage()"/>
 </div>
 <button class="my-5" (click)="getRoles()">Get roles</button>
 @if (roles().length > 0) {
