@@ -4,7 +4,7 @@
   <app-table [headers]="['Id', 'Name', 'Info', 'Delete']" class="table-auto">
     @for (user of users(); track user.id) {
       <tr class="">
-        <td class="p-3 block">{{ user.id }}</td>
+        <td class="block max-w-[100px] md:max-w-none truncate ">{{ user.id }}</td>
         <td>{{ user.username }}</td>
         <td class="">{{ user.email }}</td>
         <td><button (click)="details(user.username)">Details</button></td>
