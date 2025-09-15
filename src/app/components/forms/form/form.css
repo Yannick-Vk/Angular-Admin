@@ -1,41 +1,44 @@
 form {
-  /* top | right | bottom | left */
-  padding: 1rem 5rem 3rem 5rem;
-  border-radius: var(--border-radius);
-  background-color: var(--background-color);
+    /* top | right | bottom | left */
+    padding: 1rem 5rem 3rem 5rem;
+    border-radius: var(--border-radius);
+    background-color: var(--background-color);
 }
 
 input {
-  width: 100%;
+    width: 100%;
 }
 
 select, textarea {
-  width: 100%;
-  background-color: var(--background-color);
-  border: 2px solid var(--border-color);
-  padding: 0.8rem;
-  border-radius: var(--border-radius);
+    width: 100%;
+    background-color: var(--background-color);
+    border: 2px solid var(--border-color);
+    padding: 0.8rem;
+    border-radius: var(--border-radius);
 }
 
 input[disabled], input[readonly] {
-  background-color: #cccccc;
+    background-color: #cccccc;
 }
 
 :host {
-  --link-color: #007bff;
+    --link-color: #007bff;
 }
+
 :host ::ng-deep a {
-  text-decoration: underline;
-  color: var(--link-color);
-  cursor: pointer;
+    text-decoration: underline;
+    color: var(--link-color);
+    cursor: pointer;
 }
+
 :host ::ng-deep .button-group {
-  display: flex;
-  gap: 1rem;
-  flex-direction: row;
+    display: flex;
+    gap: 1rem;
+    flex-direction: row;
 }
+
 :host ::ng-deep .error-message {
-  color: red;
+    color: red;
 }
 
 /*# sourceMappingURL=form.css.map */
