@@ -14,7 +14,11 @@
           <button (click)="showInfo(role)">See all users</button>
         </td>
         <td>
-          <button (click)="deleteRole(role.name)"> Delete Role</button>
+          @if (role.name === 'Admin') {
+            <p></p>
+          } @else {
+            <button (click)="deleteRole(role.name)"> Delete Role</button>
+          }
         </td>
       </tr>
     }
