@@ -38,33 +38,26 @@ export class HomeComponent {
 
     onSubmit() {
         this.errorMessage.set(null);
-        let searchText = this.searchForm.controls.searchText.value;
-        const filtered = this.filterBlogs(searchText);
+        const searchText = this.searchForm.controls.searchText.value;
 
-        if (!filtered) {
+        if (!searchText || searchText.trim() === '') {
+            this.setUnfiltered();
             return;
         }
 
+        const filtered = this.filterBlogs(searchText);
+
         if (filtered.length === 0) {
-            this.setUnfiltered();
-            this.errorMessage.set(`No blog's found with title: '${searchText}'`)
-            return;
+            this.errorMessage.set(`No blogs found with title: '${searchText}'`);
         }
 
         this.blogs.set(filtered);
     }
 
-    filterBlogs(searchText: string | null): Array<Blog> | null {
-        if (!searchText) {
-            return null;
-        }
-        searchText = searchText.trim().toLowerCase();
-        if (searchText === '') {
-            return null;
-        }
-
+    filterBlogs(searchText: string): Array<Blog> {
+        const search = searchText.trim().toLowerCase();
         return this.allBlogs().filter((blog: Blog) =>
-            blog.title.toLowerCase().includes(searchText)
+            blog.title.toLowerCase().includes(search)
         );
     }
 
