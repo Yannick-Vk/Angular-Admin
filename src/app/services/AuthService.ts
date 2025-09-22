@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpResponse} from '@angular/common/http';
 import {BehaviorSubject, catchError, tap} from 'rxjs';
-import {Jwt, LoginRequest, RegisterRequest, TokenClaims} from '../models/Auth';
+import {LoginRequest, RegisterRequest, TokenClaims} from '../models/Auth';
 import {DateTime} from 'luxon';
 import {Item} from './LocalItemService';
 import {HttpService} from './http-service';
@@ -40,7 +40,7 @@ export class AuthService extends HttpService {
     }
 
     public Login(user: LoginRequest) {
-        return this.client.post<Jwt>(`${this.baseUrl()}/login`, user)
+        return this.client.post<string>(`${this.baseUrl()}/login`, user, {responseType: 'text' as 'json'})
             .pipe(
                 tap(authResult => this.HandleToken(authResult)),
                 catchError((error: HttpResponse<any>) => {
@@ -50,7 +50,7 @@ export class AuthService extends HttpService {
     }
 
     Register(user: RegisterRequest) {
-        return this.client.post<Jwt>(`${this.baseUrl()}/register`, user)
+        return this.client.post<string>(`${this.baseUrl()}/register`, user, {responseType: 'text' as 'json'})
             .pipe(
                 tap(authResult => this.HandleToken(authResult)),
                 catchError((error: HttpResponse<any>) => {
@@ -110,9 +110,9 @@ export class AuthService extends HttpService {
         await this.router.navigate(['/Login']);
     }
 
-    private async HandleToken(token: Jwt) {
+    private async HandleToken(token: string) {
         // process the configuration.
-        this.token.set(token.token);
+        this.token.set(token);
         this.loggedIn.next(true);
         await this.initiateAutomaticLogout();
     }
