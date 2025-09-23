@@ -7,7 +7,6 @@ import {RoleService} from '../../../services/role-service';
 import {RoleDto, UserWithRoleDto} from '../../../models/Role';
 import {Form} from '../../../components/forms/form/form';
 import {Modal} from "../../../components/modal/modal";
-import {DateTime} from 'luxon';
 
 @Component({
     selector: 'app-user-info',
