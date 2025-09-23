@@ -1,59 +1,83 @@
-# AngularAdmin
+# Angular Admin
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.0.
+A simple admin dashboard built with Angular, Tailwind CSS, and a C# Web API backend. This application allows users to read and upload blog posts, while administrators have the ability to manage user roles.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **User Authentication:** Secure login and registration system.
+- **Blog Management:** Users can create and read blog posts.
+- **Markdown Support:** Blog content is rendered from Markdown for easy editing.
+- **Role Management:** Administrators can view and manage user roles.
+- **Responsive Design:** Styled with Tailwind CSS for a modern, responsive UI.
 
-```bash
-ng serve
-```
+## Tech Stack
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Frontend
 
-## Code scaffolding
+- **Framework:** Angular (latest, v20+)
+- **Language:** TypeScript 5.9
+- **Styling:** Tailwind CSS 4
+- **State Management:** Angular Signals & RxJS
+- **Markdown:** `ngx-markdown` for rendering
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Backend
 
-```bash
-ng generate component component-name
-```
+- **Platform:** C# Web API
+- *Note: The backend is managed in a separate repository and is required for the application to function. [Link to the backend project](https://github.com/Yannick-Vk/Angular-Admin-Web-Api)*
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## How It Works
 
-```bash
-ng generate --help
-```
+### Authentication
 
-## Building
+The application uses an HttpOnly cookie-based authentication flow:
+1.  The user logs in with their credentials.
+2.  The C# backend validates the credentials and returns an HttpOnly cookie.
+3.  For subsequent requests, Angular's `HttpClient` automatically sends this cookie, thanks to an `HttpInterceptor` that sets `withCredentials: true`.
 
-To build the project run:
+### Project Structure
 
-```bash
-ng build
-```
+The frontend code is organized in the `src/app` directory, with a clear separation of concerns:
+-   `components/`: Reusable components used across the application.
+-   `pages/`: Smart components that represent the different pages/routes.
+-   `services/`: Services that handle API communication and other business logic (`AuthService`, `BlogService`, etc.).
+-   `models/`: TypeScript interfaces for data structures like `User` and `Blog`.
+-   `guards/`: Route guards to protect parts of the application.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Getting Started
 
-## Running unit tests
+### Prerequisites
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+-   **Node.js:** A recent LTS version is recommended (e.g., 20.x or later).
+-   **Package Manager:** `npm` (comes with Node.js) or `bun`.
+-   **Backend API:** A running instance of the backend C# Web API. You can find the backend repository and setup instructions [here](https://github.com/Yannick-Vk/Angular-Admin-Web-Api).
+    -   *Note: The application is configured to communicate with an API at `https://localhost:7134`. If your backend runs on a different address, you will need to update the API base URL in the Angular services.*
 
-```bash
-ng test
-```
+### Installation and Setup
 
-## Running end-to-end tests
+1.  **Clone the repository:**
+    ```sh
+    git clone <your-repository-url>
+    cd angular-admin
+    ```
 
-For end-to-end (e2e) testing, run:
+2.  **Install dependencies:**
+    This project includes a `bun.lock` file. If you have `bun` installed, use:
+    ```sh
+    bun install
+    ```
+    Otherwise, you can use `npm`:
+    ```sh
+    npm install
+    ```
 
-```bash
-ng e2e
-```
+3.  **Run the development server:**
+    ```sh
+    npm start
+    ```
+    The application will be available at `http://localhost:4200`.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Available Scripts
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+-   `npm start`: Runs the app in development mode with live reloading.
+-   `npm run build`: Compiles and builds the application for production into the `dist/` folder.
+-   `npm test`: Launches the test runner and executes unit tests via Karma.
