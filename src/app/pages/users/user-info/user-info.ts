@@ -7,6 +7,7 @@ import {RoleService} from '../../../services/role-service';
 import {RoleDto, UserWithRoleDto} from '../../../models/Role';
 import {Form} from '../../../components/forms/form/form';
 import {Modal} from "../../../components/modal/modal";
+import {DateTime} from 'luxon';
 
 @Component({
     selector: 'app-user-info',
@@ -24,7 +25,7 @@ export class UserInfo {
     router = inject(Router)
     userService = inject(UserService);
     roleService = inject(RoleService);
-    user = signal<User>({email: '', id: '', username: ''});
+    user = signal<User>({email: '', id: '', username: '', expiry: ''});
     roles = signal<Array<string>>([])
     allRoles = signal<Array<string>>([]);
     remainingRoles = computed(() => this.allRoles().filter(role => !this.roles().includes(role)));
