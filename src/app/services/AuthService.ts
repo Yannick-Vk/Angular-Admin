@@ -65,6 +65,18 @@ export class AuthService extends HttpService {
     }
 
     public Logout() {
+        return this.client.post(`${this.baseUrl()}/logout`, {}).pipe(
+            tap({
+                next: () => this.clearLocalSession(),
+                error: () => {
+                    console.error('Backend logout failed, clearing local session anyway.');
+                    this.clearLocalSession();
+                }
+            })
+        );
+    }
+
+    public clearLocalSession() {
         this.user.remove();
         this.loggedIn.next(false);
         clearTimeout(this.logoutTimer);
@@ -75,7 +87,7 @@ export class AuthService extends HttpService {
         const isExpired = this.IsTokenExpired();
         if (isExpired) {
             console.error('Token is expired.');
-            this.Logout();
+            this.clearLocalSession();
             return false;
         }
         return true;
@@ -106,7 +118,7 @@ export class AuthService extends HttpService {
 
     private async logoutAndRedirect() {
         console.log('Token expired, logging out and redirecting.');
-        this.Logout();
+        this.clearLocalSession();
         await this.router.navigate(['/Login']);
     }
 

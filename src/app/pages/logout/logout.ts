@@ -12,8 +12,10 @@ export class Logout {
     auth = inject(AuthService)
 
     constructor() {
-        this.auth.Logout();
-        this.router.navigate(['/Login']).then(() => {
+        this.auth.Logout().subscribe({
+            // Navigate on success or error
+            next: () => this.router.navigate(['/Login']),
+            error: () => this.router.navigate(['/Login'])
         });
     }
 }
