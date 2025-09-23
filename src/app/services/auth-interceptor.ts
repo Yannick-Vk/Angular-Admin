@@ -5,17 +5,14 @@ import {inject} from '@angular/core';
 
 export function AuthInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<any>> {
     const loggedIn = inject(AuthService).IsLoggedIn();
-    // If the token does not exist then skip the intercept
+    // If the user is not logged in then skip the intercept
     if (!loggedIn) {
         return next(req);
     }
 
-    //console.info('Auth token provided for', req.url);
-    /*
     const cloned = req.clone({
-        headers: req.headers.set('Authorization', 'Bearer ' + token)
+        withCredentials: true
     });
-    */
-    return next(req);
 
+    return next(cloned);
 }
