@@ -49,7 +49,7 @@ export class BlogService extends HttpService {
     updateBlog(blog: BlogUpdate) {
         return this.client.patch(`${this.baseUrl()}`, blog).pipe(
             catchError((error: HttpResponse<any>) => {
-                console.error(`Failed to update [${blog.title}]: ${error}`);
+                console.error(`Failed to update [${blog.title}]: `, error);
                 throw error;
             })
         )
@@ -58,7 +58,7 @@ export class BlogService extends HttpService {
     deleteBlog(id: string) {
         return this.client.delete(`${this.baseUrl()}/${id}`).pipe(
             catchError((error: HttpResponse<any>) => {
-                console.error(`Failed to delete blog with id [${id}]: ${error}`);
+                console.error(`Failed to delete blog with id [${id}]:`, error);
                 throw error;
             })
         )
@@ -67,7 +67,7 @@ export class BlogService extends HttpService {
     searchBlog(searchText: string) {
         return this.client.get<Array<Blog>>(`${this.baseUrl()}/search/${searchText}`).pipe(
             catchError((error: HttpResponse<any>) => {
-                console.error(`Failed to find blogs with '${searchText}': ${error}`)
+                console.error(`Failed to find blogs with '${searchText}':`, error)
                 throw error;
             })
         )
