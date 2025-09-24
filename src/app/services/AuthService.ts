@@ -168,20 +168,4 @@ export class AuthService extends HttpService {
         this.expiration.set(user.expiry.toString());
         this.loggedIn.next(true);
     }
-
-    private IsTokenExpired(): boolean {
-        const str = this.expiration.get();
-        if (!str) {
-            console.error('Token was null');
-            return true;
-        }
-
-        const expiry = Number(str);
-        if (expiry <= 0) {
-            console.error('Token was not a number');
-            return true;
-        }
-
-        return DateTime.fromSeconds(expiry) < DateTime.now();
-    }
 }
