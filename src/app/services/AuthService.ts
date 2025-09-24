@@ -32,15 +32,24 @@ export class AuthService extends HttpService {
         clearTimeout(this.logoutTimer);
         const expiry = this.expiration.get()
         if (!expiry) {
-            console.error('Expiry expiry not set');
-            await this.logoutAndRedirect();
+            // No expiration means no session, so do nothing.
             return;
         }
 
         const expiresIn = DateTime.fromISO(expiry).diff(DateTime.now()).as('milliseconds');
         if (expiresIn <= 0) {
-            await this.logoutAndRedirect()
+            // If token is expired on startup, try to refresh it immediately.
+            console.log('Access token expired on load, attempting to refresh...');
+            this.refreshToken().pipe(catchError(() => {
+                console.error('Failed to refresh token on startup, logging out.');
+                this.logoutAndRedirect().then();
+                return throwError(() => 'Failed to refresh token on startup');
+            })).subscribe({
+                next: () => console.log('Token refreshed successfully on startup.')
+            });
         } else {
+            // If token is not expired, set a timer to log out when it does.
+            // The interceptor will handle refreshing if the app is still in use.
             this.logoutTimer = setTimeout(async () => {
                 await this.logoutAndRedirect();
             }, expiresIn);
@@ -48,7 +57,7 @@ export class AuthService extends HttpService {
     }
 
     public Login(user: LoginRequest) {
-        return this.client.post<User>(`${this.baseUrl()}/login`, user)
+        return this.client.post<User>(`${this.baseUrl()}/login`, user, { withCredentials: true })
             .pipe(
                 tap(authResult => this.HandleToken(authResult)),
                 catchError((error: HttpResponse<any>) => {
@@ -58,7 +67,7 @@ export class AuthService extends HttpService {
     }
 
     Register(user: RegisterRequest) {
-        return this.client.post<User>(`${this.baseUrl()}/register`, user)
+        return this.client.post<User>(`${this.baseUrl()}/register`, user, { withCredentials: true })
             .pipe(
                 tap(authResult => this.HandleToken(authResult)),
                 catchError((error: HttpResponse<any>) => {
@@ -86,24 +95,20 @@ export class AuthService extends HttpService {
         this.isRefreshing = false;
     }
 
-    // Check if the expiration is set in local storage and if it's still valid
+    /**
+     * Checks if user and expiration data exist in storage.
+     * This determines if the app considers a user to be in a logged-in state.
+     * It does NOT check if the token is expired, as the interceptor handles that.
+     */
     public IsLoggedIn(): boolean {
-        const isExpired = this.IsTokenExpired();
-        if (isExpired) {
-            console.error('Token is expired.');
-            this.clearLocalSession();
-            return false;
-        }
-        return true;
+        return !!this.user.get() && !!this.expiration.get();
     }
 
-    // Get User claims from token
+    /**
+     * Gets user claims from storage.
+     * It does NOT check if the token is expired, as the interceptor handles that.
+     */
     public getUser(): User | null {
-        if (this.IsTokenExpired()) {
-            this.logoutAndRedirect().then();
-            return null;
-        }
-
         const userStr = this.user.get();
         if (!userStr) return null;
 
@@ -152,7 +157,7 @@ export class AuthService extends HttpService {
     }
 
     private async logoutAndRedirect() {
-        console.log('Token expired, logging out and redirecting.');
+        console.log('Logging out and redirecting.');
         this.clearLocalSession();
         await this.router.navigate(['/Login']);
     }
