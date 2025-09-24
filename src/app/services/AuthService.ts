@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpResponse} from '@angular/common/http';
-import {BehaviorSubject, catchError, tap} from 'rxjs';
+import {HttpHandlerFn, HttpRequest, HttpResponse} from '@angular/common/http';
+import {BehaviorSubject, catchError, filter, Observable, switchMap, take, tap, throwError} from 'rxjs';
 import {LoginRequest, RegisterRequest} from '../models/Auth';
 import {DateTime} from 'luxon';
 import {Item} from './LocalItemService';
@@ -19,6 +19,9 @@ export class AuthService extends HttpService {
     private loggedIn = new BehaviorSubject<boolean>(this.IsLoggedIn());
     public isLoggedIn$ = this.loggedIn.asObservable();
     private logoutTimer: any;
+
+    private isRefreshing = false;
+    private refreshTokenSubject = new BehaviorSubject<any>(null);
 
     constructor() {
         super();
@@ -80,6 +83,7 @@ export class AuthService extends HttpService {
         this.user.remove();
         this.loggedIn.next(false);
         clearTimeout(this.logoutTimer);
+        this.isRefreshing = false;
     }
 
     // Check if the expiration is set in local storage and if it's still valid
@@ -114,6 +118,37 @@ export class AuthService extends HttpService {
             email: user.email,
             expiry: user.expiry,
         };
+    }
+
+    handleRefreshAndRetry(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<any> {
+        // Prevent multiple refreshes
+        if (!this.isRefreshing) {
+            this.isRefreshing = true;
+            this.refreshTokenSubject.next(null);
+
+            return this.refreshToken().pipe(
+                switchMap(() => {
+                    this.isRefreshing = false;
+                    this.refreshTokenSubject.next(true);
+                    return next(req);
+                }),
+                catchError((error) => {
+                    this.isRefreshing = false;
+                    this.logoutAndRedirect().then();
+                    return throwError(() => error);
+                })
+            );
+        } else {
+            return this.refreshTokenSubject.pipe(
+                filter(result => result !== null),
+                take(1),
+                switchMap(() => next(req))
+            );
+        }
+    }
+
+    private refreshToken(): Observable<any> {
+        return this.client.post(`${this.baseUrl()}/refresh`, {}, { withCredentials: true });
     }
 
     private async logoutAndRedirect() {
