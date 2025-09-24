@@ -18,19 +18,22 @@ export class AuthService extends HttpService {
     private expiration = new Item('expiration');
     private loggedIn = new BehaviorSubject<boolean>(this.IsLoggedIn());
     public isLoggedIn$ = this.loggedIn.asObservable();
-    private logoutTimer: any;
 
     private isRefreshing = false;
     private refreshTokenSubject = new BehaviorSubject<any>(null);
 
     constructor() {
         super();
-        this.initiateAutomaticLogout().then()
+        this.validateTokenOnStartup().then();
     }
 
-    public async initiateAutomaticLogout(): Promise<void> {
-        clearTimeout(this.logoutTimer);
-        const expiry = this.expiration.get()
+    /**
+     * This method checks for an expired token when the application first loads.
+     * If the token is expired, it attempts a refresh. It no longer uses a timer
+     * to proactively log out the user.
+     */
+    private async validateTokenOnStartup(): Promise<void> {
+        const expiry = this.expiration.get();
         if (!expiry) {
             // No expiration means no session, so do nothing.
             return;
@@ -47,13 +50,8 @@ export class AuthService extends HttpService {
             })).subscribe({
                 next: () => console.log('Token refreshed successfully on startup.')
             });
-        } else {
-            // If token is not expired, set a timer to log out when it does.
-            // The interceptor will handle refreshing if the app is still in use.
-            this.logoutTimer = setTimeout(async () => {
-                await this.logoutAndRedirect();
-            }, expiresIn);
         }
+        // The timer-based logout has been removed.
     }
 
     public Login(user: LoginRequest) {
@@ -77,7 +75,7 @@ export class AuthService extends HttpService {
     }
 
     public Logout() {
-        return this.client.post(`${this.baseUrl()}/logout`, {}).pipe(
+        return this.client.post(`${this.baseUrl()}/logout`, {}, { withCredentials: true }).pipe(
             tap({
                 next: () => this.clearLocalSession(),
                 error: () => {
@@ -90,8 +88,8 @@ export class AuthService extends HttpService {
 
     public clearLocalSession() {
         this.user.remove();
+        this.expiration.remove();
         this.loggedIn.next(false);
-        clearTimeout(this.logoutTimer);
         this.isRefreshing = false;
     }
 
@@ -126,7 +124,6 @@ export class AuthService extends HttpService {
     }
 
     handleRefreshAndRetry(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<any> {
-        // Prevent multiple refreshes
         if (!this.isRefreshing) {
             this.isRefreshing = true;
             this.refreshTokenSubject.next(null);
@@ -162,12 +159,11 @@ export class AuthService extends HttpService {
         await this.router.navigate(['/Login']);
     }
 
-    private async HandleToken(user: User) {
+    private HandleToken(user: User) {
         // process the configuration.
         this.user.set(JSON.stringify(user));
         this.expiration.set(user.expiry.toString());
         this.loggedIn.next(true);
-        await this.initiateAutomaticLogout();
     }
 
     private IsTokenExpired(): boolean {
