@@ -48,7 +48,10 @@ export class AuthService extends HttpService {
                 this.logoutAndRedirect().then();
                 return throwError(() => 'Failed to refresh token on startup');
             })).subscribe({
-                next: () => console.log('Token refreshed successfully on startup.')
+                next: (user) => {
+                    this.HandleToken(user);
+                    console.log('Token refreshed successfully on startup.');
+                }
             });
         }
         // The timer-based logout has been removed.
@@ -129,9 +132,10 @@ export class AuthService extends HttpService {
             this.refreshTokenSubject.next(null);
 
             return this.refreshToken().pipe(
-                switchMap(() => {
+                switchMap((user: User) => {
                     this.isRefreshing = false;
-                    this.refreshTokenSubject.next(true);
+                    this.refreshTokenSubject.next(user);
+                    this.HandleToken(user);
                     return next(req);
                 }),
                 catchError((error) => {
@@ -149,8 +153,8 @@ export class AuthService extends HttpService {
         }
     }
 
-    private refreshToken(): Observable<any> {
-        return this.client.post(`${this.baseUrl()}/refresh`, {}, { withCredentials: true });
+    private refreshToken(): Observable<User> {
+        return this.client.post<User>(`${this.baseUrl()}/refresh`, {}, { withCredentials: true });
     }
 
     private async logoutAndRedirect() {
@@ -160,7 +164,6 @@ export class AuthService extends HttpService {
     }
 
     private HandleToken(user: User) {
-        // process the configuration.
         this.user.set(JSON.stringify(user));
         this.expiration.set(user.expiry.toString());
         this.loggedIn.next(true);
